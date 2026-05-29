@@ -44,6 +44,9 @@ body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--
 .cc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
 .cc h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
 .chart-area{width:100%;overflow:hidden}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
 .filters-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:16px}
 .filters-box h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
 .filters-grid{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
@@ -69,9 +72,6 @@ tbody tr:hover td{background:var(--surface2)}
 .bi{background:var(--info-bg);color:var(--info)}
 .bn{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
 .onum{font-family:'Courier New',monospace;font-size:12px;font-weight:600;color:var(--accent)}
-.legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
-.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
-.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
 </style>
 </head>
 <body>
@@ -107,16 +107,8 @@ tbody tr:hover td{background:var(--surface2)}
 </div>
 
 <div class="charts">
-  <div class="cc">
-    <h3>Orders by status</h3>
-    <div class="chart-area"><canvas id="c-status" height="200"></canvas></div>
-    <div class="legend" id="leg-status"></div>
-  </div>
-  <div class="cc">
-    <h3>Payment breakdown</h3>
-    <div class="chart-area"><canvas id="c-pay" height="200"></canvas></div>
-    <div class="legend" id="leg-pay"></div>
-  </div>
+  <div class="cc"><h3>Orders by status</h3><div class="chart-area"><canvas id="c-status" height="200"></canvas></div><div class="legend" id="leg-status"></div></div>
+  <div class="cc"><h3>Payment breakdown</h3><div class="chart-area"><canvas id="c-pay" height="200"></canvas></div><div class="legend" id="leg-pay"></div></div>
 </div>
 
 <div class="filters-box">
@@ -149,7 +141,7 @@ var GID = '271152649';
 var allRows = [], colHeaders = [];
 var PALETTE = ['#2d5be3','#16a34a','#d97706','#dc2626','#7c3aed','#0891b2','#db2777','#65a30d','#0f766e','#9333ea'];
 
-// ── Pure canvas bar chart (no library) ──
+// Draw bar chart using Canvas API — no external libraries
 function drawBar(canvasId, labels, values, colors) {
   var canvas = document.getElementById(canvasId);
   if (!canvas) return;
@@ -162,165 +154,123 @@ function drawBar(canvasId, labels, values, colors) {
   canvas.style.height = H + 'px';
   var ctx = canvas.getContext('2d');
   ctx.scale(dpr, dpr);
-
-  var padL=40, padR=16, padT=16, padB=36;
-  var chartW = W - padL - padR;
-  var chartH = H - padT - padB;
-  var max = Math.max.apply(null, values) || 1;
-  var step = Math.ceil(max / 4);
-  max = step * 4;
-
-  // Grid lines
-  ctx.strokeStyle = '#e4e2da';
-  ctx.lineWidth = 0.5;
-  for (var i = 0; i <= 4; i++) {
-    var y = padT + chartH - (i / 4) * chartH;
-    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + chartW, y); ctx.stroke();
-    ctx.fillStyle = '#7a786f';
-    ctx.font = '10px system-ui,sans-serif';
-    ctx.textAlign = 'right';
-    ctx.fillText(step * i, padL - 4, y + 3);
+  var padL=40,padR=16,padT=16,padB=40;
+  var chartW=W-padL-padR, chartH=H-padT-padB;
+  var max=Math.max.apply(null,values)||1;
+  var step=Math.ceil(max/4); max=step*4;
+  ctx.strokeStyle='#e4e2da'; ctx.lineWidth=0.5;
+  for(var i=0;i<=4;i++){
+    var y=padT+chartH-(i/4)*chartH;
+    ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(padL+chartW,y);ctx.stroke();
+    ctx.fillStyle='#7a786f';ctx.font='10px system-ui,sans-serif';ctx.textAlign='right';
+    ctx.fillText(step*i,padL-4,y+3);
   }
-
-  // Bars
-  var n = labels.length;
-  var barW = Math.min(48, (chartW / n) * 0.6);
-  var gap = chartW / n;
-  for (var j = 0; j < n; j++) {
-    var bh = (values[j] / max) * chartH;
-    var bx = padL + gap * j + (gap - barW) / 2;
-    var by = padT + chartH - bh;
-    ctx.fillStyle = colors[j % colors.length];
+  var n=labels.length, gap=chartW/n, barW=Math.min(50,gap*0.6);
+  for(var j=0;j<n;j++){
+    var bh=(values[j]/max)*chartH;
+    var bx=padL+gap*j+(gap-barW)/2;
+    var by=padT+chartH-bh;
+    ctx.fillStyle=colors[j%colors.length];
     ctx.beginPath();
-    ctx.roundRect ? ctx.roundRect(bx, by, barW, bh, 4) : ctx.rect(bx, by, barW, bh);
+    if(ctx.roundRect){ctx.roundRect(bx,by,barW,bh,4);}else{ctx.rect(bx,by,barW,bh);}
     ctx.fill();
-    // Value label
-    if (bh > 14) {
-      ctx.fillStyle = '#fff';
-      ctx.font = 'bold 10px system-ui,sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(values[j], bx + barW/2, by + 13);
-    }
-    // X label
-    ctx.fillStyle = '#7a786f';
-    ctx.font = '10px system-ui,sans-serif';
-    ctx.textAlign = 'center';
-    var lbl = labels[j].length > 12 ? labels[j].slice(0,11) + '..' : labels[j];
-    ctx.fillText(lbl, bx + barW/2, padT + chartH + 14);
+    if(bh>16){ctx.fillStyle='#fff';ctx.font='bold 10px system-ui,sans-serif';ctx.textAlign='center';ctx.fillText(values[j],bx+barW/2,by+13);}
+    ctx.fillStyle='#7a786f';ctx.font='10px system-ui,sans-serif';ctx.textAlign='center';
+    var lbl=labels[j].length>13?labels[j].slice(0,12)+'..':labels[j];
+    ctx.fillText(lbl,bx+barW/2,padT+chartH+15);
   }
 }
 
-// ── Pure canvas doughnut chart (no library) ──
 function drawDoughnut(canvasId, labels, values, colors) {
   var canvas = document.getElementById(canvasId);
   if (!canvas) return;
   var dpr = window.devicePixelRatio || 1;
   var W = canvas.parentElement.offsetWidth || 300;
   var H = 200;
-  canvas.width = W * dpr;
-  canvas.height = H * dpr;
-  canvas.style.width = W + 'px';
-  canvas.style.height = H + 'px';
+  canvas.width = W * dpr; canvas.height = H * dpr;
+  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
   var ctx = canvas.getContext('2d');
   ctx.scale(dpr, dpr);
-
-  var total = values.reduce(function(a,b){return a+b;},0) || 1;
-  var cx = W/2, cy = H/2, outerR = Math.min(W,H)/2 - 10, innerR = outerR * 0.6;
-  var start = -Math.PI/2;
-
-  for (var i = 0; i < values.length; i++) {
-    var slice = (values[i]/total) * Math.PI * 2;
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.arc(cx, cy, outerR, start, start + slice);
-    ctx.closePath();
-    ctx.fillStyle = colors[i % colors.length];
-    ctx.fill();
-    start += slice;
+  var total=values.reduce(function(a,b){return a+b;},0)||1;
+  var cx=W/2, cy=H/2, outerR=Math.min(W,H)/2-10, innerR=outerR*0.58;
+  var start=-Math.PI/2;
+  for(var i=0;i<values.length;i++){
+    var slice=(values[i]/total)*Math.PI*2;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,outerR,start,start+slice);ctx.closePath();
+    ctx.fillStyle=colors[i%colors.length];ctx.fill();
+    start+=slice;
   }
-  // Inner cutout
-  ctx.beginPath();
-  ctx.arc(cx, cy, innerR, 0, Math.PI*2);
-  ctx.fillStyle = '#fff';
-  ctx.fill();
-  // Center text
-  ctx.fillStyle = '#1a1916';
-  ctx.font = 'bold 18px system-ui,sans-serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(total, cx, cy - 7);
-  ctx.fillStyle = '#7a786f';
-  ctx.font = '10px system-ui,sans-serif';
-  ctx.fillText('orders', cx, cy + 10);
+  ctx.beginPath();ctx.arc(cx,cy,innerR,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+  ctx.fillStyle='#1a1916';ctx.font='bold 20px system-ui,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(total,cx,cy-8);
+  ctx.fillStyle='#7a786f';ctx.font='11px system-ui,sans-serif';ctx.fillText('total',cx,cy+12);
 }
 
-function makeLegend(containerId, labels, values, colors) {
-  var el = document.getElementById(containerId);
-  if (!el) return;
-  var total = values.reduce(function(a,b){return a+b;},0)||1;
-  el.innerHTML = labels.map(function(l,i){
-    var pct = Math.round(values[i]/total*100);
-    return '<span class="legend-item"><span class="legend-dot" style="background:'+colors[i%colors.length]+'"></span>'+l+' ('+values[i]+' &mdash; '+pct+'%)</span>';
+function makeLegend(id, labels, values, colors) {
+  var el=document.getElementById(id);if(!el)return;
+  var total=values.reduce(function(a,b){return a+b;},0)||1;
+  el.innerHTML=labels.map(function(l,i){
+    var pct=Math.round(values[i]/total*100);
+    return '<span class="legend-item"><span class="legend-dot" style="background:'+colors[i%colors.length]+'"></span>'+l+' ('+values[i]+', '+pct+'%)</span>';
   }).join('');
 }
 
 function buildCharts(rows) {
-  var sMap={}, pMap={};
+  var sMap={},pMap={};
   rows.forEach(function(r){
     var s=r['orderStatus']||'Unknown';
     var p=r['Shopify Payment']||'Unknown';
     sMap[s]=(sMap[s]||0)+1;
     pMap[p]=(pMap[p]||0)+1;
   });
-  var sLabels=Object.keys(sMap), sVals=Object.values(sMap);
-  var pLabels=Object.keys(pMap), pVals=Object.values(pMap);
-  drawBar('c-status', sLabels, sVals, PALETTE);
-  makeLegend('leg-status', sLabels, sVals, PALETTE);
-  drawDoughnut('c-pay', pLabels, pVals, PALETTE);
-  makeLegend('leg-pay', pLabels, pVals, PALETTE);
+  var sL=Object.keys(sMap),sV=Object.values(sMap);
+  var pL=Object.keys(pMap),pV=Object.values(pMap);
+  drawBar('c-status',sL,sV,PALETTE);
+  makeLegend('leg-status',sL,sV,PALETTE);
+  drawDoughnut('c-pay',pL,pV,PALETTE);
+  makeLegend('leg-pay',pL,pV,PALETTE);
 }
 
-// ── Load data via Google Visualization JSONP ──
-function loadData() {
+// Fetch using gviz JSON (not JSONP) - works on GitHub Pages hosted sites
+async function loadData() {
   setStatus('loading','Fetching...');
   document.getElementById('err-box').style.display='none';
-  var old=document.getElementById('gviz-s');
-  if(old)old.remove();
-  var s=document.createElement('script');
-  s.id='gviz-s';
-  s.src='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:json&gid='+GID+'&callback=handleData&nocache='+Date.now();
-  s.onerror=function(){showError('Network error loading sheet. Check internet connection.');};
-  document.head.appendChild(s);
+  var url='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:json&gid='+GID+'&t='+Date.now();
+  try {
+    var res = await fetch(url);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    var text = await res.text();
+    // gviz returns: /*O_o*/\ngoogle.visualization.Query.setResponse({...});
+    // Strip the wrapper to get pure JSON
+    var jsonStr = text.replace(/^[^(]+\(/, '').replace(/\);?\s*$/, '');
+    var data = JSON.parse(jsonStr);
+    if(!data.table) throw new Error('No table in response');
+    processTable(data.table);
+  } catch(e) {
+    showError('Could not load data: '+e.message+'. Make sure the sheet is shared as Anyone with the link.');
+  }
 }
 
-// Google gviz wraps response in: /*O_o*/\ngoogle.visualization.Query.setResponse({...})
-// When used as JSONP callback it calls our handleData function directly
-function handleData(raw) {
-  try {
-    var table = raw && raw.table ? raw.table : null;
-    if (!table || !table.cols || !table.cols.length) {
-      throw new Error('No data returned. Ensure sheet is shared as "Anyone with the link can view".');
-    }
-    colHeaders = table.cols.map(function(c){ return c.label || c.id || ''; });
-    allRows = (table.rows||[]).map(function(row){
-      var obj={};
-      colHeaders.forEach(function(h,i){
-        var cell=row.c&&row.c[i];
-        obj[h]=(cell&&cell.v!==null&&cell.v!==undefined)?String(cell.v):'';
-      });
-      return obj;
-    }).filter(function(r){ return colHeaders[0]&&r[colHeaders[0]]; });
-    if(!allRows.length) throw new Error('Sheet appears empty.');
-    populateFilter('f-status','orderStatus','All statuses');
-    populateFilter('f-pay','Shopify Payment','All payments');
-    populateFilter('f-priority','Priority','All priorities');
-    populateFilter('f-assign','Assign','All agents');
-    populateFilter('f-pendcat','Pending Categorie','All categories');
-    buildCharts(allRows);
-    updateMetrics(allRows);
-    renderTable(allRows);
-    setStatus('live','Updated '+new Date().toLocaleTimeString()+' - '+allRows.length+' orders');
-  } catch(e){ showError(e.message); }
+function processTable(table) {
+  colHeaders = (table.cols||[]).map(function(c){return c.label||c.id||'';});
+  allRows = (table.rows||[]).map(function(row){
+    var obj={};
+    colHeaders.forEach(function(h,i){
+      var cell=row.c&&row.c[i];
+      obj[h]=(cell&&cell.v!==null&&cell.v!==undefined)?String(cell.v):'';
+    });
+    return obj;
+  }).filter(function(r){return colHeaders[0]&&r[colHeaders[0]];});
+  if(!allRows.length){showError('Sheet appears empty or no data rows found.');return;}
+  populateFilter('f-status','orderStatus','All statuses');
+  populateFilter('f-pay','Shopify Payment','All payments');
+  populateFilter('f-priority','Priority','All priorities');
+  populateFilter('f-assign','Assign','All agents');
+  populateFilter('f-pendcat','Pending Categorie','All categories');
+  buildCharts(allRows);
+  updateMetrics(allRows);
+  renderTable(allRows);
+  setStatus('live','Updated '+new Date().toLocaleTimeString()+' - '+allRows.length+' orders');
 }
 
 function showError(msg){
@@ -335,7 +285,7 @@ function setStatus(state,text){
 function parseDate(str){
   if(!str)return null;
   var p=str.split('-');
-  if(p.length===3&&p[2].length===4) return new Date(p[2]+'-'+p[1].padStart(2,'0')+'-'+p[0].padStart(2,'0'));
+  if(p.length===3&&p[2].length===4)return new Date(p[2]+'-'+p[1].padStart(2,'0')+'-'+p[0].padStart(2,'0'));
   return new Date(str);
 }
 function badge(t,c){return '<span class="badge '+c+'">'+(t||'&mdash;')+'</span>';}
