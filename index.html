@@ -268,24 +268,31 @@ function yesterdayStr() {
 }
 function fmtDate(str){
   var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  var p=str.split('/');
+  var sep=str.indexOf('-')!==-1?'-':'/';
+  var p=str.split(sep);
   if(p.length===3)return p[0]+' '+months[parseInt(p[1],10)-1]+' '+p[2];
   return str;
 }
 
-// Converts any date string to a Date object — handles DD/MM/YYYY, D/M/YYYY, DD-MM-YYYY
+// Converts any date string to a Date object
+// Handles: DD-MM-YYYY, DD/MM/YYYY, D-M-YYYY, D/M/YYYY, Date(YYYY,M,D) from gviz
 function parseDate(str){
   if(!str)return null;
-  str=str.trim();
-  // Remove time part if present
-  str=str.split(' ')[0];
-  var sep=str.indexOf('/')!==-1?'/':str.indexOf('-')!==-1?'-':null;
+  str=str.trim().split(' ')[0];
+
+  // gviz sometimes returns Date(2026,4,28) — month is 0-indexed
+  var gvizMatch=str.match(/^Date\((\d+),(\d+),(\d+)\)$/);
+  if(gvizMatch){
+    return new Date(parseInt(gvizMatch[1]),parseInt(gvizMatch[2]),parseInt(gvizMatch[3]));
+  }
+
+  // DD-MM-YYYY or DD/MM/YYYY
+  var sep=str.indexOf('-')!==-1?'-':str.indexOf('/')!==-1?'/':null;
   if(!sep)return null;
   var p=str.split(sep);
   if(p.length===3){
     var d=parseInt(p[0],10),m=parseInt(p[1],10)-1,y=parseInt(p[2],10);
-    // If year is 2-digit
-    if(y<100) y+=2000;
+    if(y<100)y+=2000;
     return new Date(y,m,d);
   }
   return null;
