@@ -256,6 +256,8 @@ var PALETTE = ['#2d5be3','#16a34a','#d97706','#dc2626','#7c3aed','#0891b2','#db2
 var currentView = 'all';
 
 // ---- Date helpers ----
+function pad(n){return n<10?'0'+n:''+n;}
+
 function todayStr() {
   var d = new Date();
   return pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear();
@@ -264,34 +266,47 @@ function yesterdayStr() {
   var d = new Date(); d.setDate(d.getDate()-1);
   return pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear();
 }
-function pad(n){return n<10?'0'+n:''+n;}
 function fmtDate(str){
   var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   var p=str.split('/');
   if(p.length===3)return p[0]+' '+months[parseInt(p[1],10)-1]+' '+p[2];
   return str;
 }
-function normalizeDate(str){
-  // Handles DD/MM/YYYY, D/M/YYYY, DD-MM-YYYY, D-M-YYYY
-  if(!str)return '';
-  str=str.trim();
-  var sep=str.indexOf('/')!==-1?'/':'-';
-  var p=str.split(sep);
-  if(p.length===3)return pad(parseInt(p[0],10))+'/'+pad(parseInt(p[1],10))+'/'+p[2];
-  return str;
-}
-function isToday(r){ return normalizeDate(r['Order Date'])===todayStr(); }
-function isYesterday(r){ return normalizeDate(r['Order Date'])===yesterdayStr(); }
+
+// Converts any date string to a Date object — handles DD/MM/YYYY, D/M/YYYY, DD-MM-YYYY
 function parseDate(str){
   if(!str)return null;
   str=str.trim();
-  var sep=str.indexOf('/')!==-1?'/':'-';
+  // Remove time part if present
+  str=str.split(' ')[0];
+  var sep=str.indexOf('/')!==-1?'/':str.indexOf('-')!==-1?'-':null;
+  if(!sep)return null;
   var p=str.split(sep);
   if(p.length===3){
     var d=parseInt(p[0],10),m=parseInt(p[1],10)-1,y=parseInt(p[2],10);
+    // If year is 2-digit
+    if(y<100) y+=2000;
     return new Date(y,m,d);
   }
-  return new Date(str);
+  return null;
+}
+
+// Compare two Date objects by calendar day only
+function sameDay(d1,d2){
+  if(!d1||!d2)return false;
+  return d1.getFullYear()===d2.getFullYear()&&d1.getMonth()===d2.getMonth()&&d1.getDate()===d2.getDate();
+}
+
+var _today=new Date();
+var _yesterday=new Date(); _yesterday.setDate(_yesterday.getDate()-1);
+
+function isToday(r){
+  var d=parseDate(r['Order Date']);
+  return sameDay(d,_today);
+}
+function isYesterday(r){
+  var d=parseDate(r['Order Date']);
+  return sameDay(d,_yesterday);
 }
 
 // ---- Canvas charts ----
