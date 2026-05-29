@@ -17,7 +17,9 @@
 }
 body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh}
 .app{max-width:1400px;margin:0 auto;padding:24px 20px}
-.hdr{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px}
+
+/* Header */
+.hdr{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px}
 .hdr-left{display:flex;align-items:center;gap:12px}
 .hdr-icon{width:42px;height:42px;background:var(--accent);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .hdr-icon svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -32,13 +34,52 @@ body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
 .btn{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:7px 14px;font-size:13px;font-family:inherit;color:var(--text);cursor:pointer;transition:background .15s}
 .btn:hover{background:var(--surface2)}
+.btn-accent{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn-accent:hover{background:#2450c8;border-color:#2450c8}
 .btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.err-bar{display:none;background:var(--danger-bg);border:1px solid #fca5a5;border-radius:var(--radius-sm);padding:12px 16px;font-size:13px;color:var(--danger);margin-bottom:20px;line-height:1.6}
+.err-bar{display:none;background:var(--danger-bg);border:1px solid #fca5a5;border-radius:var(--radius-sm);padding:12px 16px;font-size:13px;color:var(--danger);margin-bottom:20px}
+
+/* TODAY BANNER */
+.today-banner{background:var(--accent);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.today-date{color:rgba(255,255,255,0.8);font-size:12px;margin-bottom:2px}
+.today-title{color:#fff;font-size:16px;font-weight:600}
+.today-stats{display:flex;gap:24px;flex-wrap:wrap}
+.today-stat{text-align:center}
+.today-stat-val{font-size:24px;font-weight:700;color:#fff;line-height:1}
+.today-stat-label{font-size:11px;color:rgba(255,255,255,0.75);margin-top:3px}
+.today-stat-change{font-size:11px;margin-top:2px}
+.today-stat-change.up{color:#86efac}
+.today-stat-change.down{color:#fca5a5}
+.today-stat-change.same{color:rgba(255,255,255,0.6)}
+
+/* VIEW TOGGLE */
+.view-toggle{display:flex;gap:8px;margin-bottom:16px;align-items:center;flex-wrap:wrap}
+.view-toggle span{font-size:12px;color:var(--muted);margin-right:4px}
+.toggle-btn{padding:5px 14px;font-size:12px;font-family:inherit;border-radius:100px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;transition:all .15s}
+.toggle-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* Metrics */
 .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
 .mc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
 .mc-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
 .mc-val{font-size:28px;font-weight:700;letter-spacing:-.5px;line-height:1}
 .mc-val.a{color:var(--accent)}.mc-val.s{color:var(--success)}.mc-val.w{color:var(--warn)}.mc-val.d{color:var(--danger)}
+.mc-change{font-size:11px;margin-top:5px}
+.mc-change.up{color:var(--success)}.mc-change.down{color:var(--danger)}.mc-change.same{color:var(--muted)}
+
+/* Comparison row */
+.compare-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+@media(max-width:600px){.compare-row{grid-template-columns:1fr}}
+.compare-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
+.compare-card h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.day-badge{font-size:10px;padding:2px 7px;border-radius:100px;background:var(--accent);color:#fff;font-weight:500}
+.day-badge.yesterday{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cstat{background:var(--surface2);border-radius:var(--radius-sm);padding:10px 12px}
+.cstat-val{font-size:20px;font-weight:700;color:var(--text)}
+.cstat-label{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* Charts */
 .charts{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin-bottom:20px}
 @media(max-width:700px){.charts{grid-template-columns:1fr}}
 .cc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
@@ -47,6 +88,8 @@ body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--
 .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
 .legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+/* Filters */
 .filters-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:16px}
 .filters-box h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
 .filters-grid{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
@@ -56,7 +99,9 @@ body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--
 .fg input{min-width:165px}
 .fg input[type=date]{min-width:140px}
 .fg select:focus,.fg input:focus{border-color:var(--accent)}
-.result-info{font-size:12px;color:var(--muted);margin-bottom:8px}
+
+/* Table */
+.result-info{font-size:12px;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:8px}
 .tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;overflow-x:auto}
 table{width:100%;border-collapse:collapse;min-width:700px}
 thead tr{background:var(--surface2)}
@@ -64,6 +109,7 @@ th{padding:10px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--
 td{padding:10px 14px;font-size:13px;border-bottom:1px solid var(--border);color:var(--text);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 tr:last-child td{border-bottom:none}
 tbody tr:hover td{background:var(--surface2)}
+tbody tr.today-row td{background:#eef1fd}
 .empty{text-align:center;padding:40px;color:var(--muted);font-size:13px}
 .badge{display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;white-space:nowrap}
 .bs{background:var(--success-bg);color:var(--success)}
@@ -72,11 +118,13 @@ tbody tr:hover td{background:var(--surface2)}
 .bi{background:var(--info-bg);color:var(--info)}
 .bn{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
 .onum{font-family:'Courier New',monospace;font-size:12px;font-weight:600;color:var(--accent)}
+.today-tag{font-size:10px;background:var(--accent);color:#fff;padding:1px 6px;border-radius:100px;margin-left:4px;font-weight:500}
 </style>
 </head>
 <body>
 <div class="app">
 
+<!-- Header -->
 <div class="hdr">
   <div class="hdr-left">
     <div class="hdr-icon">
@@ -98,19 +146,81 @@ tbody tr:hover td{background:var(--surface2)}
 
 <div class="err-bar" id="err-box"><span id="err-msg"></span></div>
 
+<!-- TODAY BANNER -->
+<div class="today-banner" id="today-banner">
+  <div>
+    <div class="today-date" id="today-date"></div>
+    <div class="today-title">Today's status</div>
+  </div>
+  <div class="today-stats">
+    <div class="today-stat">
+      <div class="today-stat-val" id="td-orders">-</div>
+      <div class="today-stat-label">Orders today</div>
+      <div class="today-stat-change" id="td-orders-chg"></div>
+    </div>
+    <div class="today-stat">
+      <div class="today-stat-val" id="td-paid">-</div>
+      <div class="today-stat-label">Paid today</div>
+      <div class="today-stat-change" id="td-paid-chg"></div>
+    </div>
+    <div class="today-stat">
+      <div class="today-stat-val" id="td-pending">-</div>
+      <div class="today-stat-label">Pending category</div>
+      <div class="today-stat-change" id="td-pending-chg"></div>
+    </div>
+    <div class="today-stat">
+      <div class="today-stat-val" id="td-high">-</div>
+      <div class="today-stat-label">High priority</div>
+      <div class="today-stat-change" id="td-high-chg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- View Toggle -->
+<div class="view-toggle">
+  <span>Showing:</span>
+  <button class="toggle-btn" id="btn-today" onclick="setView('today')">Today only</button>
+  <button class="toggle-btn active" id="btn-all" onclick="setView('all')">All orders</button>
+</div>
+
+<!-- Today vs Yesterday Comparison -->
+<div class="compare-row" id="compare-section">
+  <div class="compare-card">
+    <h3><span class="day-badge">Today</span> <span id="lbl-today-date"></span></h3>
+    <div class="compare-grid">
+      <div class="cstat"><div class="cstat-val" id="c-today-total">-</div><div class="cstat-label">Total orders</div></div>
+      <div class="cstat"><div class="cstat-val" id="c-today-paid">-</div><div class="cstat-label">Paid</div></div>
+      <div class="cstat"><div class="cstat-val" id="c-today-pending">-</div><div class="cstat-label">Pending</div></div>
+      <div class="cstat"><div class="cstat-val" id="c-today-high">-</div><div class="cstat-label">High priority</div></div>
+    </div>
+  </div>
+  <div class="compare-card">
+    <h3><span class="day-badge yesterday">Yesterday</span> <span id="lbl-yesterday-date"></span></h3>
+    <div class="compare-grid">
+      <div class="cstat"><div class="cstat-val" id="c-yest-total">-</div><div class="cstat-label">Total orders</div></div>
+      <div class="cstat"><div class="cstat-val" id="c-yest-paid">-</div><div class="cstat-label">Paid</div></div>
+      <div class="cstat"><div class="cstat-val" id="c-yest-pending">-</div><div class="cstat-label">Pending</div></div>
+      <div class="cstat"><div class="cstat-val" id="c-yest-high">-</div><div class="cstat-label">High priority</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Overall Metrics -->
 <div class="metrics">
-  <div class="mc"><div class="mc-label">Total orders</div><div class="mc-val a" id="m-total">-</div></div>
-  <div class="mc"><div class="mc-label">Paid orders</div><div class="mc-val s" id="m-paid">-</div></div>
+  <div class="mc"><div class="mc-label">Total orders</div><div class="mc-val a" id="m-total">-</div><div class="mc-change" id="m-total-chg"></div></div>
+  <div class="mc"><div class="mc-label">Paid orders</div><div class="mc-val s" id="m-paid">-</div><div class="mc-change" id="m-paid-chg"></div></div>
   <div class="mc"><div class="mc-label">Pending category</div><div class="mc-val w" id="m-pending">-</div></div>
   <div class="mc"><div class="mc-label">High priority</div><div class="mc-val d" id="m-high">-</div></div>
   <div class="mc"><div class="mc-label">Measurement pending</div><div class="mc-val a" id="m-meas">-</div></div>
 </div>
 
+<!-- Charts -->
 <div class="charts">
   <div class="cc"><h3>Orders by status</h3><div class="chart-area"><canvas id="c-status" height="200"></canvas></div><div class="legend" id="leg-status"></div></div>
   <div class="cc"><h3>Payment breakdown</h3><div class="chart-area"><canvas id="c-pay" height="200"></canvas></div><div class="legend" id="leg-pay"></div></div>
 </div>
 
+<!-- Filters -->
 <div class="filters-box">
   <h3>Filters</h3>
   <div class="filters-grid">
@@ -140,36 +250,68 @@ var SHEET_ID = '16wFoJiT3hlHakrdow1znmjlRfRqCzpQnLfiDEfSUeXo';
 var GID = '271152649';
 var allRows = [], colHeaders = [];
 var PALETTE = ['#2d5be3','#16a34a','#d97706','#dc2626','#7c3aed','#0891b2','#db2777','#65a30d','#0f766e','#9333ea'];
+var currentView = 'all';
 
-// Draw bar chart using Canvas API — no external libraries
-function drawBar(canvasId, labels, values, colors) {
-  var canvas = document.getElementById(canvasId);
-  if (!canvas) return;
-  var dpr = window.devicePixelRatio || 1;
-  var W = canvas.parentElement.offsetWidth || 500;
-  var H = 200;
-  canvas.width = W * dpr;
-  canvas.height = H * dpr;
-  canvas.style.width = W + 'px';
-  canvas.style.height = H + 'px';
-  var ctx = canvas.getContext('2d');
-  ctx.scale(dpr, dpr);
-  var padL=40,padR=16,padT=16,padB=40;
-  var chartW=W-padL-padR, chartH=H-padT-padB;
+// ---- Date helpers ----
+function todayStr() {
+  var d = new Date();
+  return pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear();
+}
+function yesterdayStr() {
+  var d = new Date(); d.setDate(d.getDate()-1);
+  return pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear();
+}
+function pad(n){return n<10?'0'+n:''+n;}
+function fmtDate(str){
+  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var p=str.split('/');
+  if(p.length===3)return p[0]+' '+months[parseInt(p[1],10)-1]+' '+p[2];
+  return str;
+}
+function normalizeDate(str){
+  // Handles DD/MM/YYYY, D/M/YYYY, DD-MM-YYYY, D-M-YYYY
+  if(!str)return '';
+  str=str.trim();
+  var sep=str.indexOf('/')!==-1?'/':'-';
+  var p=str.split(sep);
+  if(p.length===3)return pad(parseInt(p[0],10))+'/'+pad(parseInt(p[1],10))+'/'+p[2];
+  return str;
+}
+function isToday(r){ return normalizeDate(r['Order Date'])===todayStr(); }
+function isYesterday(r){ return normalizeDate(r['Order Date'])===yesterdayStr(); }
+function parseDate(str){
+  if(!str)return null;
+  str=str.trim();
+  var sep=str.indexOf('/')!==-1?'/':'-';
+  var p=str.split(sep);
+  if(p.length===3){
+    var d=parseInt(p[0],10),m=parseInt(p[1],10)-1,y=parseInt(p[2],10);
+    return new Date(y,m,d);
+  }
+  return new Date(str);
+}
+
+// ---- Canvas charts ----
+function drawBar(canvasId,labels,values,colors){
+  var canvas=document.getElementById(canvasId);if(!canvas)return;
+  var dpr=window.devicePixelRatio||1;
+  var W=canvas.parentElement.offsetWidth||500,H=200;
+  canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';
+  var ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
+  var padL=40,padR=16,padT=16,padB=40,chartW=W-padL-padR,chartH=H-padT-padB;
   var max=Math.max.apply(null,values)||1;
-  var step=Math.ceil(max/4); max=step*4;
-  ctx.strokeStyle='#e4e2da'; ctx.lineWidth=0.5;
+  var step=Math.ceil(max/4);max=step*4;
+  ctx.strokeStyle='#e4e2da';ctx.lineWidth=0.5;
   for(var i=0;i<=4;i++){
     var y=padT+chartH-(i/4)*chartH;
     ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(padL+chartW,y);ctx.stroke();
     ctx.fillStyle='#7a786f';ctx.font='10px system-ui,sans-serif';ctx.textAlign='right';
     ctx.fillText(step*i,padL-4,y+3);
   }
-  var n=labels.length, gap=chartW/n, barW=Math.min(50,gap*0.6);
+  var n=labels.length,gap=chartW/n,barW=Math.min(50,gap*0.6);
   for(var j=0;j<n;j++){
     var bh=(values[j]/max)*chartH;
-    var bx=padL+gap*j+(gap-barW)/2;
-    var by=padT+chartH-bh;
+    var bx=padL+gap*j+(gap-barW)/2,by=padT+chartH-bh;
     ctx.fillStyle=colors[j%colors.length];
     ctx.beginPath();
     if(ctx.roundRect){ctx.roundRect(bx,by,barW,bh,4);}else{ctx.rect(bx,by,barW,bh);}
@@ -181,18 +323,14 @@ function drawBar(canvasId, labels, values, colors) {
   }
 }
 
-function drawDoughnut(canvasId, labels, values, colors) {
-  var canvas = document.getElementById(canvasId);
-  if (!canvas) return;
-  var dpr = window.devicePixelRatio || 1;
-  var W = canvas.parentElement.offsetWidth || 300;
-  var H = 200;
-  canvas.width = W * dpr; canvas.height = H * dpr;
-  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
-  var ctx = canvas.getContext('2d');
-  ctx.scale(dpr, dpr);
+function drawDoughnut(canvasId,labels,values,colors){
+  var canvas=document.getElementById(canvasId);if(!canvas)return;
+  var dpr=window.devicePixelRatio||1;
+  var W=canvas.parentElement.offsetWidth||300,H=200;
+  canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';
+  var ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
   var total=values.reduce(function(a,b){return a+b;},0)||1;
-  var cx=W/2, cy=H/2, outerR=Math.min(W,H)/2-10, innerR=outerR*0.58;
+  var cx=W/2,cy=H/2,outerR=Math.min(W,H)/2-10,innerR=outerR*0.58;
   var start=-Math.PI/2;
   for(var i=0;i<values.length;i++){
     var slice=(values[i]/total)*Math.PI*2;
@@ -206,7 +344,7 @@ function drawDoughnut(canvasId, labels, values, colors) {
   ctx.fillStyle='#7a786f';ctx.font='11px system-ui,sans-serif';ctx.fillText('total',cx,cy+12);
 }
 
-function makeLegend(id, labels, values, colors) {
+function makeLegend(id,labels,values,colors){
   var el=document.getElementById(id);if(!el)return;
   var total=values.reduce(function(a,b){return a+b;},0)||1;
   el.innerHTML=labels.map(function(l,i){
@@ -215,45 +353,102 @@ function makeLegend(id, labels, values, colors) {
   }).join('');
 }
 
-function buildCharts(rows) {
+function buildCharts(rows){
   var sMap={},pMap={};
   rows.forEach(function(r){
     var s=r['orderStatus']||'Unknown';
     var p=r['Shopify Payment']||'Unknown';
-    sMap[s]=(sMap[s]||0)+1;
-    pMap[p]=(pMap[p]||0)+1;
+    sMap[s]=(sMap[s]||0)+1;pMap[p]=(pMap[p]||0)+1;
   });
-  var sL=Object.keys(sMap),sV=Object.values(sMap);
-  var pL=Object.keys(pMap),pV=Object.values(pMap);
-  drawBar('c-status',sL,sV,PALETTE);
-  makeLegend('leg-status',sL,sV,PALETTE);
-  drawDoughnut('c-pay',pL,pV,PALETTE);
-  makeLegend('leg-pay',pL,pV,PALETTE);
+  drawBar('c-status',Object.keys(sMap),Object.values(sMap),PALETTE);
+  makeLegend('leg-status',Object.keys(sMap),Object.values(sMap),PALETTE);
+  drawDoughnut('c-pay',Object.keys(pMap),Object.values(pMap),PALETTE);
+  makeLegend('leg-pay',Object.keys(pMap),Object.values(pMap),PALETTE);
 }
 
-// Fetch using gviz JSON (not JSONP) - works on GitHub Pages hosted sites
-async function loadData() {
+// ---- Today banner & comparison ----
+function chgArrow(today, yest){
+  var diff=today-yest;
+  if(diff>0) return {cls:'up', txt:'+'+diff+' vs yesterday'};
+  if(diff<0) return {cls:'down', txt:diff+' vs yesterday'};
+  return {cls:'same', txt:'Same as yesterday'};
+}
+
+function updateTodaySection(rows){
+  var todayRows=rows.filter(isToday);
+  var yesterdayRows=rows.filter(isYesterday);
+
+  // Banner
+  var now=new Date();
+  document.getElementById('today-date').textContent=now.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+  var tTotal=todayRows.length;
+  var tPaid=todayRows.filter(function(r){var v=(r['Shopify Payment']||'').toLowerCase();return v.includes('paid')&&!v.includes('un');}).length;
+  var tPending=todayRows.filter(function(r){return r['Pending Categorie'];}).length;
+  var tHigh=todayRows.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
+
+  var yTotal=yesterdayRows.length;
+  var yPaid=yesterdayRows.filter(function(r){var v=(r['Shopify Payment']||'').toLowerCase();return v.includes('paid')&&!v.includes('un');}).length;
+  var yPending=yesterdayRows.filter(function(r){return r['Pending Categorie'];}).length;
+  var yHigh=yesterdayRows.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
+
+  document.getElementById('td-orders').textContent=tTotal;
+  document.getElementById('td-paid').textContent=tPaid;
+  document.getElementById('td-pending').textContent=tPending;
+  document.getElementById('td-high').textContent=tHigh;
+
+  function setChg(id,t,y){
+    var c=chgArrow(t,y);
+    var el=document.getElementById(id);
+    el.textContent=c.txt;el.className='today-stat-change '+c.cls;
+  }
+  setChg('td-orders-chg',tTotal,yTotal);
+  setChg('td-paid-chg',tPaid,yPaid);
+  setChg('td-pending-chg',tPending,yPending);
+  setChg('td-high-chg',tHigh,yHigh);
+
+  // Comparison cards
+  document.getElementById('lbl-today-date').textContent=fmtDate(todayStr());
+  document.getElementById('lbl-yesterday-date').textContent=fmtDate(yesterdayStr());
+  document.getElementById('c-today-total').textContent=tTotal;
+  document.getElementById('c-today-paid').textContent=tPaid;
+  document.getElementById('c-today-pending').textContent=tPending;
+  document.getElementById('c-today-high').textContent=tHigh;
+  document.getElementById('c-yest-total').textContent=yTotal;
+  document.getElementById('c-yest-paid').textContent=yPaid;
+  document.getElementById('c-yest-pending').textContent=yPending;
+  document.getElementById('c-yest-high').textContent=yHigh;
+}
+
+// ---- View toggle ----
+function setView(view){
+  currentView=view;
+  document.getElementById('btn-today').className='toggle-btn'+(view==='today'?' active':'');
+  document.getElementById('btn-all').className='toggle-btn'+(view==='all'?' active':'');
+  applyFilters();
+}
+
+// ---- Fetch ----
+async function loadData(){
   setStatus('loading','Fetching...');
   document.getElementById('err-box').style.display='none';
   var url='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:json&gid='+GID+'&t='+Date.now();
-  try {
-    var res = await fetch(url);
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    var text = await res.text();
-    // gviz returns: /*O_o*/\ngoogle.visualization.Query.setResponse({...});
-    // Strip the wrapper to get pure JSON
-    var jsonStr = text.replace(/^[^(]+\(/, '').replace(/\);?\s*$/, '');
-    var data = JSON.parse(jsonStr);
-    if(!data.table) throw new Error('No table in response');
+  try{
+    var res=await fetch(url);
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    var text=await res.text();
+    var jsonStr=text.replace(/^[\s\S]*?\(/, '').replace(/\);?\s*$/, '');
+    var data=JSON.parse(jsonStr);
+    if(!data.table)throw new Error('No table in response');
     processTable(data.table);
-  } catch(e) {
-    showError('Could not load data: '+e.message+'. Make sure the sheet is shared as Anyone with the link.');
+  }catch(e){
+    showError('Could not load: '+e.message+'. Ensure sheet is shared as Anyone with the link.');
   }
 }
 
-function processTable(table) {
-  colHeaders = (table.cols||[]).map(function(c){return c.label||c.id||'';});
-  allRows = (table.rows||[]).map(function(row){
+function processTable(table){
+  colHeaders=(table.cols||[]).map(function(c){return c.label||c.id||'';});
+  allRows=(table.rows||[]).map(function(row){
     var obj={};
     colHeaders.forEach(function(h,i){
       var cell=row.c&&row.c[i];
@@ -261,16 +456,15 @@ function processTable(table) {
     });
     return obj;
   }).filter(function(r){return colHeaders[0]&&r[colHeaders[0]];});
-  if(!allRows.length){showError('Sheet appears empty or no data rows found.');return;}
+  if(!allRows.length){showError('Sheet appears empty.');return;}
   populateFilter('f-status','orderStatus','All statuses');
   populateFilter('f-pay','Shopify Payment','All payments');
   populateFilter('f-priority','Priority','All priorities');
   populateFilter('f-assign','Assign','All agents');
   populateFilter('f-pendcat','Pending Categorie','All categories');
-  buildCharts(allRows);
-  updateMetrics(allRows);
-  renderTable(allRows);
-  setStatus('live','Updated '+new Date().toLocaleTimeString()+' - '+allRows.length+' orders');
+  updateTodaySection(allRows);
+  applyFilters();
+  setStatus('live','Updated '+new Date().toLocaleTimeString()+' - '+allRows.length+' total orders');
 }
 
 function showError(msg){
@@ -282,16 +476,6 @@ function setStatus(state,text){
   document.getElementById('sdot').className='dot '+state;
   document.getElementById('stxt').textContent=text;
 }
-function parseDate(str){
-  if(!str)return null;
-  var p=str.split('-');
-  if(p.length===3&&p[2].length===4)return new Date(p[2]+'-'+p[1].padStart(2,'0')+'-'+p[0].padStart(2,'0'));
-  return new Date(str);
-}
-function badge(t,c){return '<span class="badge '+c+'">'+(t||'&mdash;')+'</span>';}
-function statusBadge(v){if(!v)return badge('&mdash;','bn');var l=v.toLowerCase();if(l.includes('complete'))return badge(v,'bs');if(l.includes('cancel'))return badge(v,'bd');if(l.includes('pending')||l.includes('pick')||l.includes('process'))return badge(v,'bw');return badge(v,'bn');}
-function payBadge(v){if(!v)return badge('&mdash;','bn');var l=v.toLowerCase();if(l.includes('paid')&&!l.includes('un'))return badge(v,'bs');if(l.includes('unpaid')||l.includes('failed'))return badge(v,'bd');return badge(v,'bn');}
-function prioBadge(v){if(!v)return badge('&mdash;','bn');var l=v.toLowerCase();if(l.includes('high'))return badge(v,'bd');if(l.includes('med'))return badge(v,'bw');if(l.includes('low'))return badge(v,'bi');return badge(v,'bn');}
 
 function populateFilter(id,col,ph){
   var sel=document.getElementById(id),cur=sel.value,vals=[];
@@ -299,6 +483,11 @@ function populateFilter(id,col,ph){
   vals.sort();
   sel.innerHTML='<option value="">'+ph+'</option>'+vals.map(function(v){return '<option value="'+v+'"'+(v===cur?' selected':'')+'>'+v+'</option>';}).join('');
 }
+
+function badge(t,c){return '<span class="badge '+c+'">'+(t||'&mdash;')+'</span>';}
+function statusBadge(v){if(!v)return badge('&mdash;','bn');var l=v.toLowerCase();if(l.includes('complete'))return badge(v,'bs');if(l.includes('cancel'))return badge(v,'bd');if(l.includes('pending')||l.includes('pick')||l.includes('process'))return badge(v,'bw');return badge(v,'bn');}
+function payBadge(v){if(!v)return badge('&mdash;','bn');var l=v.toLowerCase();if(l.includes('paid')&&!l.includes('un'))return badge(v,'bs');if(l.includes('unpaid')||l.includes('failed'))return badge(v,'bd');return badge(v,'bn');}
+function prioBadge(v){if(!v)return badge('&mdash;','bn');var l=v.toLowerCase();if(l.includes('high'))return badge(v,'bd');if(l.includes('med'))return badge(v,'bw');if(l.includes('low'))return badge(v,'bi');return badge(v,'bn');}
 
 var COLS=[
   {key:'orderNumber',label:'Order #',render:function(v){return '<span class="onum">#'+v+'</span>';}},
@@ -313,22 +502,13 @@ var COLS=[
   {key:'Agent Remarks ',label:'Agent Remarks'}
 ];
 
-function renderTable(rows){
-  var cols=COLS.filter(function(c){return colHeaders.indexOf(c.key)!==-1;});
-  document.getElementById('thead').innerHTML=cols.map(function(c){return '<th>'+c.label+'</th>';}).join('');
-  document.getElementById('row-count').textContent='Showing '+rows.length.toLocaleString()+' order'+(rows.length!==1?'s':'');
-  if(!rows.length){document.getElementById('tbody').innerHTML='<tr><td colspan="'+cols.length+'" class="empty">No orders match your filters.</td></tr>';return;}
-  document.getElementById('tbody').innerHTML=rows.map(function(r){
-    return '<tr>'+cols.map(function(c){var v=r[c.key]||'';return '<td>'+(c.render?c.render(v):'<span title="'+v.replace(/"/g,'&quot;')+'">'+(v||'&mdash;')+'</span>')+'</td>';}).join('')+'</tr>';
-  }).join('');
-}
-
 function updateMetrics(rows){
-  document.getElementById('m-total').textContent=rows.length.toLocaleString();
-  document.getElementById('m-paid').textContent=rows.filter(function(r){var v=(r['Shopify Payment']||'').toLowerCase();return v.includes('paid')&&!v.includes('un');}).length;
-  document.getElementById('m-pending').textContent=rows.filter(function(r){return r['Pending Categorie'];}).length;
-  document.getElementById('m-high').textContent=rows.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
-  document.getElementById('m-meas').textContent=rows.filter(function(r){return(r['Pending Categorie']||'').toLowerCase().includes('measurement');}).length;
+  var srcRows=allRows;
+  document.getElementById('m-total').textContent=srcRows.length.toLocaleString();
+  document.getElementById('m-paid').textContent=srcRows.filter(function(r){var v=(r['Shopify Payment']||'').toLowerCase();return v.includes('paid')&&!v.includes('un');}).length;
+  document.getElementById('m-pending').textContent=srcRows.filter(function(r){return r['Pending Categorie'];}).length;
+  document.getElementById('m-high').textContent=srcRows.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
+  document.getElementById('m-meas').textContent=srcRows.filter(function(r){return(r['Pending Categorie']||'').toLowerCase().includes('measurement');}).length;
 }
 
 function applyFilters(){
@@ -340,7 +520,10 @@ function applyFilters(){
   var pc=document.getElementById('f-pendcat').value;
   var df=document.getElementById('f-date-from').value;
   var dt=document.getElementById('f-date-to').value;
-  var filtered=allRows.filter(function(r){
+
+  var base=currentView==='today'?allRows.filter(isToday):allRows;
+
+  var filtered=base.filter(function(r){
     if(s&&Object.values(r).join(' ').toLowerCase().indexOf(s)===-1)return false;
     if(st&&r['orderStatus']!==st)return false;
     if(pay&&r['Shopify Payment']!==pay)return false;
@@ -350,8 +533,27 @@ function applyFilters(){
     if(df||dt){var d=parseDate(r['Order Date']);if(!d)return false;if(df&&d<new Date(df))return false;if(dt&&d>new Date(dt+'T23:59:59'))return false;}
     return true;
   });
+
+  buildCharts(filtered);
   updateMetrics(filtered);
   renderTable(filtered);
+}
+
+function renderTable(rows){
+  var cols=COLS.filter(function(c){return colHeaders.indexOf(c.key)!==-1;});
+  document.getElementById('thead').innerHTML=cols.map(function(c){return '<th>'+c.label+'</th>';}).join('');
+  var label=currentView==='today'?'today':'total';
+  document.getElementById('row-count').textContent='Showing '+rows.length.toLocaleString()+' '+label+' order'+(rows.length!==1?'s':'');
+  if(!rows.length){document.getElementById('tbody').innerHTML='<tr><td colspan="'+cols.length+'" class="empty">No orders match your filters.</td></tr>';return;}
+  document.getElementById('tbody').innerHTML=rows.map(function(r){
+    var isTodayRow=isToday(r);
+    return '<tr'+(isTodayRow?' class="today-row"':'')+'>'+cols.map(function(c){
+      var v=r[c.key]||'';
+      var cell=c.render?c.render(v):'<span title="'+v.replace(/"/g,'&quot;')+'">'+(v||'&mdash;')+'</span>';
+      if(c.key==='Order Date'&&isTodayRow) cell+='<span class="today-tag">Today</span>';
+      return '<td>'+cell+'</td>';
+    }).join('')+'</tr>';
+  }).join('');
 }
 
 function clearFilters(){
@@ -360,7 +562,7 @@ function clearFilters(){
   applyFilters();
 }
 
-window.addEventListener('resize',function(){if(allRows.length)buildCharts(allRows);});
+window.addEventListener('resize',function(){if(allRows.length)applyFilters();});
 setInterval(loadData,60000);
 loadData();
 </script>
