@@ -125,6 +125,8 @@ tr:last-child td{border-bottom:none}
 tbody tr:hover td{background:var(--surface2)}
 tbody tr.today-row td{background:#eef1fd}
 tbody tr.nostock-row td{background:#fef2f2}
+tbody tr.packed-row td{background:#f0fdf4}
+.modal-tbl-wrap tbody tr.packed-row td{background:#f0fdf4}
 .empty{text-align:center;padding:40px;color:var(--muted);font-size:13px}
 
 /* ── Badges ── */
@@ -155,6 +157,8 @@ tbody tr.nostock-row td{background:#fef2f2}
 .modal-tbl-wrap tr:last-child td{border-bottom:none}
 .modal-tbl-wrap tbody tr:hover td{background:var(--surface2)}
 .modal-tbl-wrap tbody tr.nostock-row td{background:#fef2f2}
+tbody tr.packed-row td{background:#f0fdf4}
+.modal-tbl-wrap tbody tr.packed-row td{background:#f0fdf4}
 
 /* ── Loading screen ── */
 .loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:300px;gap:12px;color:var(--muted);font-size:13px}
@@ -601,7 +605,8 @@ function renderTable(rows){
   document.getElementById('tbody').innerHTML=rows.map(function(r){
     var isTodayRow=isToday(r);
     var isNoStock=(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';
-    var cls=isNoStock?'nostock-row':isTodayRow?'today-row':'';
+    var isPacked=(r['orderStatus']||'').trim().toLowerCase()==='packed';
+    var cls=isNoStock?'nostock-row':isPacked?'packed-row':isTodayRow?'today-row':'';
     return '<tr'+(cls?' class="'+cls+'"':'')+'>'+cols.map(function(c){
       var v=r[c.key]||'';
       var cell=c.render?c.render(v):'<span title="'+v.replace(/"/g,'&quot;')+'">'+(v||'&mdash;')+'</span>';
@@ -650,7 +655,9 @@ function showModal(type){
   if(!result.rows.length){document.getElementById('modal-tbody').innerHTML='<tr><td colspan="'+cols.length+'" style="text-align:center;padding:30px;color:var(--muted)">No orders found.</td></tr>';document.getElementById('modal-overlay').className='modal-overlay open';return;}
   document.getElementById('modal-tbody').innerHTML=result.rows.map(function(r){
     var isNoStock=(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';
-    return '<tr'+(isNoStock?' class="nostock-row"':'')+'>'+cols.map(function(c){var v=r[c.key]||'';return '<td>'+(c.render?c.render(v):'<span>'+(v||'&mdash;')+'</span>')+'</td>';}).join('')+'</tr>';
+    var isPacked=(r['orderStatus']||'').trim().toLowerCase()==='packed';
+    var cls=isNoStock?'nostock-row':isPacked?'packed-row':'';
+    return '<tr'+(cls?' class="'+cls+'"':'')+'>'+cols.map(function(c){var v=r[c.key]||'';return '<td>'+(c.render?c.render(v):'<span>'+(v||'&mdash;')+'</span>')+'</td>';}).join('')+'</tr>';
   }).join('');
   document.getElementById('modal-overlay').className='modal-overlay open';
 }
