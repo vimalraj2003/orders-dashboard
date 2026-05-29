@@ -119,6 +119,8 @@ tbody tr.today-row td{background:#eef1fd}
 .bn{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
 .onum{font-family:'Courier New',monospace;font-size:12px;font-weight:600;color:var(--accent)}
 .today-tag{font-size:10px;background:var(--accent);color:#fff;padding:1px 6px;border-radius:100px;margin-left:4px;font-weight:500}
+tbody tr.nostock-row td{background:#fef2f2}
+.nostock-tag{font-size:10px;background:#dc2626;color:#fff;padding:1px 6px;border-radius:100px;margin-left:4px;font-weight:500}
 </style>
 </head>
 <body>
@@ -212,6 +214,7 @@ tbody tr.today-row td{background:#eef1fd}
   <div class="mc"><div class="mc-label">Pending category</div><div class="mc-val w" id="m-pending">-</div></div>
   <div class="mc"><div class="mc-label">High priority</div><div class="mc-val d" id="m-high">-</div></div>
   <div class="mc"><div class="mc-label">Measurement pending</div><div class="mc-val a" id="m-meas">-</div></div>
+  <div class="mc"><div class="mc-label">No stock orders</div><div class="mc-val d" id="m-nostock">-</div></div>
 </div>
 
 <!-- Charts -->
@@ -385,6 +388,7 @@ function updateTodaySection(rows){
   var tTotal=todayRows.length;
   var tPaid=todayRows.filter(function(r){var v=(r['Shopify Payment']||'').toLowerCase();return v.includes('paid')&&!v.includes('un');}).length;
   var tPending=todayRows.filter(function(r){return r['Pending Categorie'];}).length;
+  var tNoStock=todayRows.filter(function(r){return(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';}).length;
   var tHigh=todayRows.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
 
   var yTotal=yesterdayRows.length;
@@ -509,6 +513,7 @@ function updateMetrics(rows){
   document.getElementById('m-pending').textContent=srcRows.filter(function(r){return r['Pending Categorie'];}).length;
   document.getElementById('m-high').textContent=srcRows.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
   document.getElementById('m-meas').textContent=srcRows.filter(function(r){return(r['Pending Categorie']||'').toLowerCase().includes('measurement');}).length;
+  document.getElementById('m-nostock').textContent=srcRows.filter(function(r){return(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';}).length;
 }
 
 function applyFilters(){
@@ -547,10 +552,13 @@ function renderTable(rows){
   if(!rows.length){document.getElementById('tbody').innerHTML='<tr><td colspan="'+cols.length+'" class="empty">No orders match your filters.</td></tr>';return;}
   document.getElementById('tbody').innerHTML=rows.map(function(r){
     var isTodayRow=isToday(r);
-    return '<tr'+(isTodayRow?' class="today-row"':'')+'>'+cols.map(function(c){
+    var isNoStock=(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';
+    var rowClass=isNoStock?'nostock-row':(isTodayRow?'today-row':'');
+    return '<tr'+(rowClass?' class="'+rowClass+'"':'')+'>'+cols.map(function(c){
       var v=r[c.key]||'';
       var cell=c.render?c.render(v):'<span title="'+v.replace(/"/g,'&quot;')+'">'+(v||'&mdash;')+'</span>';
       if(c.key==='Order Date'&&isTodayRow) cell+='<span class="today-tag">Today</span>';
+      if(c.key==='Pending Categorie'&&isNoStock) cell='<span class="badge bd">No Stock</span> <span class="nostock-tag">!</span>';
       return '<td>'+cell+'</td>';
     }).join('')+'</tr>';
   }).join('');
