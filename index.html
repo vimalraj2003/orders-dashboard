@@ -210,9 +210,11 @@ tbody tr.nostock-row td{background:#fef2f2}
 <!-- Overall Metrics -->
 <div class="metrics">
   <div class="mc"><div class="mc-label">Total orders</div><div class="mc-val a" id="m-total">-</div><div class="mc-change" id="m-total-chg"></div></div>
-  <div class="mc"><div class="mc-label">Paid orders</div><div class="mc-val s" id="m-paid">-</div><div class="mc-change" id="m-paid-chg"></div></div>
-  <div class="mc"><div class="mc-label">Pending category</div><div class="mc-val w" id="m-pending">-</div></div>
+  <div class="mc"><div class="mc-label">Paid</div><div class="mc-val s" id="m-paid">-</div></div>
+  <div class="mc"><div class="mc-label">Payment pending</div><div class="mc-val w" id="m-pay-pending">-</div></div>
+  <div class="mc"><div class="mc-label">Other payment</div><div class="mc-val" id="m-pay-other" style="color:var(--muted)">-</div></div>
   <div class="mc"><div class="mc-label">High priority</div><div class="mc-val d" id="m-high">-</div></div>
+  <div class="mc"><div class="mc-label">Pending category</div><div class="mc-val w" id="m-pending">-</div></div>
   <div class="mc"><div class="mc-label">Measurement pending</div><div class="mc-val a" id="m-meas">-</div></div>
   <div class="mc"><div class="mc-label">No stock orders</div><div class="mc-val d" id="m-nostock">-</div></div>
 </div>
@@ -408,13 +410,13 @@ function updateTodaySection(rows){
   document.getElementById('today-date').textContent=now.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
   var tTotal=todayRows.length;
-  var tPaid=todayRows.filter(function(r){var v=(r['Shopify Payment']||'').toLowerCase();return v.includes('paid')&&!v.includes('un');}).length;
+  var tPaid=todayRows.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='paid';}).length;
   var tPending=todayRows.filter(function(r){return r['Pending Categorie'];}).length;
   var tNoStock=todayRows.filter(function(r){return(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';}).length;
   var tHigh=todayRows.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
 
   var yTotal=yesterdayRows.length;
-  var yPaid=yesterdayRows.filter(function(r){var v=(r['Shopify Payment']||'').toLowerCase();return v.includes('paid')&&!v.includes('un');}).length;
+  var yPaid=yesterdayRows.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='paid';}).length;
   var yPending=yesterdayRows.filter(function(r){return r['Pending Categorie'];}).length;
   var yHigh=yesterdayRows.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
 
@@ -530,8 +532,14 @@ var COLS=[
 
 function updateMetrics(rows){
   var srcRows=allRows;
-  document.getElementById('m-total').textContent=srcRows.length.toLocaleString();
-  document.getElementById('m-paid').textContent=srcRows.filter(function(r){var v=(r['Shopify Payment']||'').toLowerCase();return v.includes('paid')&&!v.includes('un');}).length;
+  var total=srcRows.length;
+  var paid=srcRows.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='paid';}).length;
+  var payPending=srcRows.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='pending';}).length;
+  var payOther=total-paid-payPending;
+  document.getElementById('m-total').textContent=total.toLocaleString();
+  document.getElementById('m-paid').textContent=paid;
+  document.getElementById('m-pay-pending').textContent=payPending;
+  document.getElementById('m-pay-other').textContent=payOther>0?payOther:'0';
   document.getElementById('m-pending').textContent=srcRows.filter(function(r){return r['Pending Categorie'];}).length;
   document.getElementById('m-high').textContent=srcRows.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
   document.getElementById('m-meas').textContent=srcRows.filter(function(r){return(r['Pending Categorie']||'').toLowerCase().includes('measurement');}).length;
