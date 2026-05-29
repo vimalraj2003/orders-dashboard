@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Management Dashboard</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f4f3ef;--surface:#fff;--surface2:#f9f8f5;--border:#e4e2da;
+  --text:#1a1916;--muted:#7a786f;--accent:#2d5be3;
+  --success:#16a34a;--success-bg:#f0fdf4;
+  --warn:#b45309;--warn-bg:#fffbeb;
+  --danger:#dc2626;--danger-bg:#fef2f2;
+  --info:#0369a1;--info-bg:#f0f9ff;
+  --radius:10px;--radius-sm:6px;
+}
+body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh}
+.app{max-width:1400px;margin:0 auto;padding:24px 20px}
+.hdr{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px}
+.hdr-left{display:flex;align-items:center;gap:12px}
+.hdr-icon{width:42px;height:42px;background:var(--accent);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hdr-icon svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hdr-title h1{font-size:20px;font-weight:600;letter-spacing:-.3px}
+.hdr-title p{font-size:12px;color:var(--muted);margin-top:2px}
+.hdr-right{display:flex;align-items:center;gap:10px}
+.status-pill{display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:5px 14px;font-size:12px;color:var(--muted)}
+.dot{width:7px;height:7px;border-radius:50%;background:#ccc;transition:background .3s;flex-shrink:0}
+.dot.live{background:#22c55e;box-shadow:0 0 0 3px #dcfce7}
+.dot.err{background:var(--danger)}
+.dot.loading{background:#f59e0b;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.btn{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:7px 14px;font-size:13px;font-family:inherit;color:var(--text);cursor:pointer;transition:background .15s}
+.btn:hover{background:var(--surface2)}
+.btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.err-bar{display:none;background:var(--danger-bg);border:1px solid #fca5a5;border-radius:var(--radius-sm);padding:12px 16px;font-size:13px;color:var(--danger);margin-bottom:20px;line-height:1.6}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+.mc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
+.mc-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.mc-val{font-size:28px;font-weight:700;letter-spacing:-.5px;line-height:1}
+.mc-val.a{color:var(--accent)}.mc-val.s{color:var(--success)}.mc-val.w{color:var(--warn)}.mc-val.d{color:var(--danger)}
+.charts{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin-bottom:20px}
+@media(max-width:700px){.charts{grid-template-columns:1fr}}
+.cc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
+.cc h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
+.chart-area{width:100%;overflow:hidden}
+.filters-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:16px}
+.filters-box h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.filters-grid{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+.fg{display:flex;flex-direction:column;gap:4px}
+.fg label{font-size:11px;color:var(--muted);font-weight:500}
+.fg select,.fg input{font-family:inherit;font-size:13px;height:34px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface2);color:var(--text);outline:none;min-width:130px}
+.fg input{min-width:165px}
+.fg input[type=date]{min-width:140px}
+.fg select:focus,.fg input:focus{border-color:var(--accent)}
+.result-info{font-size:12px;color:var(--muted);margin-bottom:8px}
+.tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:700px}
+thead tr{background:var(--surface2)}
+th{padding:10px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:10px 14px;font-size:13px;border-bottom:1px solid var(--border);color:var(--text);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--surface2)}
+.empty{text-align:center;padding:40px;color:var(--muted);font-size:13px}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;white-space:nowrap}
+.bs{background:var(--success-bg);color:var(--success)}
+.bw{background:var(--warn-bg);color:var(--warn)}
+.bd{background:var(--danger-bg);color:var(--danger)}
+.bi{background:var(--info-bg);color:var(--info)}
+.bn{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
+.onum{font-family:'Courier New',monospace;font-size:12px;font-weight:600;color:var(--accent)}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="hdr">
+  <div class="hdr-left">
+    <div class="hdr-icon">
+      <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+    </div>
+    <div class="hdr-title">
+      <h1>Order Management Dashboard</h1>
+      <p>Live from Google Sheets &middot; auto-refreshes every 60 seconds</p>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <div class="status-pill"><span class="dot" id="sdot"></span><span id="stxt">Loading...</span></div>
+    <button class="btn" onclick="loadData()">
+      <svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
+      Refresh
+    </button>
+  </div>
+</div>
+
+<div class="err-bar" id="err-box"><span id="err-msg"></span></div>
+
+<div class="metrics">
+  <div class="mc"><div class="mc-label">Total orders</div><div class="mc-val a" id="m-total">-</div></div>
+  <div class="mc"><div class="mc-label">Paid orders</div><div class="mc-val s" id="m-paid">-</div></div>
+  <div class="mc"><div class="mc-label">Pending category</div><div class="mc-val w" id="m-pending">-</div></div>
+  <div class="mc"><div class="mc-label">High priority</div><div class="mc-val d" id="m-high">-</div></div>
+  <div class="mc"><div class="mc-label">Measurement pending</div><div class="mc-val a" id="m-meas">-</div></div>
+</div>
+
+<div class="charts">
+  <div class="cc">
+    <h3>Orders by status</h3>
+    <div class="chart-area"><canvas id="c-status" height="200"></canvas></div>
+    <div class="legend" id="leg-status"></div>
+  </div>
+  <div class="cc">
+    <h3>Payment breakdown</h3>
+    <div class="chart-area"><canvas id="c-pay" height="200"></canvas></div>
+    <div class="legend" id="leg-pay"></div>
+  </div>
+</div>
+
+<div class="filters-box">
+  <h3>Filters</h3>
+  <div class="filters-grid">
+    <div class="fg"><label>Search</label><input type="text" id="f-search" placeholder="Order #, agent, remark..." oninput="applyFilters()"></div>
+    <div class="fg"><label>Order status</label><select id="f-status" onchange="applyFilters()"><option value="">All statuses</option></select></div>
+    <div class="fg"><label>Payment</label><select id="f-pay" onchange="applyFilters()"><option value="">All payments</option></select></div>
+    <div class="fg"><label>Priority</label><select id="f-priority" onchange="applyFilters()"><option value="">All priorities</option></select></div>
+    <div class="fg"><label>Assigned to</label><select id="f-assign" onchange="applyFilters()"><option value="">All agents</option></select></div>
+    <div class="fg"><label>Pending category</label><select id="f-pendcat" onchange="applyFilters()"><option value="">All categories</option></select></div>
+    <div class="fg"><label>Date from</label><input type="date" id="f-date-from" onchange="applyFilters()"></div>
+    <div class="fg"><label>Date to</label><input type="date" id="f-date-to" onchange="applyFilters()"></div>
+    <div class="fg" style="margin-left:auto"><label>&nbsp;</label><button class="btn" onclick="clearFilters()">Clear filters</button></div>
+  </div>
+</div>
+
+<div class="result-info" id="row-count"></div>
+<div class="tbl-wrap">
+  <table>
+    <thead><tr id="thead"></tr></thead>
+    <tbody id="tbody"><tr><td colspan="10" class="empty">Loading orders...</td></tr></tbody>
+  </table>
+</div>
+</div>
+
+<script>
+var SHEET_ID = '16wFoJiT3hlHakrdow1znmjlRfRqCzpQnLfiDEfSUeXo';
+var GID = '271152649';
+var allRows = [], colHeaders = [];
+var PALETTE = ['#2d5be3','#16a34a','#d97706','#dc2626','#7c3aed','#0891b2','#db2777','#65a30d','#0f766e','#9333ea'];
+
+// ── Pure canvas bar chart (no library) ──
+function drawBar(canvasId, labels, values, colors) {
+  var canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  var dpr = window.devicePixelRatio || 1;
+  var W = canvas.parentElement.offsetWidth || 500;
+  var H = 200;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  var ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  var padL=40, padR=16, padT=16, padB=36;
+  var chartW = W - padL - padR;
+  var chartH = H - padT - padB;
+  var max = Math.max.apply(null, values) || 1;
+  var step = Math.ceil(max / 4);
+  max = step * 4;
+
+  // Grid lines
+  ctx.strokeStyle = '#e4e2da';
+  ctx.lineWidth = 0.5;
+  for (var i = 0; i <= 4; i++) {
+    var y = padT + chartH - (i / 4) * chartH;
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + chartW, y); ctx.stroke();
+    ctx.fillStyle = '#7a786f';
+    ctx.font = '10px system-ui,sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(step * i, padL - 4, y + 3);
+  }
+
+  // Bars
+  var n = labels.length;
+  var barW = Math.min(48, (chartW / n) * 0.6);
+  var gap = chartW / n;
+  for (var j = 0; j < n; j++) {
+    var bh = (values[j] / max) * chartH;
+    var bx = padL + gap * j + (gap - barW) / 2;
+    var by = padT + chartH - bh;
+    ctx.fillStyle = colors[j % colors.length];
+    ctx.beginPath();
+    ctx.roundRect ? ctx.roundRect(bx, by, barW, bh, 4) : ctx.rect(bx, by, barW, bh);
+    ctx.fill();
+    // Value label
+    if (bh > 14) {
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 10px system-ui,sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(values[j], bx + barW/2, by + 13);
+    }
+    // X label
+    ctx.fillStyle = '#7a786f';
+    ctx.font = '10px system-ui,sans-serif';
+    ctx.textAlign = 'center';
+    var lbl = labels[j].length > 12 ? labels[j].slice(0,11) + '..' : labels[j];
+    ctx.fillText(lbl, bx + barW/2, padT + chartH + 14);
+  }
+}
+
+// ── Pure canvas doughnut chart (no library) ──
+function drawDoughnut(canvasId, labels, values, colors) {
+  var canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  var dpr = window.devicePixelRatio || 1;
+  var W = canvas.parentElement.offsetWidth || 300;
+  var H = 200;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  var ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  var total = values.reduce(function(a,b){return a+b;},0) || 1;
+  var cx = W/2, cy = H/2, outerR = Math.min(W,H)/2 - 10, innerR = outerR * 0.6;
+  var start = -Math.PI/2;
+
+  for (var i = 0; i < values.length; i++) {
+    var slice = (values[i]/total) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, outerR, start, start + slice);
+    ctx.closePath();
+    ctx.fillStyle = colors[i % colors.length];
+    ctx.fill();
+    start += slice;
+  }
+  // Inner cutout
+  ctx.beginPath();
+  ctx.arc(cx, cy, innerR, 0, Math.PI*2);
+  ctx.fillStyle = '#fff';
+  ctx.fill();
+  // Center text
+  ctx.fillStyle = '#1a1916';
+  ctx.font = 'bold 18px system-ui,sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(total, cx, cy - 7);
+  ctx.fillStyle = '#7a786f';
+  ctx.font = '10px system-ui,sans-serif';
+  ctx.fillText('orders', cx, cy + 10);
+}
+
+function makeLegend(containerId, labels, values, colors) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  var total = values.reduce(function(a,b){return a+b;},0)||1;
+  el.innerHTML = labels.map(function(l,i){
+    var pct = Math.round(values[i]/total*100);
+    return '<span class="legend-item"><span class="legend-dot" style="background:'+colors[i%colors.length]+'"></span>'+l+' ('+values[i]+' &mdash; '+pct+'%)</span>';
+  }).join('');
+}
+
+function buildCharts(rows) {
+  var sMap={}, pMap={};
+  rows.forEach(function(r){
+    var s=r['orderStatus']||'Unknown';
+    var p=r['Shopify Payment']||'Unknown';
+    sMap[s]=(sMap[s]||0)+1;
+    pMap[p]=(pMap[p]||0)+1;
+  });
+  var sLabels=Object.keys(sMap), sVals=Object.values(sMap);
+  var pLabels=Object.keys(pMap), pVals=Object.values(pMap);
+  drawBar('c-status', sLabels, sVals, PALETTE);
+  makeLegend('leg-status', sLabels, sVals, PALETTE);
+  drawDoughnut('c-pay', pLabels, pVals, PALETTE);
+  makeLegend('leg-pay', pLabels, pVals, PALETTE);
+}
+
+// ── Load data via Google Visualization JSONP ──
+function loadData() {
+  setStatus('loading','Fetching...');
+  document.getElementById('err-box').style.display='none';
+  var old=document.getElementById('gviz-s');
+  if(old)old.remove();
+  var s=document.createElement('script');
+  s.id='gviz-s';
+  s.src='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:json&gid='+GID+'&callback=handleData&nocache='+Date.now();
+  s.onerror=function(){showError('Network error loading sheet. Check internet connection.');};
+  document.head.appendChild(s);
+}
+
+// Google gviz wraps response in: /*O_o*/\ngoogle.visualization.Query.setResponse({...})
+// When used as JSONP callback it calls our handleData function directly
+function handleData(raw) {
+  try {
+    var table = raw && raw.table ? raw.table : null;
+    if (!table || !table.cols || !table.cols.length) {
+      throw new Error('No data returned. Ensure sheet is shared as "Anyone with the link can view".');
+    }
+    colHeaders = table.cols.map(function(c){ return c.label || c.id || ''; });
+    allRows = (table.rows||[]).map(function(row){
+      var obj={};
+      colHeaders.forEach(function(h,i){
+        var cell=row.c&&row.c[i];
+        obj[h]=(cell&&cell.v!==null&&cell.v!==undefined)?String(cell.v):'';
+      });
+      return obj;
+    }).filter(function(r){ return colHeaders[0]&&r[colHeaders[0]]; });
+    if(!allRows.length) throw new Error('Sheet appears empty.');
+    populateFilter('f-status','orderStatus','All statuses');
+    populateFilter('f-pay','Shopify Payment','All payments');
+    populateFilter('f-priority','Priority','All priorities');
+    populateFilter('f-assign','Assign','All agents');
+    populateFilter('f-pendcat','Pending Categorie','All categories');
+    buildCharts(allRows);
+    updateMetrics(allRows);
+    renderTable(allRows);
+    setStatus('live','Updated '+new Date().toLocaleTimeString()+' - '+allRows.length+' orders');
+  } catch(e){ showError(e.message); }
+}
+
+function showError(msg){
+  document.getElementById('err-box').style.display='block';
+  document.getElementById('err-msg').textContent='Error: '+msg;
+  setStatus('err','Failed to load');
+}
+function setStatus(state,text){
+  document.getElementById('sdot').className='dot '+state;
+  document.getElementById('stxt').textContent=text;
+}
+function parseDate(str){
+  if(!str)return null;
+  var p=str.split('-');
+  if(p.length===3&&p[2].length===4) return new Date(p[2]+'-'+p[1].padStart(2,'0')+'-'+p[0].padStart(2,'0'));
+  return new Date(str);
+}
+function badge(t,c){return '<span class="badge '+c+'">'+(t||'&mdash;')+'</span>';}
+function statusBadge(v){if(!v)return badge('&mdash;','bn');var l=v.toLowerCase();if(l.includes('complete'))return badge(v,'bs');if(l.includes('cancel'))return badge(v,'bd');if(l.includes('pending')||l.includes('pick')||l.includes('process'))return badge(v,'bw');return badge(v,'bn');}
+function payBadge(v){if(!v)return badge('&mdash;','bn');var l=v.toLowerCase();if(l.includes('paid')&&!l.includes('un'))return badge(v,'bs');if(l.includes('unpaid')||l.includes('failed'))return badge(v,'bd');return badge(v,'bn');}
+function prioBadge(v){if(!v)return badge('&mdash;','bn');var l=v.toLowerCase();if(l.includes('high'))return badge(v,'bd');if(l.includes('med'))return badge(v,'bw');if(l.includes('low'))return badge(v,'bi');return badge(v,'bn');}
+
+function populateFilter(id,col,ph){
+  var sel=document.getElementById(id),cur=sel.value,vals=[];
+  allRows.forEach(function(r){if(r[col]&&vals.indexOf(r[col])===-1)vals.push(r[col]);});
+  vals.sort();
+  sel.innerHTML='<option value="">'+ph+'</option>'+vals.map(function(v){return '<option value="'+v+'"'+(v===cur?' selected':'')+'>'+v+'</option>';}).join('');
+}
+
+var COLS=[
+  {key:'orderNumber',label:'Order #',render:function(v){return '<span class="onum">#'+v+'</span>';}},
+  {key:'Order Date',label:'Date'},
+  {key:'orderStatus',label:'Status',render:statusBadge},
+  {key:'Shopify Payment',label:'Payment',render:payBadge},
+  {key:'Priority',label:'Priority',render:prioBadge},
+  {key:'Order Tag',label:'Tag'},
+  {key:'Pending Categorie',label:'Pending Category'},
+  {key:'Assign',label:'Assigned To'},
+  {key:'User Remarks',label:'User Remarks'},
+  {key:'Agent Remarks ',label:'Agent Remarks'}
+];
+
+function renderTable(rows){
+  var cols=COLS.filter(function(c){return colHeaders.indexOf(c.key)!==-1;});
+  document.getElementById('thead').innerHTML=cols.map(function(c){return '<th>'+c.label+'</th>';}).join('');
+  document.getElementById('row-count').textContent='Showing '+rows.length.toLocaleString()+' order'+(rows.length!==1?'s':'');
+  if(!rows.length){document.getElementById('tbody').innerHTML='<tr><td colspan="'+cols.length+'" class="empty">No orders match your filters.</td></tr>';return;}
+  document.getElementById('tbody').innerHTML=rows.map(function(r){
+    return '<tr>'+cols.map(function(c){var v=r[c.key]||'';return '<td>'+(c.render?c.render(v):'<span title="'+v.replace(/"/g,'&quot;')+'">'+(v||'&mdash;')+'</span>')+'</td>';}).join('')+'</tr>';
+  }).join('');
+}
+
+function updateMetrics(rows){
+  document.getElementById('m-total').textContent=rows.length.toLocaleString();
+  document.getElementById('m-paid').textContent=rows.filter(function(r){var v=(r['Shopify Payment']||'').toLowerCase();return v.includes('paid')&&!v.includes('un');}).length;
+  document.getElementById('m-pending').textContent=rows.filter(function(r){return r['Pending Categorie'];}).length;
+  document.getElementById('m-high').textContent=rows.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
+  document.getElementById('m-meas').textContent=rows.filter(function(r){return(r['Pending Categorie']||'').toLowerCase().includes('measurement');}).length;
+}
+
+function applyFilters(){
+  var s=document.getElementById('f-search').value.toLowerCase();
+  var st=document.getElementById('f-status').value;
+  var pay=document.getElementById('f-pay').value;
+  var pri=document.getElementById('f-priority').value;
+  var asg=document.getElementById('f-assign').value;
+  var pc=document.getElementById('f-pendcat').value;
+  var df=document.getElementById('f-date-from').value;
+  var dt=document.getElementById('f-date-to').value;
+  var filtered=allRows.filter(function(r){
+    if(s&&Object.values(r).join(' ').toLowerCase().indexOf(s)===-1)return false;
+    if(st&&r['orderStatus']!==st)return false;
+    if(pay&&r['Shopify Payment']!==pay)return false;
+    if(pri&&r['Priority']!==pri)return false;
+    if(asg&&r['Assign']!==asg)return false;
+    if(pc&&r['Pending Categorie']!==pc)return false;
+    if(df||dt){var d=parseDate(r['Order Date']);if(!d)return false;if(df&&d<new Date(df))return false;if(dt&&d>new Date(dt+'T23:59:59'))return false;}
+    return true;
+  });
+  updateMetrics(filtered);
+  renderTable(filtered);
+}
+
+function clearFilters(){
+  ['f-search','f-date-from','f-date-to'].forEach(function(id){document.getElementById(id).value='';});
+  ['f-status','f-pay','f-priority','f-assign','f-pendcat'].forEach(function(id){document.getElementById(id).value='';});
+  applyFilters();
+}
+
+window.addEventListener('resize',function(){if(allRows.length)buildCharts(allRows);});
+setInterval(loadData,60000);
+loadData();
+</script>
+</body>
+</html>
