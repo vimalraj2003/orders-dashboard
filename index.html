@@ -13,16 +13,33 @@
   --warn:#b45309;--warn-bg:#fffbeb;
   --danger:#dc2626;--danger-bg:#fef2f2;
   --info:#0369a1;--info-bg:#f0f9ff;
-  --radius:10px;--radius-sm:6px;
+  --nav-w:220px;--radius:10px;--radius-sm:6px;
 }
-body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh}
-.app{max-width:1400px;margin:0 auto;padding:24px 20px}
+body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;display:flex}
 
-/* Header */
+/* ── Sidebar ── */
+.sidebar{width:var(--nav-w);min-height:100vh;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:fixed;left:0;top:0;bottom:0;z-index:100}
+.sidebar-logo{padding:18px 16px 14px;border-bottom:1px solid var(--border)}
+.sidebar-logo h2{font-size:15px;font-weight:700;color:var(--text);letter-spacing:-.3px}
+.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:2px}
+.sidebar-section{padding:12px 10px 6px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.7px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--radius-sm);margin:2px 8px;cursor:pointer;transition:background .15s;font-size:13px;color:var(--muted);font-weight:500;border:none;background:none;width:calc(100% - 16px);text-align:left}
+.nav-item:hover{background:var(--surface2);color:var(--text)}
+.nav-item.active{background:var(--accent);color:#fff}
+.nav-item.active .nav-dot{background:rgba(255,255,255,0.6)}
+.nav-item.soon{opacity:.5;cursor:not-allowed}
+.nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.nav-badge{margin-left:auto;font-size:10px;padding:1px 6px;border-radius:100px;background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
+.nav-item.active .nav-badge{background:rgba(255,255,255,0.2);border-color:transparent;color:#fff}
+.sidebar-footer{margin-top:auto;padding:12px 16px;border-top:1px solid var(--border);font-size:11px;color:var(--muted)}
+
+/* ── Main content ── */
+.main{margin-left:var(--nav-w);flex:1;min-width:0;padding:24px 24px}
+
+/* ── Header ── */
 .hdr{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px}
 .hdr-left{display:flex;align-items:center;gap:12px}
-.hdr-icon{width:42px;height:42px;background:var(--accent);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.hdr-icon svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.brand-icon{width:42px;height:42px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;font-weight:700;color:#fff}
 .hdr-title h1{font-size:20px;font-weight:600;letter-spacing:-.3px}
 .hdr-title p{font-size:12px;color:var(--muted);margin-top:2px}
 .hdr-right{display:flex;align-items:center;gap:10px}
@@ -34,13 +51,11 @@ body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
 .btn{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:7px 14px;font-size:13px;font-family:inherit;color:var(--text);cursor:pointer;transition:background .15s}
 .btn:hover{background:var(--surface2)}
-.btn-accent{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn-accent:hover{background:#2450c8;border-color:#2450c8}
 .btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .err-bar{display:none;background:var(--danger-bg);border:1px solid #fca5a5;border-radius:var(--radius-sm);padding:12px 16px;font-size:13px;color:var(--danger);margin-bottom:20px}
 
-/* TODAY BANNER */
-.today-banner{background:var(--accent);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+/* ── Today banner ── */
+.today-banner{border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .today-date{color:rgba(255,255,255,0.8);font-size:12px;margin-bottom:2px}
 .today-title{color:#fff;font-size:16px;font-weight:600}
 .today-stats{display:flex;gap:24px;flex-wrap:wrap}
@@ -52,34 +67,33 @@ body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--
 .today-stat-change.down{color:#fca5a5}
 .today-stat-change.same{color:rgba(255,255,255,0.6)}
 
-/* VIEW TOGGLE */
+/* ── View toggle ── */
 .view-toggle{display:flex;gap:8px;margin-bottom:16px;align-items:center;flex-wrap:wrap}
 .view-toggle span{font-size:12px;color:var(--muted);margin-right:4px}
 .toggle-btn{padding:5px 14px;font-size:12px;font-family:inherit;border-radius:100px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;transition:all .15s}
-.toggle-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.toggle-btn.active{color:#fff}
 
-/* Metrics */
-.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
-.mc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
-.mc-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
-.mc-val{font-size:28px;font-weight:700;letter-spacing:-.5px;line-height:1}
-.mc-val.a{color:var(--accent)}.mc-val.s{color:var(--success)}.mc-val.w{color:var(--warn)}.mc-val.d{color:var(--danger)}
-.mc-change{font-size:11px;margin-top:5px}
-.mc-change.up{color:var(--success)}.mc-change.down{color:var(--danger)}.mc-change.same{color:var(--muted)}
-
-/* Comparison row */
+/* ── Compare cards ── */
 .compare-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
 @media(max-width:600px){.compare-row{grid-template-columns:1fr}}
 .compare-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
 .compare-card h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;display:flex;align-items:center;gap:6px}
-.day-badge{font-size:10px;padding:2px 7px;border-radius:100px;background:var(--accent);color:#fff;font-weight:500}
+.day-badge{font-size:10px;padding:2px 7px;border-radius:100px;color:#fff;font-weight:500}
 .day-badge.yesterday{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
 .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .cstat{background:var(--surface2);border-radius:var(--radius-sm);padding:10px 12px}
 .cstat-val{font-size:20px;font-weight:700;color:var(--text)}
 .cstat-label{font-size:11px;color:var(--muted);margin-top:2px}
 
-/* Charts */
+/* ── Metrics ── */
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:20px}
+.mc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;cursor:pointer;transition:box-shadow .15s,border-color .15s}
+.mc:hover{box-shadow:0 0 0 2px var(--accent);border-color:var(--accent)}
+.mc-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.mc-val{font-size:28px;font-weight:700;letter-spacing:-.5px;line-height:1}
+.mc-val.a{color:var(--accent)}.mc-val.s{color:var(--success)}.mc-val.w{color:var(--warn)}.mc-val.d{color:var(--danger)}
+
+/* ── Charts ── */
 .charts{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin-bottom:20px}
 @media(max-width:700px){.charts{grid-template-columns:1fr}}
 .cc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
@@ -89,7 +103,7 @@ body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--
 .legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
 .legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
 
-/* Filters */
+/* ── Filters ── */
 .filters-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:16px}
 .filters-box h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
 .filters-grid{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
@@ -100,8 +114,8 @@ body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--
 .fg input[type=date]{min-width:140px}
 .fg select:focus,.fg input:focus{border-color:var(--accent)}
 
-/* Table */
-.result-info{font-size:12px;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+/* ── Table ── */
+.result-info{font-size:12px;color:var(--muted);margin-bottom:8px}
 .tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;overflow-x:auto}
 table{width:100%;border-collapse:collapse;min-width:700px}
 thead tr{background:var(--surface2)}
@@ -110,7 +124,10 @@ td{padding:10px 14px;font-size:13px;border-bottom:1px solid var(--border);color:
 tr:last-child td{border-bottom:none}
 tbody tr:hover td{background:var(--surface2)}
 tbody tr.today-row td{background:#eef1fd}
+tbody tr.nostock-row td{background:#fef2f2}
 .empty{text-align:center;padding:40px;color:var(--muted);font-size:13px}
+
+/* ── Badges ── */
 .badge{display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;white-space:nowrap}
 .bs{background:var(--success-bg);color:var(--success)}
 .bw{background:var(--warn-bg);color:var(--warn)}
@@ -119,19 +136,18 @@ tbody tr.today-row td{background:#eef1fd}
 .bn{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
 .onum{font-family:'Courier New',monospace;font-size:12px;font-weight:600;color:var(--accent)}
 .today-tag{font-size:10px;background:var(--accent);color:#fff;padding:1px 6px;border-radius:100px;margin-left:4px;font-weight:500}
-tbody tr.nostock-row td{background:#fef2f2}
 .nostock-tag{font-size:10px;background:#dc2626;color:#fff;padding:1px 6px;border-radius:100px;margin-left:4px;font-weight:500}
 
-/* Popup modal */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:1000;align-items:center;justify-content:center;padding:20px}
+/* ── Modal ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;align-items:center;justify-content:center;padding:20px}
 .modal-overlay.open{display:flex}
-.modal{background:var(--surface);border-radius:var(--radius);width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden}
+.modal{background:var(--surface);border-radius:var(--radius);width:100%;max-width:950px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden}
 .modal-hdr{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
 .modal-hdr h2{font-size:15px;font-weight:600;color:var(--text)}
 .modal-hdr p{font-size:12px;color:var(--muted);margin-top:2px}
-.modal-close{width:30px;height:30px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface2);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--muted);flex-shrink:0}
+.modal-close{width:30px;height:30px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface2);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--muted)}
 .modal-close:hover{background:var(--border)}
-.modal-body{overflow-y:auto;padding:0}
+.modal-body{overflow-y:auto}
 .modal-tbl-wrap{overflow-x:auto}
 .modal-tbl-wrap table{width:100%;border-collapse:collapse;min-width:600px;font-size:13px}
 .modal-tbl-wrap th{padding:10px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap;position:sticky;top:0}
@@ -139,177 +155,190 @@ tbody tr.nostock-row td{background:#fef2f2}
 .modal-tbl-wrap tr:last-child td{border-bottom:none}
 .modal-tbl-wrap tbody tr:hover td{background:var(--surface2)}
 .modal-tbl-wrap tbody tr.nostock-row td{background:#fef2f2}
-.mc{cursor:pointer;transition:box-shadow .15s}
-.mc:hover{box-shadow:0 0 0 2px var(--accent)}
-.mc-footer{font-size:11px;color:var(--accent);margin-top:6px}
+
+/* ── Loading screen ── */
+.loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:300px;gap:12px;color:var(--muted);font-size:13px}
+.spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
-<div class="app">
 
-<!-- Header -->
-<div class="hdr">
-  <div class="hdr-left">
-    <div class="hdr-icon">
-      <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
-    </div>
-    <div class="hdr-title">
-      <h1>Order Management Dashboard</h1>
-      <p>Live from Google Sheets &middot; auto-refreshes every 60 seconds</p>
-    </div>
+<!-- ── Sidebar ── -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <h2>Order Dashboard</h2>
+    <p>Multi-brand manager</p>
   </div>
-  <div class="hdr-right">
-    <div class="status-pill"><span class="dot" id="sdot"></span><span id="stxt">Loading...</span></div>
-    <button class="btn" onclick="loadData()">
-      <svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
-      Refresh
-    </button>
+  <div class="sidebar-section">Brands</div>
+
+  <button class="nav-item" id="nav-shrus" onclick="switchBrand('shrus')">
+    <span class="nav-dot" style="background:#2d5be3"></span>
+    Shrus
+    <span class="nav-badge" id="badge-shrus">-</span>
+  </button>
+  <button class="nav-item" id="nav-ikeym" onclick="switchBrand('ikeym')">
+    <span class="nav-dot" style="background:#16a34a"></span>
+    Ikeym
+    <span class="nav-badge" id="badge-ikeym">-</span>
+  </button>
+  <button class="nav-item" id="nav-maya" onclick="switchBrand('maya')">
+    <span class="nav-dot" style="background:#d97706"></span>
+    Maya
+    <span class="nav-badge" id="badge-maya">-</span>
+  </button>
+  <button class="nav-item soon" id="nav-majorrangas">
+    <span class="nav-dot" style="background:#ccc"></span>
+    Majorrangas
+    <span class="nav-badge">Soon</span>
+  </button>
+
+  <div class="sidebar-footer">
+    Auto-refresh every 60s
   </div>
-</div>
+</nav>
 
-<div class="err-bar" id="err-box"><span id="err-msg"></span></div>
+<!-- ── Main ── -->
+<div class="main">
 
-<!-- TODAY BANNER -->
-<div class="today-banner" id="today-banner">
-  <div>
-    <div class="today-date" id="today-date"></div>
-    <div class="today-title">Today's status</div>
-  </div>
-  <div class="today-stats">
-    <div class="today-stat">
-      <div class="today-stat-val" id="td-orders">-</div>
-      <div class="today-stat-label">Orders today</div>
-      <div class="today-stat-change" id="td-orders-chg"></div>
-    </div>
-    <div class="today-stat">
-      <div class="today-stat-val" id="td-paid">-</div>
-      <div class="today-stat-label">Paid today</div>
-      <div class="today-stat-change" id="td-paid-chg"></div>
-    </div>
-    <div class="today-stat">
-      <div class="today-stat-val" id="td-pending">-</div>
-      <div class="today-stat-label">Pending category</div>
-      <div class="today-stat-change" id="td-pending-chg"></div>
-    </div>
-    <div class="today-stat">
-      <div class="today-stat-val" id="td-high">-</div>
-      <div class="today-stat-label">High priority</div>
-      <div class="today-stat-change" id="td-high-chg"></div>
-    </div>
-  </div>
-</div>
-
-<!-- View Toggle -->
-<div class="view-toggle">
-  <span>Showing:</span>
-  <button class="toggle-btn" id="btn-today" onclick="setView('today')">Today only</button>
-  <button class="toggle-btn active" id="btn-all" onclick="setView('all')">All orders</button>
-</div>
-
-<!-- Today vs Yesterday Comparison -->
-<div class="compare-row" id="compare-section">
-  <div class="compare-card">
-    <h3><span class="day-badge">Today</span> <span id="lbl-today-date"></span></h3>
-    <div class="compare-grid">
-      <div class="cstat"><div class="cstat-val" id="c-today-total">-</div><div class="cstat-label">Total orders</div></div>
-      <div class="cstat"><div class="cstat-val" id="c-today-paid">-</div><div class="cstat-label">Paid</div></div>
-      <div class="cstat"><div class="cstat-val" id="c-today-pending">-</div><div class="cstat-label">Pending</div></div>
-      <div class="cstat"><div class="cstat-val" id="c-today-high">-</div><div class="cstat-label">High priority</div></div>
-    </div>
-  </div>
-  <div class="compare-card">
-    <h3><span class="day-badge yesterday">Yesterday</span> <span id="lbl-yesterday-date"></span></h3>
-    <div class="compare-grid">
-      <div class="cstat"><div class="cstat-val" id="c-yest-total">-</div><div class="cstat-label">Total orders</div></div>
-      <div class="cstat"><div class="cstat-val" id="c-yest-paid">-</div><div class="cstat-label">Paid</div></div>
-      <div class="cstat"><div class="cstat-val" id="c-yest-pending">-</div><div class="cstat-label">Pending</div></div>
-      <div class="cstat"><div class="cstat-val" id="c-yest-high">-</div><div class="cstat-label">High priority</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- Overall Metrics -->
-<div class="metrics">
-  <div class="mc" onclick="showModal('total')"><div class="mc-label">Total orders</div><div class="mc-val a" id="m-total">-</div><div class="mc-change" id="m-total-chg"></div><div class="mc-footer">View all &rarr;</div></div>
-  <div class="mc" onclick="showModal('paid')"><div class="mc-label">Paid</div><div class="mc-val s" id="m-paid">-</div><div class="mc-footer">View orders &rarr;</div></div>
-  <div class="mc" onclick="showModal('pay-pending')"><div class="mc-label">Payment pending</div><div class="mc-val w" id="m-pay-pending">-</div><div class="mc-footer">View orders &rarr;</div></div>
-  <div class="mc" onclick="showModal('pay-other')"><div class="mc-label">Other payment</div><div class="mc-val" id="m-pay-other" style="color:var(--muted)">-</div><div class="mc-footer">View orders &rarr;</div></div>
-  <div class="mc" onclick="showModal('high')"><div class="mc-label">High priority</div><div class="mc-val d" id="m-high">-</div><div class="mc-footer">View orders &rarr;</div></div>
-  <div class="mc" onclick="showModal('pending-cat')"><div class="mc-label">Pending category</div><div class="mc-val w" id="m-pending">-</div><div class="mc-footer">View orders &rarr;</div></div>
-  <div class="mc" onclick="showModal('measurement')"><div class="mc-label">Measurement pending</div><div class="mc-val a" id="m-meas">-</div><div class="mc-footer">View orders &rarr;</div></div>
-  <div class="mc" onclick="showModal('nostock')"><div class="mc-label">No stock orders</div><div class="mc-val d" id="m-nostock">-</div><div class="mc-footer">View orders &rarr;</div></div>
-</div>
-
-<!-- Charts -->
-<div class="charts">
-  <div class="cc"><h3>Orders by status</h3><div class="chart-area"><canvas id="c-status" height="200"></canvas></div><div class="legend" id="leg-status"></div></div>
-  <div class="cc"><h3>Payment breakdown</h3><div class="chart-area"><canvas id="c-pay" height="200"></canvas></div><div class="legend" id="leg-pay"></div></div>
-</div>
-
-<!-- Filters -->
-<div class="filters-box">
-  <h3>Filters</h3>
-  <div class="filters-grid">
-    <div class="fg"><label>Search</label><input type="text" id="f-search" placeholder="Order #, agent, remark..." oninput="applyFilters()"></div>
-    <div class="fg"><label>Order status</label><select id="f-status" onchange="applyFilters()"><option value="">All statuses</option></select></div>
-    <div class="fg"><label>Payment</label><select id="f-pay" onchange="applyFilters()"><option value="">All payments</option></select></div>
-    <div class="fg"><label>Priority</label><select id="f-priority" onchange="applyFilters()"><option value="">All priorities</option></select></div>
-    <div class="fg"><label>Assigned to</label><select id="f-assign" onchange="applyFilters()"><option value="">All agents</option></select></div>
-    <div class="fg"><label>Pending category</label><select id="f-pendcat" onchange="applyFilters()"><option value="">All categories</option></select></div>
-    <div class="fg"><label>Date from</label><input type="date" id="f-date-from" onchange="applyFilters()"></div>
-    <div class="fg"><label>Date to</label><input type="date" id="f-date-to" onchange="applyFilters()"></div>
-    <div class="fg" style="margin-left:auto"><label>&nbsp;</label><button class="btn" onclick="clearFilters()">Clear filters</button></div>
-  </div>
-</div>
-
-<!-- Popup Modal -->
-<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
-  <div class="modal" id="modal">
-    <div class="modal-hdr">
-      <div>
-        <h2 id="modal-title">Orders</h2>
-        <p id="modal-subtitle"></p>
+  <div class="hdr">
+    <div class="hdr-left">
+      <div class="brand-icon" id="brand-icon">S</div>
+      <div class="hdr-title">
+        <h1 id="brand-name">Shrus</h1>
+        <p>Live from Google Sheets &middot; auto-refreshes every 60 seconds</p>
       </div>
+    </div>
+    <div class="hdr-right">
+      <div class="status-pill"><span class="dot" id="sdot"></span><span id="stxt">Loading...</span></div>
+      <button class="btn" onclick="loadData()">
+        <svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
+        Refresh
+      </button>
+    </div>
+  </div>
+
+  <div class="err-bar" id="err-box"><span id="err-msg"></span></div>
+
+  <!-- Today Banner -->
+  <div class="today-banner" id="today-banner">
+    <div>
+      <div class="today-date" id="today-date"></div>
+      <div class="today-title">Today's status</div>
+    </div>
+    <div class="today-stats">
+      <div class="today-stat"><div class="today-stat-val" id="td-orders">-</div><div class="today-stat-label">Orders today</div><div class="today-stat-change" id="td-orders-chg"></div></div>
+      <div class="today-stat"><div class="today-stat-val" id="td-paid">-</div><div class="today-stat-label">Paid today</div><div class="today-stat-change" id="td-paid-chg"></div></div>
+      <div class="today-stat"><div class="today-stat-val" id="td-pending">-</div><div class="today-stat-label">Pay pending</div><div class="today-stat-change" id="td-pending-chg"></div></div>
+      <div class="today-stat"><div class="today-stat-val" id="td-high">-</div><div class="today-stat-label">High priority</div><div class="today-stat-change" id="td-high-chg"></div></div>
+    </div>
+  </div>
+
+  <!-- View Toggle -->
+  <div class="view-toggle">
+    <span>Showing:</span>
+    <button class="toggle-btn" id="btn-today" onclick="setView('today')">Today only</button>
+    <button class="toggle-btn active" id="btn-all" onclick="setView('all')">All orders</button>
+  </div>
+
+  <!-- Today vs Yesterday -->
+  <div class="compare-row">
+    <div class="compare-card">
+      <h3><span class="day-badge" id="today-badge">Today</span> <span id="lbl-today-date"></span></h3>
+      <div class="compare-grid">
+        <div class="cstat"><div class="cstat-val" id="c-today-total">-</div><div class="cstat-label">Total orders</div></div>
+        <div class="cstat"><div class="cstat-val" id="c-today-paid">-</div><div class="cstat-label">Paid</div></div>
+        <div class="cstat"><div class="cstat-val" id="c-today-pending">-</div><div class="cstat-label">Pay pending</div></div>
+        <div class="cstat"><div class="cstat-val" id="c-today-high">-</div><div class="cstat-label">High priority</div></div>
+      </div>
+    </div>
+    <div class="compare-card">
+      <h3><span class="day-badge yesterday">Yesterday</span> <span id="lbl-yesterday-date"></span></h3>
+      <div class="compare-grid">
+        <div class="cstat"><div class="cstat-val" id="c-yest-total">-</div><div class="cstat-label">Total orders</div></div>
+        <div class="cstat"><div class="cstat-val" id="c-yest-paid">-</div><div class="cstat-label">Paid</div></div>
+        <div class="cstat"><div class="cstat-val" id="c-yest-pending">-</div><div class="cstat-label">Pay pending</div></div>
+        <div class="cstat"><div class="cstat-val" id="c-yest-high">-</div><div class="cstat-label">High priority</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Metrics -->
+  <div class="metrics">
+    <div class="mc" onclick="showModal('total')"><div class="mc-label">Total orders</div><div class="mc-val a" id="m-total">-</div></div>
+    <div class="mc" onclick="showModal('paid')"><div class="mc-label">Paid</div><div class="mc-val s" id="m-paid">-</div></div>
+    <div class="mc" onclick="showModal('pay-pending')"><div class="mc-label">Payment pending</div><div class="mc-val w" id="m-pay-pending">-</div></div>
+    <div class="mc" onclick="showModal('pay-other')"><div class="mc-label">Other payment</div><div class="mc-val" id="m-pay-other" style="color:var(--muted)">-</div></div>
+    <div class="mc" onclick="showModal('high')"><div class="mc-label">High priority</div><div class="mc-val d" id="m-high">-</div></div>
+    <div class="mc" onclick="showModal('pending-cat')"><div class="mc-label">Pending category</div><div class="mc-val w" id="m-pending">-</div></div>
+    <div class="mc" onclick="showModal('measurement')"><div class="mc-label">Measurement pending</div><div class="mc-val a" id="m-meas">-</div></div>
+    <div class="mc" onclick="showModal('nostock')"><div class="mc-label">No stock orders</div><div class="mc-val d" id="m-nostock">-</div></div>
+  </div>
+
+  <!-- Charts -->
+  <div class="charts">
+    <div class="cc"><h3>Orders by status</h3><div class="chart-area"><canvas id="c-status" height="200"></canvas></div><div class="legend" id="leg-status"></div></div>
+    <div class="cc"><h3>Payment breakdown</h3><div class="chart-area"><canvas id="c-pay" height="200"></canvas></div><div class="legend" id="leg-pay"></div></div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-box">
+    <h3>Filters</h3>
+    <div class="filters-grid">
+      <div class="fg"><label>Search</label><input type="text" id="f-search" placeholder="Order #, agent, remark..." oninput="applyFilters()"></div>
+      <div class="fg"><label>Order status</label><select id="f-status" onchange="applyFilters()"><option value="">All statuses</option></select></div>
+      <div class="fg"><label>Payment</label><select id="f-pay" onchange="applyFilters()"><option value="">All payments</option></select></div>
+      <div class="fg"><label>Priority</label><select id="f-priority" onchange="applyFilters()"><option value="">All priorities</option></select></div>
+      <div class="fg"><label>Assigned to</label><select id="f-assign" onchange="applyFilters()"><option value="">All agents</option></select></div>
+      <div class="fg"><label>Pending category</label><select id="f-pendcat" onchange="applyFilters()"><option value="">All categories</option></select></div>
+      <div class="fg"><label>Date from</label><input type="date" id="f-date-from" onchange="applyFilters()"></div>
+      <div class="fg"><label>Date to</label><input type="date" id="f-date-to" onchange="applyFilters()"></div>
+      <div class="fg" style="margin-left:auto"><label>&nbsp;</label><button class="btn" onclick="clearFilters()">Clear filters</button></div>
+    </div>
+  </div>
+
+  <div class="result-info" id="row-count"></div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr id="thead"></tr></thead>
+      <tbody id="tbody"><tr><td colspan="10" class="empty"><div class="loading-screen"><div class="spinner"></div>Loading orders...</div></td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div><h2 id="modal-title">Orders</h2><p id="modal-subtitle"></p></div>
       <button class="modal-close" onclick="closeModal()">&#x2715;</button>
     </div>
     <div class="modal-body">
       <div class="modal-tbl-wrap">
-        <table>
-          <thead><tr id="modal-thead"></tr></thead>
-          <tbody id="modal-tbody"></tbody>
-        </table>
+        <table><thead><tr id="modal-thead"></tr></thead><tbody id="modal-tbody"></tbody></table>
       </div>
     </div>
   </div>
 </div>
 
-<div class="result-info" id="row-count"></div>
-<div class="tbl-wrap">
-  <table>
-    <thead><tr id="thead"></tr></thead>
-    <tbody id="tbody"><tr><td colspan="10" class="empty">Loading orders...</td></tr></tbody>
-  </table>
-</div>
-</div>
-
 <script>
-var SHEET_ID = '16wFoJiT3hlHakrdow1znmjlRfRqCzpQnLfiDEfSUeXo';
-var GID = '271152649';
+// ── Brand config ──
+var BRANDS = {
+  shrus:      { name:'Shrus',      icon:'S', color:'#2d5be3', sheetId:'16wFoJiT3hlHakrdow1znmjlRfRqCzpQnLfiDEfSUeXo', gid:'271152649' },
+  ikeym:      { name:'Ikeym',      icon:'I', color:'#16a34a', sheetId:'1nO8vJB8XF_IhPyRhJRdAampvV-zqU7ASWzTU4CU4SKQ', gid:'0' },
+  maya:       { name:'Maya',       icon:'M', color:'#d97706', sheetId:'1nI6hwvEcctT25bDycuIsDR9WMwPnP780VQQlPAyw3Us', gid:'0' }
+};
+
+var currentBrand = 'shrus';
 var allRows = [], colHeaders = [];
-var PALETTE = ['#2d5be3','#16a34a','#d97706','#dc2626','#7c3aed','#0891b2','#db2777','#65a30d','#0f766e','#9333ea'];
 var currentView = 'all';
+var brandCache = {};
+var PALETTE = ['#2d5be3','#16a34a','#d97706','#dc2626','#7c3aed','#0891b2','#db2777','#65a30d','#0f766e','#9333ea'];
 
-// ---- Date helpers ----
+// ── Date helpers ──
 function pad(n){return n<10?'0'+n:''+n;}
-
-function todayStr() {
-  var d = new Date();
-  return pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear();
-}
-function yesterdayStr() {
-  var d = new Date(); d.setDate(d.getDate()-1);
-  return pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear();
-}
+function todayStr(){var d=new Date();return pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear();}
+function yesterdayStr(){var d=new Date();d.setDate(d.getDate()-1);return pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear();}
 function fmtDate(str){
   var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   var sep=str.indexOf('-')!==-1?'-':'/';
@@ -317,202 +346,69 @@ function fmtDate(str){
   if(p.length===3)return p[0]+' '+months[parseInt(p[1],10)-1]+' '+p[2];
   return str;
 }
-
-// Converts any date string to a Date object
-// Handles: DD-MM-YYYY, DD/MM/YYYY, D-M-YYYY, D/M/YYYY, Date(YYYY,M,D) from gviz
 function parseDate(str){
   if(!str)return null;
   str=str.trim().split(' ')[0];
-
-  // gviz sometimes returns Date(2026,4,28) — month is 0-indexed
-  var gvizMatch=str.match(/^Date\((\d+),(\d+),(\d+)\)$/);
-  if(gvizMatch){
-    return new Date(parseInt(gvizMatch[1]),parseInt(gvizMatch[2]),parseInt(gvizMatch[3]));
-  }
-
-  // DD-MM-YYYY or DD/MM/YYYY
+  var gm=str.match(/^Date\((\d+),(\d+),(\d+)\)$/);
+  if(gm)return new Date(parseInt(gm[1]),parseInt(gm[2]),parseInt(gm[3]));
   var sep=str.indexOf('-')!==-1?'-':str.indexOf('/')!==-1?'/':null;
   if(!sep)return null;
   var p=str.split(sep);
-  if(p.length===3){
-    var d=parseInt(p[0],10),m=parseInt(p[1],10)-1,y=parseInt(p[2],10);
-    if(y<100)y+=2000;
-    return new Date(y,m,d);
-  }
+  if(p.length===3){var d=parseInt(p[0],10),m=parseInt(p[1],10)-1,y=parseInt(p[2],10);if(y<100)y+=2000;return new Date(y,m,d);}
   return null;
 }
-
-// Compare two Date objects by calendar day only
-function sameDay(d1,d2){
-  if(!d1||!d2)return false;
-  return d1.getFullYear()===d2.getFullYear()&&d1.getMonth()===d2.getMonth()&&d1.getDate()===d2.getDate();
-}
-
+function sameDay(d1,d2){if(!d1||!d2)return false;return d1.getFullYear()===d2.getFullYear()&&d1.getMonth()===d2.getMonth()&&d1.getDate()===d2.getDate();}
 var _today=new Date();
-var _yesterday=new Date(); _yesterday.setDate(_yesterday.getDate()-1);
+var _yesterday=new Date();_yesterday.setDate(_yesterday.getDate()-1);
+function isToday(r){return sameDay(parseDate(r['Order Date']),_today);}
+function isYesterday(r){return sameDay(parseDate(r['Order Date']),_yesterday);}
 
-function isToday(r){
-  var d=parseDate(r['Order Date']);
-  return sameDay(d,_today);
-}
-function isYesterday(r){
-  var d=parseDate(r['Order Date']);
-  return sameDay(d,_yesterday);
-}
-
-// ---- Canvas charts ----
-function drawBar(canvasId,labels,values,colors){
-  var canvas=document.getElementById(canvasId);if(!canvas)return;
-  var dpr=window.devicePixelRatio||1;
-  var W=canvas.parentElement.offsetWidth||500,H=200;
-  canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';
-  var ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
-  var padL=40,padR=16,padT=16,padB=40,chartW=W-padL-padR,chartH=H-padT-padB;
-  var max=Math.max.apply(null,values)||1;
-  var step=Math.ceil(max/4);max=step*4;
-  ctx.strokeStyle='#e4e2da';ctx.lineWidth=0.5;
-  for(var i=0;i<=4;i++){
-    var y=padT+chartH-(i/4)*chartH;
-    ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(padL+chartW,y);ctx.stroke();
-    ctx.fillStyle='#7a786f';ctx.font='10px system-ui,sans-serif';ctx.textAlign='right';
-    ctx.fillText(step*i,padL-4,y+3);
-  }
-  var n=labels.length,gap=chartW/n,barW=Math.min(50,gap*0.6);
-  for(var j=0;j<n;j++){
-    var bh=(values[j]/max)*chartH;
-    var bx=padL+gap*j+(gap-barW)/2,by=padT+chartH-bh;
-    ctx.fillStyle=colors[j%colors.length];
-    ctx.beginPath();
-    if(ctx.roundRect){ctx.roundRect(bx,by,barW,bh,4);}else{ctx.rect(bx,by,barW,bh);}
-    ctx.fill();
-    if(bh>16){ctx.fillStyle='#fff';ctx.font='bold 10px system-ui,sans-serif';ctx.textAlign='center';ctx.fillText(values[j],bx+barW/2,by+13);}
-    ctx.fillStyle='#7a786f';ctx.font='10px system-ui,sans-serif';ctx.textAlign='center';
-    var lbl=labels[j].length>13?labels[j].slice(0,12)+'..':labels[j];
-    ctx.fillText(lbl,bx+barW/2,padT+chartH+15);
-  }
-}
-
-function drawDoughnut(canvasId,labels,values,colors){
-  var canvas=document.getElementById(canvasId);if(!canvas)return;
-  var dpr=window.devicePixelRatio||1;
-  var W=canvas.parentElement.offsetWidth||300,H=200;
-  canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';
-  var ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
-  var total=values.reduce(function(a,b){return a+b;},0)||1;
-  var cx=W/2,cy=H/2,outerR=Math.min(W,H)/2-10,innerR=outerR*0.58;
-  var start=-Math.PI/2;
-  for(var i=0;i<values.length;i++){
-    var slice=(values[i]/total)*Math.PI*2;
-    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,outerR,start,start+slice);ctx.closePath();
-    ctx.fillStyle=colors[i%colors.length];ctx.fill();
-    start+=slice;
-  }
-  ctx.beginPath();ctx.arc(cx,cy,innerR,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
-  ctx.fillStyle='#1a1916';ctx.font='bold 20px system-ui,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
-  ctx.fillText(total,cx,cy-8);
-  ctx.fillStyle='#7a786f';ctx.font='11px system-ui,sans-serif';ctx.fillText('total',cx,cy+12);
-}
-
-function makeLegend(id,labels,values,colors){
-  var el=document.getElementById(id);if(!el)return;
-  var total=values.reduce(function(a,b){return a+b;},0)||1;
-  el.innerHTML=labels.map(function(l,i){
-    var pct=Math.round(values[i]/total*100);
-    return '<span class="legend-item"><span class="legend-dot" style="background:'+colors[i%colors.length]+'"></span>'+l+' ('+values[i]+', '+pct+'%)</span>';
-  }).join('');
-}
-
-function buildCharts(rows){
-  var sMap={},pMap={};
-  rows.forEach(function(r){
-    var s=r['orderStatus']||'Unknown';
-    var p=r['Shopify Payment']||'Unknown';
-    sMap[s]=(sMap[s]||0)+1;pMap[p]=(pMap[p]||0)+1;
+// ── Brand switching ──
+function switchBrand(brand){
+  if(!BRANDS[brand])return;
+  currentBrand=brand;
+  var b=BRANDS[brand];
+  // Update nav
+  ['shrus','ikeym','maya'].forEach(function(k){
+    document.getElementById('nav-'+k).className='nav-item'+(k===brand?' active':'');
   });
-  drawBar('c-status',Object.keys(sMap),Object.values(sMap),PALETTE);
-  makeLegend('leg-status',Object.keys(sMap),Object.values(sMap),PALETTE);
-  drawDoughnut('c-pay',Object.keys(pMap),Object.values(pMap),PALETTE);
-  makeLegend('leg-pay',Object.keys(pMap),Object.values(pMap),PALETTE);
-}
-
-// ---- Today banner & comparison ----
-function chgArrow(today, yest){
-  var diff=today-yest;
-  if(diff>0) return {cls:'up', txt:'+'+diff+' vs yesterday'};
-  if(diff<0) return {cls:'down', txt:diff+' vs yesterday'};
-  return {cls:'same', txt:'Same as yesterday'};
-}
-
-function updateTodaySection(rows){
-  var todayRows=rows.filter(isToday);
-  var yesterdayRows=rows.filter(isYesterday);
-
-  // Banner
-  var now=new Date();
-  document.getElementById('today-date').textContent=now.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-
-  var tTotal=todayRows.length;
-  var tPaid=todayRows.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='paid';}).length;
-  var tPending=todayRows.filter(function(r){return r['Pending Categorie'];}).length;
-  var tNoStock=todayRows.filter(function(r){return(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';}).length;
-  var tHigh=todayRows.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
-
-  var yTotal=yesterdayRows.length;
-  var yPaid=yesterdayRows.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='paid';}).length;
-  var yPending=yesterdayRows.filter(function(r){return r['Pending Categorie'];}).length;
-  var yHigh=yesterdayRows.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
-
-  document.getElementById('td-orders').textContent=tTotal;
-  document.getElementById('td-paid').textContent=tPaid;
-  document.getElementById('td-pending').textContent=tPending;
-  document.getElementById('td-high').textContent=tHigh;
-
-  function setChg(id,t,y){
-    var c=chgArrow(t,y);
-    var el=document.getElementById(id);
-    el.textContent=c.txt;el.className='today-stat-change '+c.cls;
+  // Update header
+  document.getElementById('brand-icon').textContent=b.icon;
+  document.getElementById('brand-icon').style.background=b.color;
+  document.getElementById('brand-name').textContent=b.name;
+  document.getElementById('today-banner').style.background=b.color;
+  document.getElementById('today-badge').style.background=b.color;
+  // Update toggle active color
+  document.querySelectorAll('.toggle-btn.active').forEach(function(el){el.style.background=b.color;el.style.borderColor=b.color;});
+  // Load from cache or fetch
+  if(brandCache[brand]){
+    allRows=brandCache[brand];
+    colHeaders=brandCacheHeaders[brand]||[];
+    refreshUI();
+    setStatus('live','Cached \u00b7 '+allRows.length+' orders');
+  } else {
+    loadData();
   }
-  setChg('td-orders-chg',tTotal,yTotal);
-  setChg('td-paid-chg',tPaid,yPaid);
-  setChg('td-pending-chg',tPending,yPending);
-  setChg('td-high-chg',tHigh,yHigh);
-
-  // Comparison cards
-  document.getElementById('lbl-today-date').textContent=fmtDate(todayStr());
-  document.getElementById('lbl-yesterday-date').textContent=fmtDate(yesterdayStr());
-  document.getElementById('c-today-total').textContent=tTotal;
-  document.getElementById('c-today-paid').textContent=tPaid;
-  document.getElementById('c-today-pending').textContent=tPending;
-  document.getElementById('c-today-high').textContent=tHigh;
-  document.getElementById('c-yest-total').textContent=yTotal;
-  document.getElementById('c-yest-paid').textContent=yPaid;
-  document.getElementById('c-yest-pending').textContent=yPending;
-  document.getElementById('c-yest-high').textContent=yHigh;
 }
 
-// ---- View toggle ----
-function setView(view){
-  currentView=view;
-  document.getElementById('btn-today').className='toggle-btn'+(view==='today'?' active':'');
-  document.getElementById('btn-all').className='toggle-btn'+(view==='all'?' active':'');
-  applyFilters();
-}
+var brandCacheHeaders = {};
 
-// ---- Fetch ----
+// ── Fetch ──
 async function loadData(){
   setStatus('loading','Fetching...');
   document.getElementById('err-box').style.display='none';
-  var url='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:json&gid='+GID+'&t='+Date.now();
+  var b=BRANDS[currentBrand];
+  var url='https://docs.google.com/spreadsheets/d/'+b.sheetId+'/gviz/tq?tqx=out:json&gid='+b.gid+'&t='+Date.now();
   try{
     var res=await fetch(url);
     if(!res.ok)throw new Error('HTTP '+res.status);
     var text=await res.text();
-    var jsonStr=text.replace(/^[\s\S]*?\(/, '').replace(/\);?\s*$/, '');
+    var jsonStr=text.replace(/^[^(]+\(/,'').replace(/\);\s*$/,'');
     var data=JSON.parse(jsonStr);
     if(!data.table)throw new Error('No table in response');
     processTable(data.table);
   }catch(e){
-    showError('Could not load: '+e.message+'. Ensure sheet is shared as Anyone with the link.');
+    showError('Could not load '+BRANDS[currentBrand].name+': '+e.message);
   }
 }
 
@@ -522,37 +418,131 @@ function processTable(table){
     var obj={};
     colHeaders.forEach(function(h,i){
       var cell=row.c&&row.c[i];
-      // Use formatted value (f) if available, else raw value (v)
       var val='';
-      if(cell){
-        if(cell.f!==null&&cell.f!==undefined) val=String(cell.f);
-        else if(cell.v!==null&&cell.v!==undefined) val=String(cell.v);
-      }
+      if(cell){if(cell.f!==null&&cell.f!==undefined)val=String(cell.f);else if(cell.v!==null&&cell.v!==undefined)val=String(cell.v);}
       obj[h]=val.trim();
     });
     return obj;
   }).filter(function(r){return colHeaders[0]&&r[colHeaders[0]];});
-  if(!allRows.length){showError('Sheet appears empty.');return;}
+  // Cache
+  brandCache[currentBrand]=allRows;
+  brandCacheHeaders[currentBrand]=colHeaders;
+  // Update sidebar badge
+  document.getElementById('badge-'+currentBrand).textContent=allRows.length;
+  refreshUI();
+  setStatus('live','Updated '+new Date().toLocaleTimeString()+' \u00b7 '+allRows.length+' orders');
+}
+
+function refreshUI(){
   populateFilter('f-status','orderStatus','All statuses');
   populateFilter('f-pay','Shopify Payment','All payments');
   populateFilter('f-priority','Priority','All priorities');
   populateFilter('f-assign','Assign','All agents');
   populateFilter('f-pendcat','Pending Categorie','All categories');
-  updateTodaySection(allRows);
+  updateTodaySection();
   applyFilters();
-  setStatus('live','Updated '+new Date().toLocaleTimeString()+' - '+allRows.length+' total orders');
 }
 
-function showError(msg){
-  document.getElementById('err-box').style.display='block';
-  document.getElementById('err-msg').textContent='Error: '+msg;
-  setStatus('err','Failed to load');
-}
-function setStatus(state,text){
-  document.getElementById('sdot').className='dot '+state;
-  document.getElementById('stxt').textContent=text;
+// ── Today section ──
+function updateTodaySection(){
+  var now=new Date();
+  document.getElementById('today-date').textContent=now.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('lbl-today-date').textContent=fmtDate(todayStr());
+  document.getElementById('lbl-yesterday-date').textContent=fmtDate(yesterdayStr());
+
+  var tR=allRows.filter(isToday), yR=allRows.filter(isYesterday);
+  var tT=tR.length, tPd=tR.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='paid';}).length;
+  var tPn=tR.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='pending';}).length;
+  var tH=tR.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
+  var yT=yR.length, yPd=yR.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='paid';}).length;
+  var yPn=yR.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='pending';}).length;
+  var yH=yR.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
+
+  document.getElementById('td-orders').textContent=tT;
+  document.getElementById('td-paid').textContent=tPd;
+  document.getElementById('td-pending').textContent=tPn;
+  document.getElementById('td-high').textContent=tH;
+  setChg('td-orders-chg',tT,yT);setChg('td-paid-chg',tPd,yPd);setChg('td-pending-chg',tPn,yPn);setChg('td-high-chg',tH,yH);
+
+  document.getElementById('c-today-total').textContent=tT;document.getElementById('c-today-paid').textContent=tPd;
+  document.getElementById('c-today-pending').textContent=tPn;document.getElementById('c-today-high').textContent=tH;
+  document.getElementById('c-yest-total').textContent=yT;document.getElementById('c-yest-paid').textContent=yPd;
+  document.getElementById('c-yest-pending').textContent=yPn;document.getElementById('c-yest-high').textContent=yH;
 }
 
+function setChg(id,t,y){
+  var diff=t-y,el=document.getElementById(id);
+  el.textContent=diff>0?'+'+diff+' vs yesterday':diff<0?diff+' vs yesterday':'Same as yesterday';
+  el.className='today-stat-change '+(diff>0?'up':diff<0?'down':'same');
+}
+
+// ── View toggle ──
+function setView(view){
+  currentView=view;
+  var b=BRANDS[currentBrand];
+  ['today','all'].forEach(function(v){
+    var el=document.getElementById('btn-'+v);
+    el.className='toggle-btn'+(view===v?' active':'');
+    if(view===v){el.style.background=b.color;el.style.borderColor=b.color;}
+    else{el.style.background='';el.style.borderColor='';}
+  });
+  applyFilters();
+}
+
+// ── Charts ──
+function drawBar(canvasId,labels,values,colors){
+  var canvas=document.getElementById(canvasId);if(!canvas)return;
+  var dpr=window.devicePixelRatio||1,W=canvas.parentElement.offsetWidth||500,H=200;
+  canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';
+  var ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
+  var padL=40,padR=16,padT=16,padB=40,chartW=W-padL-padR,chartH=H-padT-padB;
+  var max=Math.max.apply(null,values)||1,step=Math.ceil(max/4);max=step*4;
+  ctx.strokeStyle='#e4e2da';ctx.lineWidth=0.5;
+  for(var i=0;i<=4;i++){var y=padT+chartH-(i/4)*chartH;ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(padL+chartW,y);ctx.stroke();ctx.fillStyle='#7a786f';ctx.font='10px system-ui,sans-serif';ctx.textAlign='right';ctx.fillText(step*i,padL-4,y+3);}
+  var n=labels.length,gap=chartW/n,barW=Math.min(50,gap*0.6);
+  for(var j=0;j<n;j++){var bh=(values[j]/max)*chartH,bx=padL+gap*j+(gap-barW)/2,by=padT+chartH-bh;ctx.fillStyle=colors[j%colors.length];ctx.beginPath();if(ctx.roundRect)ctx.roundRect(bx,by,barW,bh,4);else ctx.rect(bx,by,barW,bh);ctx.fill();if(bh>16){ctx.fillStyle='#fff';ctx.font='bold 10px system-ui,sans-serif';ctx.textAlign='center';ctx.fillText(values[j],bx+barW/2,by+13);}ctx.fillStyle='#7a786f';ctx.font='10px system-ui,sans-serif';ctx.textAlign='center';var lbl=labels[j].length>13?labels[j].slice(0,12)+'..':labels[j];ctx.fillText(lbl,bx+barW/2,padT+chartH+15);}
+}
+function drawDoughnut(canvasId,labels,values,colors){
+  var canvas=document.getElementById(canvasId);if(!canvas)return;
+  var dpr=window.devicePixelRatio||1,W=canvas.parentElement.offsetWidth||300,H=200;
+  canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';
+  var ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
+  var total=values.reduce(function(a,b){return a+b;},0)||1,cx=W/2,cy=H/2,outerR=Math.min(W,H)/2-10,innerR=outerR*0.58,start=-Math.PI/2;
+  for(var i=0;i<values.length;i++){var slice=(values[i]/total)*Math.PI*2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,outerR,start,start+slice);ctx.closePath();ctx.fillStyle=colors[i%colors.length];ctx.fill();start+=slice;}
+  ctx.beginPath();ctx.arc(cx,cy,innerR,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+  ctx.fillStyle='#1a1916';ctx.font='bold 20px system-ui,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(total,cx,cy-8);
+  ctx.fillStyle='#7a786f';ctx.font='11px system-ui,sans-serif';ctx.fillText('total',cx,cy+12);
+}
+function makeLegend(id,labels,values,colors){
+  var el=document.getElementById(id);if(!el)return;
+  var total=values.reduce(function(a,b){return a+b;},0)||1;
+  el.innerHTML=labels.map(function(l,i){var pct=Math.round(values[i]/total*100);return '<span class="legend-item"><span class="legend-dot" style="background:'+colors[i%colors.length]+'"></span>'+l+' ('+values[i]+', '+pct+'%)</span>';}).join('');
+}
+function buildCharts(rows){
+  var sMap={},pMap={};
+  rows.forEach(function(r){var s=r['orderStatus']||'Unknown';var p=r['Shopify Payment']||'Unknown';sMap[s]=(sMap[s]||0)+1;pMap[p]=(pMap[p]||0)+1;});
+  drawBar('c-status',Object.keys(sMap),Object.values(sMap),PALETTE);
+  makeLegend('leg-status',Object.keys(sMap),Object.values(sMap),PALETTE);
+  drawDoughnut('c-pay',Object.keys(pMap),Object.values(pMap),PALETTE);
+  makeLegend('leg-pay',Object.keys(pMap),Object.values(pMap),PALETTE);
+}
+
+// ── Metrics ──
+function updateMetrics(rows){
+  var total=rows.length;
+  var paid=rows.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='paid';}).length;
+  var payPending=rows.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='pending';}).length;
+  document.getElementById('m-total').textContent=total.toLocaleString();
+  document.getElementById('m-paid').textContent=paid;
+  document.getElementById('m-pay-pending').textContent=payPending;
+  document.getElementById('m-pay-other').textContent=total-paid-payPending;
+  document.getElementById('m-high').textContent=rows.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
+  document.getElementById('m-pending').textContent=rows.filter(function(r){return r['Pending Categorie'];}).length;
+  document.getElementById('m-meas').textContent=rows.filter(function(r){return(r['Pending Categorie']||'').toLowerCase().includes('measurement');}).length;
+  document.getElementById('m-nostock').textContent=rows.filter(function(r){return(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';}).length;
+}
+
+// ── Filters & table ──
 function populateFilter(id,col,ph){
   var sel=document.getElementById(id),cur=sel.value,vals=[];
   allRows.forEach(function(r){if(r[col]&&vals.indexOf(r[col])===-1)vals.push(r[col]);});
@@ -562,7 +552,7 @@ function populateFilter(id,col,ph){
 
 function badge(t,c){return '<span class="badge '+c+'">'+(t||'&mdash;')+'</span>';}
 function statusBadge(v){if(!v)return badge('&mdash;','bn');var l=v.toLowerCase();if(l.includes('complete'))return badge(v,'bs');if(l.includes('cancel'))return badge(v,'bd');if(l.includes('pending')||l.includes('pick')||l.includes('process'))return badge(v,'bw');return badge(v,'bn');}
-function payBadge(v){if(!v)return badge('&mdash;','bn');var l=v.toLowerCase();if(l.includes('paid')&&!l.includes('un'))return badge(v,'bs');if(l.includes('unpaid')||l.includes('failed'))return badge(v,'bd');return badge(v,'bn');}
+function payBadge(v){if(!v)return badge('&mdash;','bn');var l=v.toLowerCase();if(l==='paid')return badge(v,'bs');if(l==='pending')return badge(v,'bw');return badge(v,'bn');}
 function prioBadge(v){if(!v)return badge('&mdash;','bn');var l=v.toLowerCase();if(l.includes('high'))return badge(v,'bd');if(l.includes('med'))return badge(v,'bw');if(l.includes('low'))return badge(v,'bi');return badge(v,'bn');}
 
 var COLS=[
@@ -578,22 +568,6 @@ var COLS=[
   {key:'Agent Remarks ',label:'Agent Remarks'}
 ];
 
-function updateMetrics(rows){
-  var srcRows=allRows;
-  var total=srcRows.length;
-  var paid=srcRows.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='paid';}).length;
-  var payPending=srcRows.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='pending';}).length;
-  var payOther=total-paid-payPending;
-  document.getElementById('m-total').textContent=total.toLocaleString();
-  document.getElementById('m-paid').textContent=paid;
-  document.getElementById('m-pay-pending').textContent=payPending;
-  document.getElementById('m-pay-other').textContent=payOther>0?payOther:'0';
-  document.getElementById('m-pending').textContent=srcRows.filter(function(r){return r['Pending Categorie'];}).length;
-  document.getElementById('m-high').textContent=srcRows.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
-  document.getElementById('m-meas').textContent=srcRows.filter(function(r){return(r['Pending Categorie']||'').toLowerCase().includes('measurement');}).length;
-  document.getElementById('m-nostock').textContent=srcRows.filter(function(r){return(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';}).length;
-}
-
 function applyFilters(){
   var s=document.getElementById('f-search').value.toLowerCase();
   var st=document.getElementById('f-status').value;
@@ -603,9 +577,7 @@ function applyFilters(){
   var pc=document.getElementById('f-pendcat').value;
   var df=document.getElementById('f-date-from').value;
   var dt=document.getElementById('f-date-to').value;
-
   var base=currentView==='today'?allRows.filter(isToday):allRows;
-
   var filtered=base.filter(function(r){
     if(s&&Object.values(r).join(' ').toLowerCase().indexOf(s)===-1)return false;
     if(st&&r['orderStatus']!==st)return false;
@@ -616,7 +588,6 @@ function applyFilters(){
     if(df||dt){var d=parseDate(r['Order Date']);if(!d)return false;if(df&&d<new Date(df))return false;if(dt&&d>new Date(dt+'T23:59:59'))return false;}
     return true;
   });
-
   buildCharts(filtered);
   updateMetrics(filtered);
   renderTable(filtered);
@@ -625,18 +596,17 @@ function applyFilters(){
 function renderTable(rows){
   var cols=COLS.filter(function(c){return colHeaders.indexOf(c.key)!==-1;});
   document.getElementById('thead').innerHTML=cols.map(function(c){return '<th>'+c.label+'</th>';}).join('');
-  var label=currentView==='today'?'today':'total';
-  document.getElementById('row-count').textContent='Showing '+rows.length.toLocaleString()+' '+label+' order'+(rows.length!==1?'s':'');
+  document.getElementById('row-count').textContent='Showing '+rows.length.toLocaleString()+' order'+(rows.length!==1?'s':'');
   if(!rows.length){document.getElementById('tbody').innerHTML='<tr><td colspan="'+cols.length+'" class="empty">No orders match your filters.</td></tr>';return;}
   document.getElementById('tbody').innerHTML=rows.map(function(r){
     var isTodayRow=isToday(r);
     var isNoStock=(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';
-    var rowClass=isNoStock?'nostock-row':(isTodayRow?'today-row':'');
-    return '<tr'+(rowClass?' class="'+rowClass+'"':'')+'>'+cols.map(function(c){
+    var cls=isNoStock?'nostock-row':isTodayRow?'today-row':'';
+    return '<tr'+(cls?' class="'+cls+'"':'')+'>'+cols.map(function(c){
       var v=r[c.key]||'';
       var cell=c.render?c.render(v):'<span title="'+v.replace(/"/g,'&quot;')+'">'+(v||'&mdash;')+'</span>';
-      if(c.key==='Order Date'&&isTodayRow) cell+='<span class="today-tag">Today</span>';
-      if(c.key==='Pending Categorie'&&isNoStock) cell='<span class="badge bd">No Stock</span> <span class="nostock-tag">!</span>';
+      if(c.key==='Order Date'&&isTodayRow)cell+='<span class="today-tag">Today</span>';
+      if(c.key==='Pending Categorie'&&isNoStock)cell='<span class="badge bd">No Stock</span><span class="nostock-tag">!</span>';
       return '<td>'+cell+'</td>';
     }).join('')+'</tr>';
   }).join('');
@@ -648,9 +618,7 @@ function clearFilters(){
   applyFilters();
 }
 
-window.addEventListener('resize',function(){if(allRows.length)applyFilters();});
-
-// ── Modal logic ──
+// ── Modal ──
 var MODAL_COLS=[
   {key:'orderNumber',label:'Order #',render:function(v){return '<span class="onum">#'+v+'</span>';}},
   {key:'Order Date',label:'Date'},
@@ -661,54 +629,42 @@ var MODAL_COLS=[
   {key:'Assign',label:'Assigned To'},
   {key:'User Remarks',label:'User Remarks'}
 ];
-
 function getModalRows(type){
   var base=currentView==='today'?allRows.filter(isToday):allRows;
-  if(type==='total')     return {title:'All orders',rows:base};
-  if(type==='paid')      return {title:'Paid orders',rows:base.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='paid';})};
-  if(type==='pay-pending') return {title:'Payment pending orders',rows:base.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='pending';})};
-  if(type==='pay-other') return {title:'Other payment status orders',rows:base.filter(function(r){var v=(r['Shopify Payment']||'').trim().toLowerCase();return v!=='paid'&&v!=='pending';})};
-  if(type==='high')      return {title:'High priority orders',rows:base.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');})};
-  if(type==='pending-cat') return {title:'Orders with pending category',rows:base.filter(function(r){return r['Pending Categorie'];})};
-  if(type==='measurement') return {title:'Measurement pending orders',rows:base.filter(function(r){return(r['Pending Categorie']||'').toLowerCase().includes('measurement');})};
-  if(type==='nostock')   return {title:'No stock orders',rows:base.filter(function(r){return(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';})};
-  return {title:'Orders',rows:base};
+  if(type==='total')return{title:'All orders',rows:base};
+  if(type==='paid')return{title:'Paid orders',rows:base.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='paid';})};
+  if(type==='pay-pending')return{title:'Payment pending orders',rows:base.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='pending';})};
+  if(type==='pay-other')return{title:'Other payment status',rows:base.filter(function(r){var v=(r['Shopify Payment']||'').trim().toLowerCase();return v!=='paid'&&v!=='pending';})};
+  if(type==='high')return{title:'High priority orders',rows:base.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');})};
+  if(type==='pending-cat')return{title:'Orders with pending category',rows:base.filter(function(r){return r['Pending Categorie'];})};
+  if(type==='measurement')return{title:'Measurement pending orders',rows:base.filter(function(r){return(r['Pending Categorie']||'').toLowerCase().includes('measurement');})};
+  if(type==='nostock')return{title:'No stock orders',rows:base.filter(function(r){return(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';})};
+  return{title:'Orders',rows:base};
 }
-
-function renderModalTable(rows){
-  var cols=MODAL_COLS.filter(function(c){return colHeaders.indexOf(c.key)!==-1;});
-  document.getElementById('modal-thead').innerHTML=cols.map(function(c){return '<th>'+c.label+'</th>';}).join('');
-  if(!rows.length){
-    document.getElementById('modal-tbody').innerHTML='<tr><td colspan="'+cols.length+'" style="text-align:center;padding:30px;color:var(--muted)">No orders found.</td></tr>';
-    return;
-  }
-  document.getElementById('modal-tbody').innerHTML=rows.map(function(r){
-    var isNoStock=(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';
-    return '<tr'+(isNoStock?' class="nostock-row"':'')+'>'+cols.map(function(c){
-      var v=r[c.key]||'';
-      return '<td>'+(c.render?c.render(v):'<span title="'+v.replace(/"/g,'&quot;')+'">'+(v||'&mdash;')+'</span>')+'</td>';
-    }).join('')+'</tr>';
-  }).join('');
-}
-
 function showModal(type){
   var result=getModalRows(type);
-  document.getElementById('modal-title').textContent=result.title;
-  document.getElementById('modal-subtitle').textContent=result.rows.length+' order'+(result.rows.length!==1?'s':'')+(currentView==='today'?' (today)':' (all time)');
-  renderModalTable(result.rows);
+  document.getElementById('modal-title').textContent=result.title+' \u2014 '+BRANDS[currentBrand].name;
+  document.getElementById('modal-subtitle').textContent=result.rows.length+' order'+(result.rows.length!==1?'s':'')+(currentView==='today'?' (today only)':' (all time)');
+  var cols=MODAL_COLS.filter(function(c){return colHeaders.indexOf(c.key)!==-1;});
+  document.getElementById('modal-thead').innerHTML=cols.map(function(c){return '<th>'+c.label+'</th>';}).join('');
+  if(!result.rows.length){document.getElementById('modal-tbody').innerHTML='<tr><td colspan="'+cols.length+'" style="text-align:center;padding:30px;color:var(--muted)">No orders found.</td></tr>';document.getElementById('modal-overlay').className='modal-overlay open';return;}
+  document.getElementById('modal-tbody').innerHTML=result.rows.map(function(r){
+    var isNoStock=(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';
+    return '<tr'+(isNoStock?' class="nostock-row"':'')+'>'+cols.map(function(c){var v=r[c.key]||'';return '<td>'+(c.render?c.render(v):'<span>'+(v||'&mdash;')+'</span>')+'</td>';}).join('')+'</tr>';
+  }).join('');
   document.getElementById('modal-overlay').className='modal-overlay open';
 }
-
-function closeModal(e){
-  if(!e||e.target===document.getElementById('modal-overlay')){
-    document.getElementById('modal-overlay').className='modal-overlay';
-  }
-}
-
+function closeModal(e){if(!e||e.target===document.getElementById('modal-overlay'))document.getElementById('modal-overlay').className='modal-overlay';}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
 
-setInterval(loadData,60000);
-loadData();
+function showError(msg){document.getElementById('err-box').style.display='block';document.getElementById('err-msg').textContent='Error: '+msg;setStatus('err','Failed to load');}
+function setStatus(state,text){document.getElementById('sdot').className='dot '+state;document.getElementById('stxt').textContent=text;}
+
+window.addEventListener('resize',function(){if(allRows.length)applyFilters();});
+
+// ── Init ──
+switchBrand('shrus');
+setInterval(function(){loadData();},60000);
 </script>
 </body>
 </html>
