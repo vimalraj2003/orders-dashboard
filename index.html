@@ -149,6 +149,11 @@ tbody tr.packed-row td{background:#f0fdf4}
 .modal-hdr p{font-size:12px;color:var(--muted);margin-top:2px}
 .modal-close{width:30px;height:30px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface2);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--muted)}
 .modal-close:hover{background:var(--border)}
+.modal-filter-bar{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface2)}
+.modal-filter-bar input,.modal-filter-bar select{font-family:inherit;font-size:12px;height:30px;padding:0 8px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);color:var(--text);outline:none;min-width:110px}
+.modal-filter-bar input{min-width:160px}
+.modal-filter-bar input:focus,.modal-filter-bar select:focus{border-color:var(--accent)}
+.modal-count{font-size:11px;color:var(--muted);padding:8px 16px;border-bottom:1px solid var(--border)}
 .modal-body{overflow-y:auto}
 .modal-tbl-wrap{overflow-x:auto}
 .modal-tbl-wrap table{width:100%;border-collapse:collapse;min-width:600px;font-size:13px}
@@ -318,6 +323,15 @@ tbody tr.packed-row td{background:#f0fdf4}
       <div><h2 id="modal-title">Orders</h2><p id="modal-subtitle"></p></div>
       <button class="modal-close" onclick="closeModal()">&#x2715;</button>
     </div>
+    <div class="modal-filter-bar">
+      <input type="text" id="modal-search" placeholder="Search order #, agent..." oninput="filterModal()">
+      <select id="modal-f-status" onchange="filterModal()"><option value="">All statuses</option></select>
+      <select id="modal-f-pay" onchange="filterModal()"><option value="">All payments</option></select>
+      <select id="modal-f-assign" onchange="filterModal()"><option value="">All agents</option></select>
+      <select id="modal-f-pendcat" onchange="filterModal()"><option value="">All categories</option></select>
+      <button class="btn" onclick="clearModalFilters()" style="height:30px;padding:0 10px;font-size:12px">Clear</button>
+    </div>
+    <div class="modal-count" id="modal-count"></div>
     <div class="modal-body">
       <div class="modal-tbl-wrap">
         <table><thead><tr id="modal-thead"></tr></thead><tbody id="modal-tbody"></tbody></table>
@@ -649,21 +663,68 @@ function getModalRows(type){
   if(type==='packed')return{title:'Packed orders',rows:base.filter(function(r){return(r['orderStatus']||'').trim().toLowerCase()==='packed';})};
   return{title:'Orders',rows:base};
 }
+var _modalRows=[], _modalAllRows=[];
+
 function showModal(type){
   var result=getModalRows(type);
-  document.getElementById('modal-title').textContent=result.title+' \u2014 '+BRANDS[currentBrand].name;
+  _modalAllRows=result.rows;
+  _modalRows=result.rows;
+  document.getElementById('modal-title').textContent=result.title+' — '+BRANDS[currentBrand].name;
   document.getElementById('modal-subtitle').textContent=result.rows.length+' order'+(result.rows.length!==1?'s':'')+(currentView==='today'?' (today only)':' (all time)');
+  document.getElementById('modal-search').value='';
+  populateModalFilter('modal-f-status','orderStatus','All statuses');
+  populateModalFilter('modal-f-pay','Shopify Payment','All payments');
+  populateModalFilter('modal-f-assign','Assign','All agents');
+  populateModalFilter('modal-f-pendcat','Pending Categorie','All categories');
+  ['modal-f-status','modal-f-pay','modal-f-assign','modal-f-pendcat'].forEach(function(id){document.getElementById(id).value='';});
+  renderModalRows(_modalAllRows);
+  document.getElementById('modal-overlay').className='modal-overlay open';
+}
+
+function populateModalFilter(id,col,ph){
+  var sel=document.getElementById(id),vals=[];
+  _modalAllRows.forEach(function(r){if(r[col]&&vals.indexOf(r[col])===-1)vals.push(r[col]);});
+  vals.sort();
+  sel.innerHTML='<option value="">'+ph+'</option>'+vals.map(function(v){return '<option value="'+v+'">'+v+'</option>';}).join('');
+}
+
+function filterModal(){
+  var s=document.getElementById('modal-search').value.toLowerCase();
+  var st=document.getElementById('modal-f-status').value;
+  var pay=document.getElementById('modal-f-pay').value;
+  var asg=document.getElementById('modal-f-assign').value;
+  var pc=document.getElementById('modal-f-pendcat').value;
+  var filtered=_modalAllRows.filter(function(r){
+    if(s&&Object.values(r).join(' ').toLowerCase().indexOf(s)===-1)return false;
+    if(st&&r['orderStatus']!==st)return false;
+    if(pay&&r['Shopify Payment']!==pay)return false;
+    if(asg&&r['Assign']!==asg)return false;
+    if(pc&&r['Pending Categorie']!==pc)return false;
+    return true;
+  });
+  renderModalRows(filtered);
+}
+
+function clearModalFilters(){
+  document.getElementById('modal-search').value='';
+  ['modal-f-status','modal-f-pay','modal-f-assign','modal-f-pendcat'].forEach(function(id){document.getElementById(id).value='';});
+  renderModalRows(_modalAllRows);
+}
+
+function renderModalRows(rows){
   var cols=MODAL_COLS.filter(function(c){return colHeaders.indexOf(c.key)!==-1;});
   document.getElementById('modal-thead').innerHTML=cols.map(function(c){return '<th>'+c.label+'</th>';}).join('');
-  if(!result.rows.length){document.getElementById('modal-tbody').innerHTML='<tr><td colspan="'+cols.length+'" style="text-align:center;padding:30px;color:var(--muted)">No orders found.</td></tr>';document.getElementById('modal-overlay').className='modal-overlay open';return;}
-  document.getElementById('modal-tbody').innerHTML=result.rows.map(function(r){
+  document.getElementById('modal-count').textContent='Showing '+rows.length.toLocaleString()+' of '+_modalAllRows.length.toLocaleString()+' order'+(rows.length!==1?'s':'');
+  if(!rows.length){document.getElementById('modal-tbody').innerHTML='<tr><td colspan="'+cols.length+'" style="text-align:center;padding:30px;color:var(--muted)">No orders match filters.</td></tr>';return;}
+  document.getElementById('modal-tbody').innerHTML=rows.map(function(r){
     var isNoStock=(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';
     var isPacked=(r['orderStatus']||'').trim().toLowerCase()==='packed';
     var cls=isNoStock?'nostock-row':isPacked?'packed-row':'';
     return '<tr'+(cls?' class="'+cls+'"':'')+'>'+cols.map(function(c){var v=r[c.key]||'';return '<td>'+(c.render?c.render(v):'<span>'+(v||'&mdash;')+'</span>')+'</td>';}).join('')+'</tr>';
   }).join('');
-  document.getElementById('modal-overlay').className='modal-overlay open';
 }
+
+
 function closeModal(e){if(!e||e.target===document.getElementById('modal-overlay'))document.getElementById('modal-overlay').className='modal-overlay';}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
 
