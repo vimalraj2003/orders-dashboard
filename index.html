@@ -166,40 +166,41 @@ tbody tr.packed-row td{background:#f0fdf4}
 .modal-tbl-wrap tbody tr.packed-row td{background:#f0fdf4}
 
 /* ── Daily Tracker ── */
-.panel{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:300;align-items:center;justify-content:center;padding:20px}
-.panel.open{display:flex}
-.panel-box{background:var(--surface);border-radius:var(--radius);width:100%;max-width:700px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden}
-.panel-hdr{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
-.panel-hdr h2{font-size:15px;font-weight:600}
-.panel-hdr p{font-size:12px;color:var(--muted);margin-top:2px}
-.panel-body{overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:20px}
-.form-section{background:var(--surface2);border-radius:var(--radius);padding:16px}
-.form-section h3{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
+.daily-page{display:none}.daily-page.open{display:block}
+.form-section{background:var(--surface2);border-radius:var(--radius);padding:16px;margin-bottom:16px}
+.form-section h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
 .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
 .form-group{display:flex;flex-direction:column;gap:5px}
 .form-group label{font-size:11px;font-weight:500;color:var(--muted)}
-.form-group input{font-family:inherit;font-size:13px;height:36px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);color:var(--text);outline:none;width:100%}
-.form-group input:focus{border-color:#7c3aed}
+.form-group input,.form-group textarea{font-family:inherit;font-size:13px;padding:8px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);color:var(--text);outline:none;width:100%}
+.form-group input[type=date],.form-group input[type=number]{height:36px;padding:0 10px}
 .form-group input[type=number]{-moz-appearance:textfield}
+.form-group input:focus,.form-group textarea:focus{border-color:#7c3aed}
+.total-display{background:#f5f3ff;border:2px solid #7c3aed;border-radius:var(--radius-sm);padding:10px;text-align:center}
+.total-display .total-num{font-size:28px;font-weight:700;color:#7c3aed;line-height:1}
+.total-display .total-lbl{font-size:11px;color:#7c3aed;opacity:.7;margin-top:2px}
 .submit-btn{background:#7c3aed;border:none;color:#fff;font-family:inherit;font-size:13px;font-weight:500;padding:10px 20px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;width:100%}
 .submit-btn:hover{background:#6d28d9}
 .submit-btn:disabled{background:#ccc;cursor:not-allowed}
-.form-msg{font-size:12px;text-align:center;padding:8px;border-radius:var(--radius-sm);display:none}
+.form-msg{font-size:12px;text-align:center;padding:8px;border-radius:var(--radius-sm);display:none;margin-bottom:8px}
 .form-msg.success{background:var(--success-bg);color:var(--success)}
 .form-msg.error{background:var(--danger-bg);color:var(--danger)}
 .tracker-table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border)}
-.tracker-table-wrap table{width:100%;border-collapse:collapse;font-size:13px;min-width:500px}
-.tracker-table-wrap th{padding:9px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);background:var(--surface2)}
-.tracker-table-wrap td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text)}
+.tracker-table-wrap table{width:100%;border-collapse:collapse;font-size:13px;min-width:600px}
+.tracker-table-wrap th{padding:9px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap}
+.tracker-table-wrap td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text);white-space:nowrap;max-width:200px;overflow:hidden;text-overflow:ellipsis}
 .tracker-table-wrap tr:last-child td{border-bottom:none}
 .tracker-table-wrap tbody tr:hover td{background:var(--surface2)}
-.setup-box{background:#f5f3ff;border:1px solid #ddd6fe;border-radius:var(--radius);padding:16px}
+.setup-box{background:#f5f3ff;border:1px solid #ddd6fe;border-radius:var(--radius);padding:16px;margin-bottom:16px}
 .setup-box h3{font-size:13px;font-weight:600;color:#7c3aed;margin-bottom:10px}
 .setup-box ol{padding-left:18px;font-size:12px;color:var(--text);line-height:2}
 .setup-box code{background:#ede9fe;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:11px;color:#7c3aed}
 .setup-box input{font-family:inherit;font-size:12px;height:32px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid #ddd6fe;background:#fff;color:var(--text);outline:none;width:100%;margin-top:8px}
 .setup-box input:focus{border-color:#7c3aed}
 .setup-save-btn{margin-top:8px;background:#7c3aed;border:none;color:#fff;font-family:inherit;font-size:12px;padding:6px 14px;border-radius:var(--radius-sm);cursor:pointer}
+.page-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.page-hdr h1{font-size:20px;font-weight:600;letter-spacing:-.3px}
+.page-hdr p{font-size:12px;color:var(--muted);margin-top:2px}
 
 /* ── Loading screen ── */
 .loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:300px;gap:12px;color:var(--muted);font-size:13px}
@@ -217,17 +218,17 @@ tbody tr.packed-row td{background:#f0fdf4}
   </div>
   <div class="sidebar-section">Brands</div>
 
-  <button class="nav-item" id="nav-shrus" onclick="switchBrand('shrus')">
+  <button class="nav-item" id="nav-shrus" onclick="showBrandDashboard('shrus')">
     <span class="nav-dot" style="background:#2d5be3"></span>
     Shrus
     <span class="nav-badge" id="badge-shrus">-</span>
   </button>
-  <button class="nav-item" id="nav-ikeym" onclick="switchBrand('ikeym')">
+  <button class="nav-item" id="nav-ikeym" onclick="showBrandDashboard('ikeym')">
     <span class="nav-dot" style="background:#16a34a"></span>
     Ikeym
     <span class="nav-badge" id="badge-ikeym">-</span>
   </button>
-  <button class="nav-item" id="nav-maya" onclick="switchBrand('maya')">
+  <button class="nav-item" id="nav-maya" onclick="showBrandDashboard('maya')">
     <span class="nav-dot" style="background:#d97706"></span>
     Maya
     <span class="nav-badge" id="badge-maya">-</span>
@@ -251,6 +252,9 @@ tbody tr.packed-row td{background:#f0fdf4}
 
 <!-- ── Main ── -->
 <div class="main">
+
+  <!-- Dashboard content -->
+  <div id="dashboard-content">
 
   <div class="hdr">
     <div class="hdr-left">
@@ -382,87 +386,89 @@ tbody tr.packed-row td{background:#f0fdf4}
   </div>
 </div>
 
-<!-- Daily Tracker Panel -->
-<div class="panel" id="daily-panel" onclick="closeDailyPanel(event)">
-  <div class="panel-box" onclick="event.stopPropagation()">
-    <div class="panel-hdr">
-      <div>
-        <h2>&#x1F4E6; Daily Packed &amp; Delivery Tracker</h2>
-        <p>Log today's packed orders and delivery partner breakdown</p>
-      </div>
-      <button class="modal-close" onclick="closeDailyPanel()">&#x2715;</button>
+  </div><!-- end dashboard-content -->
+
+<!-- Daily Tracker Inline Page -->
+<div class="daily-page" id="daily-page">
+  <div class="page-hdr">
+    <div>
+      <h1>Daily Packed &amp; Delivery Tracker</h1>
+      <p>Log packed orders and delivery partner breakdown each day</p>
     </div>
-    <div class="panel-body">
+    <button class="btn" onclick="loadTrackerHistory()">
+      <svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
+      Refresh history
+    </button>
+  </div>
 
-      <!-- Setup -->
-      <div class="setup-box" id="setup-box">
-        <h3>&#x2699;&#xFE0F; One-time setup — connect your Google Sheet</h3>
-        <ol>
-          <li>Create a new Google Sheet for tracking</li>
-          <li>Go to <code>Extensions &rarr; Apps Script</code></li>
-          <li>Paste the Apps Script code (copy below) and deploy as web app</li>
-          <li>Paste the web app URL here:</li>
-        </ol>
-        <input type="text" id="script-url-input" placeholder="https://script.google.com/macros/s/..." />
-        <br>
-        <button class="setup-save-btn" onclick="saveScriptUrl()">Save &amp; Connect</button>
-        <div style="margin-top:12px;font-size:11px;color:var(--muted)">
-          <strong>Apps Script code to paste:</strong><br>
-          <textarea readonly style="width:100%;height:120px;font-family:monospace;font-size:10px;margin-top:6px;padding:8px;border:1px solid #ddd6fe;border-radius:4px;background:#fff;resize:none" id="apps-script-code"></textarea>
+  <!-- Setup -->
+  <div class="setup-box" id="setup-box">
+    <h3>&#9881; One-time setup &mdash; connect your Google Sheet</h3>
+    <ol>
+      <li>Create a new Google Sheet for daily tracking</li>
+      <li>Go to <code>Extensions &rarr; Apps Script</code></li>
+      <li>Delete existing code, paste the script below &amp; deploy as <strong>Web App</strong> (Anyone can access)</li>
+      <li>Copy the web app URL and paste below:</li>
+    </ol>
+    <input type="text" id="script-url-input" placeholder="https://script.google.com/macros/s/..." />
+    <br>
+    <button class="setup-save-btn" onclick="saveScriptUrl()">Save &amp; Connect</button>
+    <div style="margin-top:12px;font-size:11px;color:var(--muted)">
+      <strong>Paste this in Apps Script:</strong>
+      <textarea readonly style="width:100%;height:130px;font-family:monospace;font-size:10px;margin-top:6px;padding:8px;border:1px solid #ddd6fe;border-radius:4px;background:#fff;resize:none;color:#333" id="apps-script-code"></textarea>
+    </div>
+  </div>
+
+  <!-- Entry Form -->
+  <div class="form-section">
+    <h3>Log daily data</h3>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" id="f-date" />
+      </div>
+      <div class="form-group">
+        <label>DHL</label>
+        <input type="number" id="f-dhl" placeholder="0" min="0" oninput="calcTotal()" />
+      </div>
+      <div class="form-group">
+        <label>Bluedart</label>
+        <input type="number" id="f-bluedart" placeholder="0" min="0" oninput="calcTotal()" />
+      </div>
+      <div class="form-group">
+        <label>Franch</label>
+        <input type="number" id="f-franch" placeholder="0" min="0" oninput="calcTotal()" />
+      </div>
+      <div class="form-group">
+        <label>Others</label>
+        <input type="number" id="f-others" placeholder="0" min="0" oninput="calcTotal()" />
+      </div>
+      <div class="form-group">
+        <label>&nbsp;</label>
+        <div class="total-display">
+          <div class="total-num" id="f-total-display">0</div>
+          <div class="total-lbl">Total Packed</div>
         </div>
       </div>
-
-      <!-- Entry Form -->
-      <div class="form-section">
-        <h3>&#x270F;&#xFE0F; Log daily data</h3>
-        <div class="form-grid">
-          <div class="form-group" style="grid-column:span 2">
-            <label>Date</label>
-            <input type="date" id="f-date" />
-          </div>
-          <div class="form-group">
-            <label>Total Packed</label>
-            <input type="number" id="f-total" placeholder="0" min="0" />
-          </div>
-          <div class="form-group">
-            <label>DHL</label>
-            <input type="number" id="f-dhl" placeholder="0" min="0" />
-          </div>
-          <div class="form-group">
-            <label>Bluedart</label>
-            <input type="number" id="f-bluedart" placeholder="0" min="0" />
-          </div>
-          <div class="form-group">
-            <label>Franch</label>
-            <input type="number" id="f-franch" placeholder="0" min="0" />
-          </div>
-          <div class="form-group">
-            <label>Others</label>
-            <input type="number" id="f-others" placeholder="0" min="0" />
-          </div>
-        </div>
-        <div style="margin-top:14px">
-          <div class="form-msg" id="form-msg"></div>
-          <button class="submit-btn" id="submit-btn" onclick="submitDailyData()" style="margin-top:8px">
-            Submit Entry
-          </button>
-        </div>
+      <div class="form-group" style="grid-column:1/-1">
+        <label>Remarks</label>
+        <textarea id="f-remarks" placeholder="Any notes for today..." rows="2" style="resize:vertical"></textarea>
       </div>
+    </div>
+    <div style="margin-top:14px">
+      <div class="form-msg" id="form-msg"></div>
+      <button class="submit-btn" id="submit-btn" onclick="submitDailyData()">Submit Entry</button>
+    </div>
+  </div>
 
-      <!-- History Table -->
-      <div>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-          <div style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Recent entries</div>
-          <button class="btn" onclick="loadTrackerHistory()" style="font-size:11px;height:26px;padding:0 10px">Refresh</button>
-        </div>
-        <div class="tracker-table-wrap">
-          <table>
-            <thead><tr><th>Date</th><th>Total Packed</th><th>DHL</th><th>Bluedart</th><th>Franch</th><th>Others</th></tr></thead>
-            <tbody id="tracker-tbody"><tr><td colspan="6" style="text-align:center;padding:20px;color:var(--muted)">No data yet. Submit your first entry!</td></tr></tbody>
-          </table>
-        </div>
-      </div>
-
+  <!-- History -->
+  <div class="form-section">
+    <h3>Recent entries</h3>
+    <div class="tracker-table-wrap">
+      <table>
+        <thead><tr><th>Date</th><th>Total Packed</th><th>DHL</th><th>Bluedart</th><th>Franch</th><th>Others</th><th>Remarks</th></tr></thead>
+        <tbody id="tracker-tbody"><tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted)">No entries yet. Submit your first entry above!</td></tr></tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -866,13 +872,12 @@ var APPS_SCRIPT_URL = localStorage.getItem('daily_tracker_url') || '';
 var APPS_SCRIPT_CODE = `function doPost(e) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   if (sheet.getLastRow() === 0) {
-    sheet.appendRow(['Date','Total Packed','DHL','Bluedart','Franch','Others']);
+    sheet.appendRow(['Date','Total Packed','DHL','Bluedart','Franch','Others','Remarks']);
   }
   var data = JSON.parse(e.postData.contents);
-  sheet.appendRow([data.date, data.total, data.dhl, data.bluedart, data.franch, data.others]);
+  sheet.appendRow([data.date, data.total, data.dhl, data.bluedart, data.franch, data.others, data.remarks||'']);
   return ContentService.createTextOutput(JSON.stringify({status:'ok'})).setMimeType(ContentService.MimeType.JSON);
 }
-
 function doGet(e) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var rows = sheet.getDataRange().getValues();
@@ -880,38 +885,37 @@ function doGet(e) {
 }`;
 
 function showDailyTracker() {
+  // Hide dashboard, show daily page
+  document.getElementById('dashboard-content').style.display='none';
+  document.getElementById('daily-page').className='daily-page open';
+
   // Set nav active
-  ['shrus','ikeym','maya'].forEach(function(k){ document.getElementById('nav-'+k).className='nav-item'; });
+  ['shrus','ikeym','maya'].forEach(function(k){
+    document.getElementById('nav-'+k).className='nav-item';
+    document.getElementById('nav-'+k).style.background='';
+  });
   document.getElementById('nav-daily').className='nav-item active';
   document.getElementById('nav-daily').style.background='#7c3aed';
 
   // Set today's date
-  var today = new Date();
-  var yyyy = today.getFullYear();
-  var mm = String(today.getMonth()+1).padStart(2,'0');
-  var dd = String(today.getDate()).padStart(2,'0');
-  document.getElementById('f-date').value = yyyy+'-'+mm+'-'+dd;
+  var today=new Date();
+  document.getElementById('f-date').value=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
 
-  // Show/hide setup box
-  document.getElementById('setup-box').style.display = APPS_SCRIPT_URL ? 'none' : 'block';
-  document.getElementById('script-url-input').value = APPS_SCRIPT_URL;
-  document.getElementById('apps-script-code').value = APPS_SCRIPT_CODE;
+  // Setup box
+  document.getElementById('setup-box').style.display=APPS_SCRIPT_URL?'none':'block';
+  document.getElementById('script-url-input').value=APPS_SCRIPT_URL||'';
+  document.getElementById('apps-script-code').value=APPS_SCRIPT_CODE;
 
-  document.getElementById('daily-panel').className='panel open';
+  calcTotal();
   if(APPS_SCRIPT_URL) loadTrackerHistory();
 }
 
-function closeDailyPanel(e) {
-  if(!e || e.target===document.getElementById('daily-panel')) {
-    document.getElementById('daily-panel').className='panel';
-    // Restore nav
-    ['shrus','ikeym','maya'].forEach(function(k){
-      document.getElementById('nav-'+k).className='nav-item'+(k===currentBrand?' active':'');
-      if(k===currentBrand) document.getElementById('nav-'+k).style.background='';
-    });
-    document.getElementById('nav-daily').className='nav-item';
-    document.getElementById('nav-daily').style.background='';
-  }
+function showBrandDashboard(brand) {
+  document.getElementById('dashboard-content').style.display='block';
+  document.getElementById('daily-page').className='daily-page';
+  document.getElementById('nav-daily').className='nav-item';
+  document.getElementById('nav-daily').style.background='';
+  switchBrand(brand);
 }
 
 function saveScriptUrl() {
@@ -923,46 +927,56 @@ function saveScriptUrl() {
   loadTrackerHistory();
 }
 
+function calcTotal(){
+  var dhl=parseInt(document.getElementById('f-dhl').value)||0;
+  var bd=parseInt(document.getElementById('f-bluedart').value)||0;
+  var fr=parseInt(document.getElementById('f-franch').value)||0;
+  var ot=parseInt(document.getElementById('f-others').value)||0;
+  document.getElementById('f-total-display').textContent=dhl+bd+fr+ot;
+}
+
 async function submitDailyData() {
-  if(!APPS_SCRIPT_URL){ alert('Please set up the Apps Script URL first.'); return; }
-  var date = document.getElementById('f-date').value;
-  var total = parseInt(document.getElementById('f-total').value)||0;
-  var dhl = parseInt(document.getElementById('f-dhl').value)||0;
-  var bluedart = parseInt(document.getElementById('f-bluedart').value)||0;
-  var franch = parseInt(document.getElementById('f-franch').value)||0;
-  var others = parseInt(document.getElementById('f-others').value)||0;
-  if(!date){ showFormMsg('Please select a date.','error'); return; }
-  var btn = document.getElementById('submit-btn');
-  btn.disabled=true; btn.textContent='Submitting...';
+  if(!APPS_SCRIPT_URL){ showFormMsg('Please set up the Apps Script URL first.','error'); return; }
+  var date=document.getElementById('f-date').value;
+  var dhl=parseInt(document.getElementById('f-dhl').value)||0;
+  var bluedart=parseInt(document.getElementById('f-bluedart').value)||0;
+  var franch=parseInt(document.getElementById('f-franch').value)||0;
+  var others=parseInt(document.getElementById('f-others').value)||0;
+  var total=dhl+bluedart+franch+others;
+  var remarks=document.getElementById('f-remarks').value.trim();
+  if(!date){showFormMsg('Please select a date.','error');return;}
+  var btn=document.getElementById('submit-btn');
+  btn.disabled=true;btn.textContent='Submitting...';
   try {
-    await fetch(APPS_SCRIPT_URL, {
-      method:'POST', mode:'no-cors',
+    await fetch(APPS_SCRIPT_URL,{
+      method:'POST',mode:'no-cors',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({date:date,total:total,dhl:dhl,bluedart:bluedart,franch:franch,others:others})
+      body:JSON.stringify({date:date,total:total,dhl:dhl,bluedart:bluedart,franch:franch,others:others,remarks:remarks})
     });
     showFormMsg('Entry saved successfully!','success');
-    ['f-total','f-dhl','f-bluedart','f-franch','f-others'].forEach(function(id){document.getElementById(id).value='';});
-    setTimeout(loadTrackerHistory, 1500);
-  } catch(e) {
+    ['f-dhl','f-bluedart','f-franch','f-others','f-remarks'].forEach(function(id){document.getElementById(id).value='';});
+    document.getElementById('f-total-display').textContent='0';
+    setTimeout(loadTrackerHistory,1500);
+  } catch(e){
     showFormMsg('Error: '+e.message,'error');
   }
-  btn.disabled=false; btn.textContent='Submit Entry';
+  btn.disabled=false;btn.textContent='Submit Entry';
 }
 
 async function loadTrackerHistory() {
   if(!APPS_SCRIPT_URL) return;
-  var tbody = document.getElementById('tracker-tbody');
-  tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:16px;color:var(--muted)">Loading...</td></tr>';
+  var tbody=document.getElementById('tracker-tbody');
+  tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:16px;color:var(--muted)">Loading...</td></tr>';
   try {
-    var res = await fetch(APPS_SCRIPT_URL+'?t='+Date.now());
-    var rows = await res.json();
-    if(!rows||rows.length<=1){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--muted)">No entries yet.</td></tr>';return;}
-    var data = rows.slice(1).reverse(); // skip header, newest first
-    tbody.innerHTML = data.map(function(r){
-      return '<tr><td>'+r[0]+'</td><td><strong>'+r[1]+'</strong></td><td>'+r[2]+'</td><td>'+r[3]+'</td><td>'+r[4]+'</td><td>'+r[5]+'</td></tr>';
+    var res=await fetch(APPS_SCRIPT_URL+'?t='+Date.now());
+    var rows=await res.json();
+    if(!rows||rows.length<=1){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--muted)">No entries yet.</td></tr>';return;}
+    var data=rows.slice(1).reverse();
+    tbody.innerHTML=data.map(function(r){
+      return '<tr><td>'+r[0]+'</td><td><strong>'+r[1]+'</strong></td><td>'+(r[2]||0)+'</td><td>'+(r[3]||0)+'</td><td>'+(r[4]||0)+'</td><td>'+(r[5]||0)+'</td><td style="color:var(--muted);white-space:normal">'+(r[6]||'&mdash;')+'</td></tr>';
     }).join('');
-  } catch(e) {
-    tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:16px;color:var(--danger)">Could not load history.</td></tr>';
+  } catch(e){
+    tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:16px;color:var(--danger)">Could not load history.</td></tr>';
   }
 }
 
@@ -973,7 +987,7 @@ function showFormMsg(msg, type) {
 }
 
 // ── Init ──
-switchBrand('shrus');
+showBrandDashboard('shrus');
 setInterval(function(){loadData();},60000);
 </script>
 </body>
