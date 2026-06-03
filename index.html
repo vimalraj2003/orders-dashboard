@@ -176,9 +176,8 @@ tbody tr.packed-row td{background:#f0fdf4}
 .form-group input[type=date],.form-group input[type=number]{height:36px;padding:0 10px}
 .form-group input[type=number]{-moz-appearance:textfield}
 .form-group input:focus,.form-group textarea:focus{border-color:#7c3aed}
-.total-display{background:#f5f3ff;border:2px solid #7c3aed;border-radius:var(--radius-sm);padding:10px;text-align:center}
-.total-display .total-num{font-size:28px;font-weight:700;color:#7c3aed;line-height:1}
-.total-display .total-lbl{font-size:11px;color:#7c3aed;opacity:.7;margin-top:2px}
+.total-display{background:#f5f3ff;border:2px solid #7c3aed;border-radius:var(--radius-sm);padding:6px 10px;text-align:center;height:36px;display:flex;align-items:center;justify-content:center}
+.total-display .total-num{font-size:22px;font-weight:700;color:#7c3aed;line-height:1}
 .submit-btn{background:#7c3aed;border:none;color:#fff;font-family:inherit;font-size:13px;font-weight:500;padding:10px 20px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;width:100%}
 .submit-btn:hover{background:#6d28d9}
 .submit-btn:disabled{background:#ccc;cursor:not-allowed}
@@ -422,11 +421,15 @@ tbody tr.packed-row td{background:#f0fdf4}
   <!-- Entry Form -->
   <div class="form-section">
     <h3>Log daily data</h3>
-    <div class="form-grid">
+    <!-- Row 1: Date spans full width -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px">
       <div class="form-group">
         <label>Date</label>
         <input type="date" id="f-date" />
       </div>
+    </div>
+    <!-- Row 2: Partners + Total -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px;align-items:end">
       <div class="form-group">
         <label>DHL</label>
         <input type="number" id="f-dhl" placeholder="0" min="0" oninput="calcTotal()" />
@@ -444,16 +447,16 @@ tbody tr.packed-row td{background:#f0fdf4}
         <input type="number" id="f-others" placeholder="0" min="0" oninput="calcTotal()" />
       </div>
       <div class="form-group">
-        <label>&nbsp;</label>
+        <label>Total Packed</label>
         <div class="total-display">
           <div class="total-num" id="f-total-display">0</div>
-          <div class="total-lbl">Total Packed</div>
         </div>
       </div>
-      <div class="form-group" style="grid-column:1/-1">
-        <label>Remarks</label>
-        <textarea id="f-remarks" placeholder="Any notes for today..." rows="2" style="resize:vertical"></textarea>
-      </div>
+    </div>
+    <!-- Row 3: Remarks -->
+    <div class="form-group">
+      <label>Remarks</label>
+      <textarea id="f-remarks" placeholder="Any notes for today..." rows="2" style="resize:vertical"></textarea>
     </div>
     <div style="margin-top:14px">
       <div class="form-msg" id="form-msg"></div>
@@ -937,7 +940,9 @@ function calcTotal(){
 
 async function submitDailyData() {
   if(!APPS_SCRIPT_URL){ showFormMsg('Please set up the Apps Script URL first.','error'); return; }
-  var date=document.getElementById('f-date').value;
+  var rawDate=document.getElementById('f-date').value; // YYYY-MM-DD from input
+  var dp=rawDate.split('-');
+  var date=dp.length===3?dp[2]+'-'+dp[1]+'-'+dp[0]:rawDate; // convert to DD-MM-YYYY
   var dhl=parseInt(document.getElementById('f-dhl').value)||0;
   var bluedart=parseInt(document.getElementById('f-bluedart').value)||0;
   var franch=parseInt(document.getElementById('f-franch').value)||0;
@@ -973,7 +978,18 @@ async function loadTrackerHistory() {
     if(!rows||rows.length<=1){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--muted)">No entries yet.</td></tr>';return;}
     var data=rows.slice(1).reverse();
     tbody.innerHTML=data.map(function(r){
-      return '<tr><td>'+r[0]+'</td><td><strong>'+r[1]+'</strong></td><td>'+(r[2]||0)+'</td><td>'+(r[3]||0)+'</td><td>'+(r[4]||0)+'</td><td>'+(r[5]||0)+'</td><td style="color:var(--muted);white-space:normal">'+(r[6]||'&mdash;')+'</td></tr>';
+      // Format date as DD-MM-YYYY
+      var rawDate=String(r[0]||'').trim();
+      var dispDate=rawDate;
+      try {
+        // Handle ISO format (2026-06-02T...) from existing entries
+        if(rawDate.includes('T')||(/^\d{4}-\d{2}-\d{2}$/.test(rawDate))) {
+          var d=new Date(rawDate);
+          if(!isNaN(d.getTime())) dispDate=pad(d.getDate())+'-'+pad(d.getMonth()+1)+'-'+d.getFullYear();
+        }
+        // Already DD-MM-YYYY — use as-is
+      } catch(e){}
+      return '<tr><td>'+dispDate+'</td><td><strong>'+(r[1]||0)+'</strong></td><td>'+(r[2]||0)+'</td><td>'+(r[3]||0)+'</td><td>'+(r[4]||0)+'</td><td>'+(r[5]||0)+'</td><td style="color:var(--muted);white-space:normal;max-width:200px">'+(r[6]||'&mdash;')+'</td></tr>';
     }).join('');
   } catch(e){
     tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:16px;color:var(--danger)">Could not load history.</td></tr>';
