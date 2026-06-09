@@ -1019,6 +1019,39 @@ function renderPendingCategories() {
 
   // Sort by total descending
   cats.sort(function(a,b){ return combined[b].total - combined[a].total; });
+
+  // Build cards using DOM (no innerHTML onclick issues)
+  var grid = document.createElement('div');
+  grid.className = 'pcat-grid';
+  cats.forEach(function(cat){
+    var info = combined[cat];
+    var card = document.createElement('div');
+    card.className = 'pcat-card';
+    card.addEventListener('click', (function(c){ return function(){ showPcatModal(c); }; })(cat));
+    var nameEl = document.createElement('div');
+    nameEl.className = 'pcat-name';
+    nameEl.title = cat;
+    nameEl.textContent = cat;
+    var totalEl = document.createElement('div');
+    totalEl.className = 'pcat-total';
+    totalEl.textContent = info.total;
+    var brandsEl = document.createElement('div');
+    brandsEl.className = 'pcat-brands';
+    Object.keys(info.brands).forEach(function(k){
+      var chip = document.createElement('span');
+      chip.className = 'pcat-brand-chip';
+      chip.style.background = brandColors[k]+'22';
+      chip.style.color = brandColors[k];
+      chip.textContent = BRANDS[k].name+': '+info.brands[k];
+      brandsEl.appendChild(chip);
+    });
+    card.appendChild(nameEl);
+    card.appendChild(totalEl);
+    card.appendChild(brandsEl);
+    grid.appendChild(card);
+  });
+  content.innerHTML = '';
+  content.appendChild(grid);
 }
 
 // ── Pending Category Modal ──
