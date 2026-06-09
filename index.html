@@ -201,6 +201,20 @@ tbody tr.packed-row td{background:#f0fdf4}
 .page-hdr h1{font-size:20px;font-weight:600;letter-spacing:-.3px}
 .page-hdr p{font-size:12px;color:var(--muted);margin-top:2px}
 
+/* ── Pending Category Section ── */
+.pcat-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:20px}
+.pcat-section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.pcat-section-hdr h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.pcat-loading{font-size:12px;color:var(--muted);text-align:center;padding:20px}
+.pcat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.pcat-card{background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border);padding:12px 14px;cursor:pointer;transition:box-shadow .15s,border-color .15s}
+.pcat-card:hover{box-shadow:0 0 0 2px var(--accent);border-color:var(--accent)}
+.pcat-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcat-total{font-size:22px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:6px}
+.pcat-brands{display:flex;gap:6px;flex-wrap:wrap}
+.pcat-brand-chip{font-size:10px;padding:2px 7px;border-radius:100px;font-weight:500;white-space:nowrap}
+.pcat-empty{font-size:12px;color:var(--muted);text-align:center;padding:24px}
+
 /* ── Loading screen ── */
 .loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:300px;gap:12px;color:var(--muted);font-size:13px}
 .spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
@@ -334,6 +348,23 @@ tbody tr.packed-row td{background:#f0fdf4}
   <div class="charts">
     <div class="cc"><h3>Orders by status</h3><div class="chart-area"><canvas id="c-status" height="200"></canvas></div><div class="legend" id="leg-status"></div></div>
     <div class="cc"><h3>Payment breakdown</h3><div class="chart-area"><canvas id="c-pay" height="200"></canvas></div><div class="legend" id="leg-pay"></div></div>
+  </div>
+
+  <!-- Pending Category Cross-Brand Section -->
+  <div class="pcat-section" id="pcat-section">
+    <div class="pcat-section-hdr">
+      <div>
+        <h3>&#x1F4CB; Pending Category — All Brands</h3>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span id="pcat-status" style="font-size:11px;color:var(--muted)"></span>
+        <button class="btn" onclick="loadAllPendingCategories()" style="font-size:11px;height:28px;padding:0 10px">
+          <svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
+          Refresh
+        </button>
+      </div>
+    </div>
+    <div id="pcat-content"><div class="pcat-loading">Loading pending categories from all brands...</div></div>
   </div>
 
   <!-- Filters -->
@@ -856,18 +887,160 @@ function renderModalRows(rows){
     var isNoStock=(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';
     var isPacked=(r['orderStatus']||'').trim().toLowerCase()==='packed';
     var cls=isNoStock?'nostock-row':isPacked?'packed-row':'';
-    return '<tr'+(cls?' class="'+cls+'"':'')+'>'+cols.map(function(c){var v=r[c.key]||'';return '<td>'+(c.render?c.render(v):'<span>'+(v||'&mdash;')+'</span>')+'</td>';}).join('')+'</tr>';
+    return '<tr'+(cls?' class="'+cls+'"':'')+'>'+cols.map(function(c){var v=r[c.key]||'';return '<td>'+(c.render?c.render(v,r):'<span>'+(v||'&mdash;')+'</span>')+'</td>';}).join('')+'</tr>';
   }).join('');
 }
 
 
-function closeModal(e){if(!e||e.target===document.getElementById('modal-overlay'))document.getElementById('modal-overlay').className='modal-overlay';}
+function closeModal(e){
+  if(!e||e.target===document.getElementById('modal-overlay')){
+    document.getElementById('modal-overlay').className='modal-overlay';
+    // Remove brand col if added
+    if(MODAL_COLS.length&&MODAL_COLS[0].key==='_brand') MODAL_COLS.shift();
+  }
+}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
 
 function showError(msg){document.getElementById('err-box').style.display='block';document.getElementById('err-msg').textContent='Error: '+msg;setStatus('err','Failed to load');}
 function setStatus(state,text){document.getElementById('sdot').className='dot '+state;document.getElementById('stxt').textContent=text;}
 
 window.addEventListener('resize',function(){if(allRows.length)applyFilters();});
+
+// ── Pending Category Cross-Brand Dashboard ──
+var pcatData = {}; // {brand: {category: count}}
+var pcatLoaded = {};
+
+async function fetchBrandRows(brandKey) {
+  var b = BRANDS[brandKey];
+  var url = 'https://docs.google.com/spreadsheets/d/'+b.sheetId+'/gviz/tq?tqx=out:json&gid='+b.gid+'&t='+Date.now();
+  var res = await fetch(url);
+  if(!res.ok) throw new Error('HTTP '+res.status);
+  var text = await res.text();
+  var jsonStr = text.replace(/^[^(]+\(/,'').replace(/\);\s*$/,'');
+  var data = JSON.parse(jsonStr);
+  if(!data.table) throw new Error('No table');
+  var cols = (data.table.cols||[]).map(function(c){return c.label||c.id||'';});
+  var rows = (data.table.rows||[]).map(function(row){
+    var obj={};
+    cols.forEach(function(h,i){
+      var cell=row.c&&row.c[i];
+      var val='';
+      if(cell){if(cell.f!=null)val=String(cell.f);else if(cell.v!=null)val=String(cell.v);}
+      obj[h]=val.trim();
+    });
+    return obj;
+  }).filter(function(r){return cols[0]&&r[cols[0]];});
+  return rows;
+}
+
+async function loadAllPendingCategories() {
+  var status = document.getElementById('pcat-status');
+  var content = document.getElementById('pcat-content');
+  status.textContent = 'Loading...';
+  content.innerHTML = '<div class="pcat-loading">Fetching data from all brands...</div>';
+  pcatData = {};
+
+  var brandKeys = ['shrus','ikeym','maya'];
+  var results = await Promise.allSettled(brandKeys.map(function(k){ return fetchBrandRows(k); }));
+
+  brandKeys.forEach(function(k, i) {
+    if(results[i].status === 'fulfilled') {
+      var rows = results[i].value;
+      pcatData[k] = {};
+      rows.forEach(function(r){
+        var cat = (r['Pending Categorie']||'').trim();
+        if(cat) pcatData[k][cat] = (pcatData[k][cat]||0) + 1;
+      });
+      // Also cache for brand dashboard
+      brandCache[k] = rows;
+      brandCacheHeaders[k] = Object.keys(rows[0]||{});
+      document.getElementById('badge-'+k).textContent = rows.length;
+    } else {
+      pcatData[k] = null;
+    }
+  });
+
+  renderPendingCategories();
+  status.textContent = 'Updated ' + new Date().toLocaleTimeString();
+}
+
+function renderPendingCategories() {
+  var content = document.getElementById('pcat-content');
+  var brandKeys = ['shrus','ikeym','maya'];
+  var brandColors = {shrus:'#2d5be3', ikeym:'#16a34a', maya:'#d97706'};
+
+  // Aggregate all categories across brands
+  var combined = {}; // {cat: {total, brands: {brand: count}}}
+  brandKeys.forEach(function(k){
+    if(!pcatData[k]) return;
+    Object.keys(pcatData[k]).forEach(function(cat){
+      if(!combined[cat]) combined[cat] = {total:0, brands:{}};
+      combined[cat].total += pcatData[k][cat];
+      combined[cat].brands[k] = pcatData[k][cat];
+    });
+  });
+
+  var cats = Object.keys(combined);
+  if(!cats.length) {
+    content.innerHTML = '<div class="pcat-empty">No pending categories found across all brands.</div>';
+    return;
+  }
+
+  // Sort by total descending
+  cats.sort(function(a,b){ return combined[b].total - combined[a].total; });
+
+  content.innerHTML = '<div class="pcat-grid">'+cats.map(function(cat){
+    var info = combined[cat];
+    var chips = Object.keys(info.brands).map(function(k){
+      return '<span class="pcat-brand-chip" style="background:'+brandColors[k]+'22;color:'+brandColors[k]+'">'+
+        BRANDS[k].name+': '+info.brands[k]+'</span>';
+    }).join('');
+    return '<div class="pcat-card" onclick="showPcatModal(''+cat.replace(/'/g,"\'")+'')" >'+
+      '<div class="pcat-name" title="'+cat+'">'+cat+'</div>'+
+      '<div class="pcat-total">'+info.total+'</div>'+
+      '<div class="pcat-brands">'+chips+'</div>'+
+      '</div>';
+  }).join('')+'</div>';
+}
+
+// ── Pending Category Modal ──
+function showPcatModal(cat) {
+  var brandKeys = ['shrus','ikeym','maya'];
+  var rows = [];
+  brandKeys.forEach(function(k){
+    if(!brandCache[k]) return;
+    brandCache[k].forEach(function(r){
+      if((r['Pending Categorie']||'').trim()===cat){
+        var nr = Object.assign({},r);
+        nr['_brand'] = BRANDS[k].name;
+        nr['_brandColor'] = {shrus:'#2d5be3',ikeym:'#16a34a',maya:'#d97706'}[k];
+        rows.push(nr);
+      }
+    });
+  });
+
+  // Use existing modal
+  document.getElementById('modal-title').textContent = cat;
+  document.getElementById('modal-subtitle').textContent = rows.length+' order'+(rows.length!==1?'s':'')+' across all brands';
+  _modalAllRows = rows;
+
+  // Populate filters
+  document.getElementById('modal-search').value='';
+  populateModalFilter('modal-f-status','orderStatus','All statuses');
+  populateModalFilter('modal-f-pay','Shopify Payment','All payments');
+  populateModalFilter('modal-f-assign','Assign','All agents');
+  populateModalFilter('modal-f-pendcat','Pending Categorie','All categories');
+  ['modal-f-status','modal-f-pay','modal-f-assign','modal-f-pendcat'].forEach(function(id){document.getElementById(id).value='';});
+
+  // Add brand column to modal cols temporarily
+  var brandCol = {key:'_brand', label:'Brand', render:function(v,r){
+    return '<span class="badge" style="background:'+(r&&r['_brandColor']||'#ccc')+'22;color:'+(r&&r['_brandColor']||'#888')+'">'+v+'</span>';
+  }};
+  if(MODAL_COLS[0].key!=='_brand') MODAL_COLS.unshift(brandCol);
+
+  renderModalRows(rows);
+  document.getElementById('modal-overlay').className='modal-overlay open';
+}
 
 // ── Daily Tracker ──
 var APPS_SCRIPT_URL = localStorage.getItem('daily_tracker_url') || '';
@@ -1004,6 +1177,7 @@ function showFormMsg(msg, type) {
 
 // ── Init ──
 showBrandDashboard('shrus');
+loadAllPendingCategories();
 setInterval(function(){loadData();},60000);
 </script>
 </body>
