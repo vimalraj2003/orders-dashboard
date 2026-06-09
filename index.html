@@ -1,1 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Management Dashboard</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f4f3ef;--surface:#fff;--surface2:#f9f8f5;--border:#e4e2da;
+  --text:#1a1916;--muted:#7a786f;--accent:#2d5be3;
+  --success:#16a34a;--success-bg:#f0fdf4;
+  --warn:#b45309;--warn-bg:#fffbeb;
+  --danger:#dc2626;--danger-bg:#fef2f2;
+  --info:#0369a1;--info-bg:#f0f9ff;
+  --nav-w:220px;--radius:10px;--radius-sm:6px;
+}
+body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;display:flex}
+
+/* ── Sidebar ── */
+.sidebar{width:var(--nav-w);min-height:100vh;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:fixed;left:0;top:0;bottom:0;z-index:100}
+.sidebar-logo{padding:18px 16px 14px;border-bottom:1px solid var(--border)}
+.sidebar-logo h2{font-size:15px;font-weight:700;color:var(--text);letter-spacing:-.3px}
+.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:2px}
+.sidebar-section{padding:12px 10px 6px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.7px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--radius-sm);margin:2px 8px;cursor:pointer;transition:background .15s;font-size:13px;color:var(--muted);font-weight:500;border:none;background:none;width:calc(100% - 16px);text-align:left}
+.nav-item:hover{background:var(--surface2);color:var(--text)}
+.nav-item.active{background:var(--accent);color:#fff}
+.nav-item.active .nav-dot{background:rgba(255,255,255,0.6)}
+.nav-item.soon{opacity:.5;cursor:not-allowed}
+.nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.nav-badge{margin-left:auto;font-size:10px;padding:1px 6px;border-radius:100px;background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
+.nav-item.active .nav-badge{background:rgba(255,255,255,0.2);border-color:transparent;color:#fff}
+.sidebar-footer{margin-top:auto;padding:12px 16px;border-top:1px solid var(--border);font-size:11px;color:var(--muted)}
+
+/* ── Main content ── */
+.main{margin-left:var(--nav-w);flex:1;min-width:0;padding:24px 24px}
+
+/* ── Header ── */
+.hdr{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px}
+.hdr-left{display:flex;align-items:center;gap:12px}
+.brand-icon{width:42px;height:42px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;font-weight:700;color:#fff}
+.hdr-title h1{font-size:20px;font-weight:600;letter-spacing:-.3px}
+.hdr-title p{font-size:12px;color:var(--muted);margin-top:2px}
+.hdr-right{display:flex;align-items:center;gap:10px}
+.status-pill{display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:5px 14px;font-size:12px;color:var(--muted)}
+.dot{width:7px;height:7px;border-radius:50%;background:#ccc;transition:background .3s;flex-shrink:0}
+.dot.live{background:#22c55e;box-shadow:0 0 0 3px #dcfce7}
+.dot.err{background:var(--danger)}
+.dot.loading{background:#f59e0b;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.btn{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:7px 14px;font-size:13px;font-family:inherit;color:var(--text);cursor:pointer;transition:background .15s}
+.btn:hover{background:var(--surface2)}
+.btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.err-bar{display:none;background:var(--danger-bg);border:1px solid #fca5a5;border-radius:var(--radius-sm);padding:12px 16px;font-size:13px;color:var(--danger);margin-bottom:20px}
+
+/* ── Today banner ── */
+.today-banner{border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.today-date{color:rgba(255,255,255,0.8);font-size:12px;margin-bottom:2px}
+.today-title{color:#fff;font-size:16px;font-weight:600}
+.today-stats{display:flex;gap:24px;flex-wrap:wrap}
+.today-stat{text-align:center}
+.today-stat-val{font-size:24px;font-weight:700;color:#fff;line-height:1}
+.today-stat-label{font-size:11px;color:rgba(255,255,255,0.75);margin-top:3px}
+.today-stat-change{font-size:11px;margin-top:2px}
+.today-stat-change.up{color:#86efac}
+.today-stat-change.down{color:#fca5a5}
+.today-stat-change.same{color:rgba(255,255,255,0.6)}
+
+/* ── View toggle ── */
+.view-toggle{display:flex;gap:8px;margin-bottom:16px;align-items:center;flex-wrap:wrap}
+.view-toggle span{font-size:12px;color:var(--muted);margin-right:4px}
+.toggle-btn{padding:5px 14px;font-size:12px;font-family:inherit;border-radius:100px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;transition:all .15s}
+.toggle-btn.active{color:#fff}
+
+/* ── Compare cards ── */
+.compare-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+@media(max-width:600px){.compare-row{grid-template-columns:1fr}}
+.compare-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
+.compare-card h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.day-badge{font-size:10px;padding:2px 7px;border-radius:100px;color:#fff;font-weight:500}
+.day-badge.yesterday{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cstat{background:var(--surface2);border-radius:var(--radius-sm);padding:10px 12px}
+.cstat-val{font-size:20px;font-weight:700;color:var(--text)}
+.cstat-label{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* ── Metrics ── */
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:20px}
+.mc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;cursor:pointer;transition:box-shadow .15s,border-color .15s}
+.mc:hover{box-shadow:0 0 0 2px var(--accent);border-color:var(--accent)}
+.mc-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.mc-val{font-size:28px;font-weight:700;letter-spacing:-.5px;line-height:1}
+.mc-val.a{color:var(--accent)}.mc-val.s{color:var(--success)}.mc-val.w{color:var(--warn)}.mc-val.d{color:var(--danger)}
+
+/* ── Charts ── */
+.charts{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin-bottom:20px}
+@media(max-width:700px){.charts{grid-template-columns:1fr}}
+.cc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
+.cc h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
+.chart-area{width:100%;overflow:hidden}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+/* ── Filters ── */
+.filters-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:16px}
+.filters-box h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.filters-grid{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+.fg{display:flex;flex-direction:column;gap:4px}
+.fg label{font-size:11px;color:var(--muted);font-weight:500}
+.fg select,.fg input{font-family:inherit;font-size:13px;height:34px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface2);color:var(--text);outline:none;min-width:130px}
+.fg input{min-width:165px}
+.fg input[type=date]{min-width:140px}
+.fg select:focus,.fg input:focus{border-color:var(--accent)}
+
+/* ── Table ── */
+.result-info{font-size:12px;color:var(--muted);margin-bottom:8px}
+.tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:700px}
+thead tr{background:var(--surface2)}
+th{padding:10px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:10px 14px;font-size:13px;border-bottom:1px solid var(--border);color:var(--text);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--surface2)}
+tbody tr.today-row td{background:#eef1fd}
+tbody tr.nostock-row td{background:#fef2f2}
+tbody tr.packed-row td{background:#f0fdf4}
+.modal-tbl-wrap tbody tr.packed-row td{background:#f0fdf4}
+.empty{text-align:center;padding:40px;color:var(--muted);font-size:13px}
+
+/* ── Badges ── */
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;white-space:nowrap}
+.bs{background:var(--success-bg);color:var(--success)}
+.bw{background:var(--warn-bg);color:var(--warn)}
+.bd{background:var(--danger-bg);color:var(--danger)}
+.bi{background:var(--info-bg);color:var(--info)}
+.bn{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
+.onum{font-family:'Courier New',monospace;font-size:12px;font-weight:600;color:var(--accent)}
+.today-tag{font-size:10px;background:var(--accent);color:#fff;padding:1px 6px;border-radius:100px;margin-left:4px;font-weight:500}
+.nostock-tag{font-size:10px;background:#dc2626;color:#fff;padding:1px 6px;border-radius:100px;margin-left:4px;font-weight:500}
+
+/* ── Modal ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border-radius:var(--radius);width:100%;max-width:950px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.modal-hdr h2{font-size:15px;font-weight:600;color:var(--text)}
+.modal-hdr p{font-size:12px;color:var(--muted);margin-top:2px}
+.modal-close{width:30px;height:30px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface2);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.modal-close:hover{background:var(--border)}
+.modal-filter-bar{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface2)}
+.modal-filter-bar input,.modal-filter-bar select{font-family:inherit;font-size:12px;height:30px;padding:0 8px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);color:var(--text);outline:none;min-width:110px}
+.modal-filter-bar input{min-width:160px}
+.modal-filter-bar input:focus,.modal-filter-bar select:focus{border-color:var(--accent)}
+.modal-count{font-size:11px;color:var(--muted);padding:8px 16px;border-bottom:1px solid var(--border)}
+.modal-body{overflow-y:auto}
+.modal-tbl-wrap{overflow-x:auto}
+.modal-tbl-wrap table{width:100%;border-collapse:collapse;min-width:600px;font-size:13px}
+.modal-tbl-wrap th{padding:10px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap;position:sticky;top:0}
+.modal-tbl-wrap td{padding:9px 14px;border-bottom:1px solid var(--border);color:var(--text);white-space:nowrap}
+.modal-tbl-wrap tr:last-child td{border-bottom:none}
+.modal-tbl-wrap tbody tr:hover td{background:var(--surface2)}
+.modal-tbl-wrap tbody tr.nostock-row td{background:#fef2f2}
+tbody tr.packed-row td{background:#f0fdf4}
+.modal-tbl-wrap tbody tr.packed-row td{background:#f0fdf4}
+
+/* ── Daily Tracker ── */
+.daily-page{display:none}.daily-page.open{display:block}
+.form-section{background:var(--surface2);border-radius:var(--radius);padding:16px;margin-bottom:16px}
+.form-section h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-group label{font-size:11px;font-weight:500;color:var(--muted)}
+.form-group input,.form-group textarea{font-family:inherit;font-size:13px;padding:8px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);color:var(--text);outline:none;width:100%}
+.form-group input[type=date],.form-group input[type=number]{height:36px;padding:0 10px}
+.form-group input[type=number]{-moz-appearance:textfield}
+.form-group input:focus,.form-group textarea:focus{border-color:#7c3aed}
+.total-display{background:#f5f3ff;border:2px solid #7c3aed;border-radius:var(--radius-sm);padding:6px 10px;text-align:center;height:36px;display:flex;align-items:center;justify-content:center}
+.total-display .total-num{font-size:22px;font-weight:700;color:#7c3aed;line-height:1}
+.submit-btn{background:#7c3aed;border:none;color:#fff;font-family:inherit;font-size:13px;font-weight:500;padding:10px 20px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;width:100%}
+.submit-btn:hover{background:#6d28d9}
+.submit-btn:disabled{background:#ccc;cursor:not-allowed}
+.form-msg{font-size:12px;text-align:center;padding:8px;border-radius:var(--radius-sm);display:none;margin-bottom:8px}
+.form-msg.success{background:var(--success-bg);color:var(--success)}
+.form-msg.error{background:var(--danger-bg);color:var(--danger)}
+.tracker-table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border)}
+.tracker-table-wrap table{width:100%;border-collapse:collapse;font-size:13px;min-width:600px}
+.tracker-table-wrap th{padding:9px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap}
+.tracker-table-wrap td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text);white-space:nowrap;max-width:200px;overflow:hidden;text-overflow:ellipsis}
+.tracker-table-wrap tr:last-child td{border-bottom:none}
+.tracker-table-wrap tbody tr:hover td{background:var(--surface2)}
+.setup-box{background:#f5f3ff;border:1px solid #ddd6fe;border-radius:var(--radius);padding:16px;margin-bottom:16px}
+.setup-box h3{font-size:13px;font-weight:600;color:#7c3aed;margin-bottom:10px}
+.setup-box ol{padding-left:18px;font-size:12px;color:var(--text);line-height:2}
+.setup-box code{background:#ede9fe;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:11px;color:#7c3aed}
+.setup-box input{font-family:inherit;font-size:12px;height:32px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid #ddd6fe;background:#fff;color:var(--text);outline:none;width:100%;margin-top:8px}
+.setup-box input:focus{border-color:#7c3aed}
+.setup-save-btn{margin-top:8px;background:#7c3aed;border:none;color:#fff;font-family:inherit;font-size:12px;padding:6px 14px;border-radius:var(--radius-sm);cursor:pointer}
+.page-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.page-hdr h1{font-size:20px;font-weight:600;letter-spacing:-.3px}
+.page-hdr p{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* ── Pending Category Section ── */
+.pcat-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:20px}
+.pcat-section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.pcat-section-hdr h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.pcat-loading{font-size:12px;color:var(--muted);text-align:center;padding:20px}
+.pcat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.pcat-card{background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border);padding:12px 14px;cursor:pointer;transition:box-shadow .15s,border-color .15s}
+.pcat-card:hover{box-shadow:0 0 0 2px var(--accent);border-color:var(--accent)}
+.pcat-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcat-total{font-size:22px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:6px}
+.pcat-brands{display:flex;gap:6px;flex-wrap:wrap}
+.pcat-brand-chip{font-size:10px;padding:2px 7px;border-radius:100px;font-weight:500;white-space:nowrap}
+.pcat-empty{font-size:12px;color:var(--muted);text-align:center;padding:24px}
+
+/* ── Loading screen ── */
+.loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:300px;gap:12px;color:var(--muted);font-size:13px}
+.spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<!-- ── Sidebar ── -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <h2>Order Dashboard</h2>
+    <p>Multi-brand manager</p>
+  </div>
+  <div class="sidebar-section">Brands</div>
+
+  <button class="nav-item" id="nav-shrus" onclick="showBrandDashboard('shrus')">
+    <span class="nav-dot" style="background:#2d5be3"></span>
+    Shrus
+    <span class="nav-badge" id="badge-shrus">-</span>
+  </button>
+  <button class="nav-item" id="nav-ikeym" onclick="showBrandDashboard('ikeym')">
+    <span class="nav-dot" style="background:#16a34a"></span>
+    Ikeym
+    <span class="nav-badge" id="badge-ikeym">-</span>
+  </button>
+  <button class="nav-item" id="nav-maya" onclick="showBrandDashboard('maya')">
+    <span class="nav-dot" style="background:#d97706"></span>
+    Maya
+    <span class="nav-badge" id="badge-maya">-</span>
+  </button>
+  <button class="nav-item soon" id="nav-majorrangas">
+    <span class="nav-dot" style="background:#ccc"></span>
+    Majorrangas
+    <span class="nav-badge">Soon</span>
+  </button>
+
+  <div class="sidebar-section">Tools</div>
+  <button class="nav-item" id="nav-daily" onclick="showDailyTracker()">
+    <span class="nav-dot" style="background:#7c3aed"></span>
+    Daily Tracker
+  </button>
+
+  <div class="sidebar-footer">
+    Auto-refresh every 60s
+  </div>
+</nav>
+
+<!-- ── Main ── -->
+<div class="main">
+
+  <!-- Dashboard content -->
+  <div id="dashboard-content">
+
+  <div class="hdr">
+    <div class="hdr-left">
+      <div class="brand-icon" id="brand-icon">S</div>
+      <div class="hdr-title">
+        <h1 id="brand-name">Shrus</h1>
+        <p>Live from Google Sheets &middot; auto-refreshes every 60 seconds</p>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <div class="status-pill"><span class="dot" id="sdot"></span><span id="stxt">Loading...</span></div>
+      <button class="btn" onclick="loadData()">
+        <svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
+        Refresh
+      </button>
+    </div>
+  </div>
+
+  <div class="err-bar" id="err-box"><span id="err-msg"></span></div>
+
+  <!-- Today Banner -->
+  <div class="today-banner" id="today-banner">
+    <div>
+      <div class="today-date" id="today-date"></div>
+      <div class="today-title">Today's status</div>
+    </div>
+    <div class="today-stats">
+      <div class="today-stat"><div class="today-stat-val" id="td-orders">-</div><div class="today-stat-label">Orders today</div><div class="today-stat-change" id="td-orders-chg"></div></div>
+      <div class="today-stat"><div class="today-stat-val" id="td-paid">-</div><div class="today-stat-label">Paid today</div><div class="today-stat-change" id="td-paid-chg"></div></div>
+      <div class="today-stat"><div class="today-stat-val" id="td-pending">-</div><div class="today-stat-label">Pay pending</div><div class="today-stat-change" id="td-pending-chg"></div></div>
+      <div class="today-stat"><div class="today-stat-val" id="td-high">-</div><div class="today-stat-label">High priority</div><div class="today-stat-change" id="td-high-chg"></div></div>
+    </div>
+  </div>
+
+  <!-- View Toggle -->
+  <div class="view-toggle">
+    <span>Showing:</span>
+    <button class="toggle-btn" id="btn-today" onclick="setView('today')">Today only</button>
+    <button class="toggle-btn active" id="btn-all" onclick="setView('all')">All orders</button>
+  </div>
+
+  <!-- Today vs Yesterday -->
+  <div class="compare-row">
+    <div class="compare-card">
+      <h3><span class="day-badge" id="today-badge">Today</span> <span id="lbl-today-date"></span></h3>
+      <div class="compare-grid">
+        <div class="cstat"><div class="cstat-val" id="c-today-total">-</div><div class="cstat-label">Total orders</div></div>
+        <div class="cstat"><div class="cstat-val" id="c-today-paid">-</div><div class="cstat-label">Paid</div></div>
+        <div class="cstat"><div class="cstat-val" id="c-today-pending">-</div><div class="cstat-label">Pay pending</div></div>
+        <div class="cstat"><div class="cstat-val" id="c-today-high">-</div><div class="cstat-label">High priority</div></div>
+      </div>
+    </div>
+    <div class="compare-card">
+      <h3><span class="day-badge yesterday">Yesterday</span> <span id="lbl-yesterday-date"></span></h3>
+      <div class="compare-grid">
+        <div class="cstat"><div class="cstat-val" id="c-yest-total">-</div><div class="cstat-label">Total orders</div></div>
+        <div class="cstat"><div class="cstat-val" id="c-yest-paid">-</div><div class="cstat-label">Paid</div></div>
+        <div class="cstat"><div class="cstat-val" id="c-yest-pending">-</div><div class="cstat-label">Pay pending</div></div>
+        <div class="cstat"><div class="cstat-val" id="c-yest-high">-</div><div class="cstat-label">High priority</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Metrics -->
+  <div class="metrics">
+    <div class="mc" onclick="showModal('total')"><div class="mc-label">Total orders</div><div class="mc-val a" id="m-total">-</div></div>
+    <div class="mc" onclick="showModal('paid')"><div class="mc-label">Paid</div><div class="mc-val s" id="m-paid">-</div></div>
+    <div class="mc" onclick="showModal('pay-pending')"><div class="mc-label">Payment pending</div><div class="mc-val w" id="m-pay-pending">-</div></div>
+    <div class="mc" onclick="showModal('pay-other')"><div class="mc-label">Other payment</div><div class="mc-val" id="m-pay-other" style="color:var(--muted)">-</div></div>
+    <div class="mc" onclick="showModal('high')"><div class="mc-label">High priority</div><div class="mc-val d" id="m-high">-</div></div>
+    <div class="mc" onclick="showModal('pending-cat')"><div class="mc-label">Pending category</div><div class="mc-val w" id="m-pending">-</div></div>
+    <div class="mc" onclick="showModal('measurement')"><div class="mc-label">Measurement pending</div><div class="mc-val a" id="m-meas">-</div></div>
+    <div class="mc" onclick="showModal('nostock')"><div class="mc-label">No stock orders</div><div class="mc-val d" id="m-nostock">-</div></div>
+    <div class="mc" onclick="showModal('packed')"><div class="mc-label">Packed orders</div><div class="mc-val s" id="m-packed">-</div></div>
+  </div>
+
+  <!-- Charts -->
+  <div class="charts">
+    <div class="cc"><h3>Orders by status</h3><div class="chart-area"><canvas id="c-status" height="200"></canvas></div><div class="legend" id="leg-status"></div></div>
+    <div class="cc"><h3>Payment breakdown</h3><div class="chart-area"><canvas id="c-pay" height="200"></canvas></div><div class="legend" id="leg-pay"></div></div>
+  </div>
+
+  <!-- Pending Category Cross-Brand Section -->
+  <div class="pcat-section" id="pcat-section">
+    <div class="pcat-section-hdr">
+      <div>
+        <h3>&#x1F4CB; Pending Category — All Brands</h3>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span id="pcat-status" style="font-size:11px;color:var(--muted)"></span>
+        <button class="btn" onclick="loadAllPendingCategories()" style="font-size:11px;height:28px;padding:0 10px">
+          <svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
+          Refresh
+        </button>
+      </div>
+    </div>
+    <div id="pcat-content"><div class="pcat-loading">Loading pending categories from all brands...</div></div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-box">
+    <h3>Filters</h3>
+    <div class="filters-grid">
+      <div class="fg"><label>Search</label><input type="text" id="f-search" placeholder="Order #, agent, remark..." oninput="applyFilters()"></div>
+      <div class="fg"><label>Order status</label><select id="f-status" onchange="applyFilters()"><option value="">All statuses</option></select></div>
+      <div class="fg"><label>Payment</label><select id="f-pay" onchange="applyFilters()"><option value="">All payments</option></select></div>
+      <div class="fg"><label>Priority</label><select id="f-priority" onchange="applyFilters()"><option value="">All priorities</option></select></div>
+      <div class="fg"><label>Assigned to</label><select id="f-assign" onchange="applyFilters()"><option value="">All agents</option></select></div>
+      <div class="fg"><label>Pending category</label><select id="f-pendcat" onchange="applyFilters()"><option value="">All categories</option></select></div>
+      <div class="fg"><label>Date from</label><input type="date" id="f-date-from" onchange="applyFilters()"></div>
+      <div class="fg"><label>Date to</label><input type="date" id="f-date-to" onchange="applyFilters()"></div>
+      <div class="fg" style="margin-left:auto"><label>&nbsp;</label><button class="btn" onclick="clearFilters()">Clear filters</button></div>
+    </div>
+  </div>
+
+  <div class="result-info" id="row-count"></div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr id="thead"></tr></thead>
+      <tbody id="tbody"><tr><td colspan="10" class="empty"><div class="loading-screen"><div class="spinner"></div>Loading orders...</div></td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div><h2 id="modal-title">Orders</h2><p id="modal-subtitle"></p></div>
+      <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    </div>
+    <div class="modal-filter-bar">
+      <input type="text" id="modal-search" placeholder="Search order #, agent..." oninput="filterModal()">
+      <select id="modal-f-status" onchange="filterModal()"><option value="">All statuses</option></select>
+      <select id="modal-f-pay" onchange="filterModal()"><option value="">All payments</option></select>
+      <select id="modal-f-assign" onchange="filterModal()"><option value="">All agents</option></select>
+      <select id="modal-f-pendcat" onchange="filterModal()"><option value="">All categories</option></select>
+      <button class="btn" onclick="clearModalFilters()" style="height:30px;padding:0 10px;font-size:12px">Clear</button>
+    </div>
+    <div class="modal-count" id="modal-count"></div>
+    <div class="modal-body">
+      <div class="modal-tbl-wrap">
+        <table><thead><tr id="modal-thead"></tr></thead><tbody id="modal-tbody"></tbody></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div><!-- end dashboard-content -->
+
+<!-- Daily Tracker Inline Page -->
+<div class="daily-page" id="daily-page">
+  <div class="page-hdr">
+    <div>
+      <h1>Daily Packed &amp; Delivery Tracker</h1>
+      <p>Log packed orders and delivery partner breakdown each day</p>
+    </div>
+    <button class="btn" onclick="loadTrackerHistory()">
+      <svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
+      Refresh history
+    </button>
+  </div>
+
+  <!-- Setup -->
+  <div class="setup-box" id="setup-box">
+    <h3>&#9881; One-time setup &mdash; connect your Google Sheet</h3>
+    <ol>
+      <li>Create a new Google Sheet for daily tracking</li>
+      <li>Go to <code>Extensions &rarr; Apps Script</code></li>
+      <li>Delete existing code, paste the script below &amp; deploy as <strong>Web App</strong> (Anyone can access)</li>
+      <li>Copy the web app URL and paste below:</li>
+    </ol>
+    <input type="text" id="script-url-input" placeholder="https://script.google.com/macros/s/..." />
+    <br>
+    <button class="setup-save-btn" onclick="saveScriptUrl()">Save &amp; Connect</button>
+    <div style="margin-top:12px;font-size:11px;color:var(--muted)">
+      <strong>Paste this in Apps Script:</strong>
+      <textarea readonly style="width:100%;height:130px;font-family:monospace;font-size:10px;margin-top:6px;padding:8px;border:1px solid #ddd6fe;border-radius:4px;background:#fff;resize:none;color:#333" id="apps-script-code"></textarea>
+    </div>
+  </div>
+
+  <!-- Entry Form -->
+  <div class="form-section">
+    <h3>Log daily data</h3>
+    <!-- Row 1: Date spans full width -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px">
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" id="f-date" />
+      </div>
+    </div>
+    <!-- Row 2: Partners + Total -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px;align-items:end">
+      <div class="form-group">
+        <label>DHL</label>
+        <input type="number" id="f-dhl" placeholder="0" min="0" oninput="calcTotal()" />
+      </div>
+      <div class="form-group">
+        <label>Bluedart</label>
+        <input type="number" id="f-bluedart" placeholder="0" min="0" oninput="calcTotal()" />
+      </div>
+      <div class="form-group">
+        <label>Franch</label>
+        <input type="number" id="f-franch" placeholder="0" min="0" oninput="calcTotal()" />
+      </div>
+      <div class="form-group">
+        <label>Others</label>
+        <input type="number" id="f-others" placeholder="0" min="0" oninput="calcTotal()" />
+      </div>
+      <div class="form-group">
+        <label>Total Packed</label>
+        <div class="total-display">
+          <div class="total-num" id="f-total-display">0</div>
+        </div>
+      </div>
+    </div>
+    <!-- Row 3: Remarks -->
+    <div class="form-group">
+      <label>Remarks</label>
+      <textarea id="f-remarks" placeholder="Any notes for today..." rows="2" style="resize:vertical"></textarea>
+    </div>
+    <div style="margin-top:14px">
+      <div class="form-msg" id="form-msg"></div>
+      <button class="submit-btn" id="submit-btn" onclick="submitDailyData()">Submit Entry</button>
+    </div>
+  </div>
+
+  <!-- History -->
+  <div class="form-section">
+    <h3>Recent entries</h3>
+    <div class="tracker-table-wrap">
+      <table>
+        <thead><tr><th>Date</th><th>Total Packed</th><th>DHL</th><th>Bluedart</th><th>Franch</th><th>Others</th><th>Remarks</th></tr></thead>
+        <tbody id="tracker-tbody"><tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted)">No entries yet. Submit your first entry above!</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Brand config ──
+var BRANDS = {
+  shrus:      { name:'Shrus',      icon:'S', color:'#2d5be3', sheetId:'16wFoJiT3hlHakrdow1znmjlRfRqCzpQnLfiDEfSUeXo', gid:'271152649' },
+  ikeym:      { name:'Ikeym',      icon:'I', color:'#16a34a', sheetId:'1nO8vJB8XF_IhPyRhJRdAampvV-zqU7ASWzTU4CU4SKQ', gid:'0' },
+  maya:       { name:'Maya',       icon:'M', color:'#d97706', sheetId:'1nI6hwvEcctT25bDycuIsDR9WMwPnP780VQQlPAyw3Us', gid:'0' }
+};
+
+var currentBrand = 'shrus';
+var allRows = [], colHeaders = [];
+var currentView = 'all';
+var brandCache = {};
+var PALETTE = ['#2d5be3','#16a34a','#d97706','#dc2626','#7c3aed','#0891b2','#db2777','#65a30d','#0f766e','#9333ea'];
+
+// ── Date helpers ──
+function pad(n){return n<10?'0'+n:''+n;}
+function todayStr(){var d=new Date();return pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear();}
+function yesterdayStr(){var d=new Date();d.setDate(d.getDate()-1);return pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear();}
+function fmtDate(str){
+  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var sep=str.indexOf('-')!==-1?'-':'/';
+  var p=str.split(sep);
+  if(p.length===3)return p[0]+' '+months[parseInt(p[1],10)-1]+' '+p[2];
+  return str;
+}
+function parseDate(str){
+  if(!str)return null;
+  str=str.trim().split(' ')[0];
+  var gm=str.match(/^Date\((\d+),(\d+),(\d+)\)$/);
+  if(gm)return new Date(parseInt(gm[1]),parseInt(gm[2]),parseInt(gm[3]));
+  var sep=str.indexOf('-')!==-1?'-':str.indexOf('/')!==-1?'/':null;
+  if(!sep)return null;
+  var p=str.split(sep);
+  if(p.length===3){var d=parseInt(p[0],10),m=parseInt(p[1],10)-1,y=parseInt(p[2],10);if(y<100)y+=2000;return new Date(y,m,d);}
+  return null;
+}
+function sameDay(d1,d2){if(!d1||!d2)return false;return d1.getFullYear()===d2.getFullYear()&&d1.getMonth()===d2.getMonth()&&d1.getDate()===d2.getDate();}
+var _today=new Date();
+var _yesterday=new Date();_yesterday.setDate(_yesterday.getDate()-1);
+function isToday(r){return sameDay(parseDate(r['Order Date']),_today);}
+function isYesterday(r){return sameDay(parseDate(r['Order Date']),_yesterday);}
+
+// ── Brand switching ──
+function switchBrand(brand){
+  if(!BRANDS[brand])return;
+  currentBrand=brand;
+  var b=BRANDS[brand];
+  // Update nav
+  ['shrus','ikeym','maya'].forEach(function(k){
+    document.getElementById('nav-'+k).className='nav-item'+(k===brand?' active':'');
+  });
+  // Update header
+  document.getElementById('brand-icon').textContent=b.icon;
+  document.getElementById('brand-icon').style.background=b.color;
+  document.getElementById('brand-name').textContent=b.name;
+  document.getElementById('today-banner').style.background=b.color;
+  document.getElementById('today-badge').style.background=b.color;
+  // Update toggle active color
+  document.querySelectorAll('.toggle-btn.active').forEach(function(el){el.style.background=b.color;el.style.borderColor=b.color;});
+  // Load from cache or fetch
+  if(brandCache[brand]){
+    allRows=brandCache[brand];
+    colHeaders=brandCacheHeaders[brand]||[];
+    refreshUI();
+    setStatus('live','Cached \u00b7 '+allRows.length+' orders');
+  } else {
+    loadData();
+  }
+}
+
+var brandCacheHeaders = {};
+
+// ── Fetch ──
+async function loadData(){
+  setStatus('loading','Fetching...');
+  document.getElementById('err-box').style.display='none';
+  var b=BRANDS[currentBrand];
+  var url='https://docs.google.com/spreadsheets/d/'+b.sheetId+'/gviz/tq?tqx=out:json&gid='+b.gid+'&t='+Date.now();
+  try{
+    var res=await fetch(url);
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    var text=await res.text();
+    var jsonStr=text.replace(/^[^(]+\(/,'').replace(/\);\s*$/,'');
+    var data=JSON.parse(jsonStr);
+    if(!data.table)throw new Error('No table in response');
+    processTable(data.table);
+  }catch(e){
+    showError('Could not load '+BRANDS[currentBrand].name+': '+e.message);
+  }
+}
+
+function processTable(table){
+  colHeaders=(table.cols||[]).map(function(c){return c.label||c.id||'';});
+  allRows=(table.rows||[]).map(function(row){
+    var obj={};
+    colHeaders.forEach(function(h,i){
+      var cell=row.c&&row.c[i];
+      var val='';
+      if(cell){if(cell.f!==null&&cell.f!==undefined)val=String(cell.f);else if(cell.v!==null&&cell.v!==undefined)val=String(cell.v);}
+      obj[h]=val.trim();
+    });
+    return obj;
+  }).filter(function(r){return colHeaders[0]&&r[colHeaders[0]];});
+  // Cache
+  brandCache[currentBrand]=allRows;
+  brandCacheHeaders[currentBrand]=colHeaders;
+  // Update sidebar badge
+  document.getElementById('badge-'+currentBrand).textContent=allRows.length;
+  refreshUI();
+  setStatus('live','Updated '+new Date().toLocaleTimeString()+' \u00b7 '+allRows.length+' orders');
+}
+
+function refreshUI(){
+  populateFilter('f-status','orderStatus','All statuses');
+  populateFilter('f-pay','Shopify Payment','All payments');
+  populateFilter('f-priority','Priority','All priorities');
+  populateFilter('f-assign','Assign','All agents');
+  populateFilter('f-pendcat','Pending Categorie','All categories');
+  updateTodaySection();
+  applyFilters();
+}
+
+// ── Today section ──
+function updateTodaySection(){
+  var now=new Date();
+  document.getElementById('today-date').textContent=now.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('lbl-today-date').textContent=fmtDate(todayStr());
+  document.getElementById('lbl-yesterday-date').textContent=fmtDate(yesterdayStr());
+
+  var tR=allRows.filter(isToday), yR=allRows.filter(isYesterday);
+  var tT=tR.length, tPd=tR.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='paid';}).length;
+  var tPn=tR.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='pending';}).length;
+  var tH=tR.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
+  var yT=yR.length, yPd=yR.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='paid';}).length;
+  var yPn=yR.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='pending';}).length;
+  var yH=yR.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
+
+  document.getElementById('td-orders').textContent=tT;
+  document.getElementById('td-paid').textContent=tPd;
+  document.getElementById('td-pending').textContent=tPn;
+  document.getElementById('td-high').textContent=tH;
+  setChg('td-orders-chg',tT,yT);setChg('td-paid-chg',tPd,yPd);setChg('td-pending-chg',tPn,yPn);setChg('td-high-chg',tH,yH);
+
+  document.getElementById('c-today-total').textContent=tT;document.getElementById('c-today-paid').textContent=tPd;
+  document.getElementById('c-today-pending').textContent=tPn;document.getElementById('c-today-high').textContent=tH;
+  document.getElementById('c-yest-total').textContent=yT;document.getElementById('c-yest-paid').textContent=yPd;
+  document.getElementById('c-yest-pending').textContent=yPn;document.getElementById('c-yest-high').textContent=yH;
+}
+
+function setChg(id,t,y){
+  var diff=t-y,el=document.getElementById(id);
+  el.textContent=diff>0?'+'+diff+' vs yesterday':diff<0?diff+' vs yesterday':'Same as yesterday';
+  el.className='today-stat-change '+(diff>0?'up':diff<0?'down':'same');
+}
+
+// ── View toggle ──
+function setView(view){
+  currentView=view;
+  var b=BRANDS[currentBrand];
+  ['today','all'].forEach(function(v){
+    var el=document.getElementById('btn-'+v);
+    el.className='toggle-btn'+(view===v?' active':'');
+    if(view===v){el.style.background=b.color;el.style.borderColor=b.color;}
+    else{el.style.background='';el.style.borderColor='';}
+  });
+  applyFilters();
+}
+
+// ── Charts ──
+function drawBar(canvasId,labels,values,colors){
+  var canvas=document.getElementById(canvasId);if(!canvas)return;
+  var dpr=window.devicePixelRatio||1,W=canvas.parentElement.offsetWidth||500,H=200;
+  canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';
+  var ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
+  var padL=40,padR=16,padT=16,padB=40,chartW=W-padL-padR,chartH=H-padT-padB;
+  var max=Math.max.apply(null,values)||1,step=Math.ceil(max/4);max=step*4;
+  ctx.strokeStyle='#e4e2da';ctx.lineWidth=0.5;
+  for(var i=0;i<=4;i++){var y=padT+chartH-(i/4)*chartH;ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(padL+chartW,y);ctx.stroke();ctx.fillStyle='#7a786f';ctx.font='10px system-ui,sans-serif';ctx.textAlign='right';ctx.fillText(step*i,padL-4,y+3);}
+  var n=labels.length,gap=chartW/n,barW=Math.min(50,gap*0.6);
+  for(var j=0;j<n;j++){var bh=(values[j]/max)*chartH,bx=padL+gap*j+(gap-barW)/2,by=padT+chartH-bh;ctx.fillStyle=colors[j%colors.length];ctx.beginPath();if(ctx.roundRect)ctx.roundRect(bx,by,barW,bh,4);else ctx.rect(bx,by,barW,bh);ctx.fill();if(bh>16){ctx.fillStyle='#fff';ctx.font='bold 10px system-ui,sans-serif';ctx.textAlign='center';ctx.fillText(values[j],bx+barW/2,by+13);}ctx.fillStyle='#7a786f';ctx.font='10px system-ui,sans-serif';ctx.textAlign='center';var lbl=labels[j].length>13?labels[j].slice(0,12)+'..':labels[j];ctx.fillText(lbl,bx+barW/2,padT+chartH+15);}
+}
+function drawDoughnut(canvasId,labels,values,colors){
+  var canvas=document.getElementById(canvasId);if(!canvas)return;
+  var dpr=window.devicePixelRatio||1,W=canvas.parentElement.offsetWidth||300,H=200;
+  canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';
+  var ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
+  var total=values.reduce(function(a,b){return a+b;},0)||1,cx=W/2,cy=H/2,outerR=Math.min(W,H)/2-10,innerR=outerR*0.58,start=-Math.PI/2;
+  for(var i=0;i<values.length;i++){var slice=(values[i]/total)*Math.PI*2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,outerR,start,start+slice);ctx.closePath();ctx.fillStyle=colors[i%colors.length];ctx.fill();start+=slice;}
+  ctx.beginPath();ctx.arc(cx,cy,innerR,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+  ctx.fillStyle='#1a1916';ctx.font='bold 20px system-ui,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(total,cx,cy-8);
+  ctx.fillStyle='#7a786f';ctx.font='11px system-ui,sans-serif';ctx.fillText('total',cx,cy+12);
+}
+function makeLegend(id,labels,values,colors){
+  var el=document.getElementById(id);if(!el)return;
+  var total=values.reduce(function(a,b){return a+b;},0)||1;
+  el.innerHTML=labels.map(function(l,i){var pct=Math.round(values[i]/total*100);return '<span class="legend-item"><span class="legend-dot" style="background:'+colors[i%colors.length]+'"></span>'+l+' ('+values[i]+', '+pct+'%)</span>';}).join('');
+}
+function buildCharts(rows){
+  var sMap={},pMap={};
+  rows.forEach(function(r){var s=r['orderStatus']||'Unknown';var p=r['Shopify Payment']||'Unknown';sMap[s]=(sMap[s]||0)+1;pMap[p]=(pMap[p]||0)+1;});
+  drawBar('c-status',Object.keys(sMap),Object.values(sMap),PALETTE);
+  makeLegend('leg-status',Object.keys(sMap),Object.values(sMap),PALETTE);
+  drawDoughnut('c-pay',Object.keys(pMap),Object.values(pMap),PALETTE);
+  makeLegend('leg-pay',Object.keys(pMap),Object.values(pMap),PALETTE);
+}
+
+// ── Metrics ──
+function updateMetrics(rows){
+  var total=rows.length;
+  var paid=rows.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='paid';}).length;
+  var payPending=rows.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='pending';}).length;
+  document.getElementById('m-total').textContent=total.toLocaleString();
+  document.getElementById('m-paid').textContent=paid;
+  document.getElementById('m-pay-pending').textContent=payPending;
+  document.getElementById('m-pay-other').textContent=total-paid-payPending;
+  document.getElementById('m-high').textContent=rows.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
+  document.getElementById('m-pending').textContent=rows.filter(function(r){return r['Pending Categorie'];}).length;
+  document.getElementById('m-meas').textContent=rows.filter(function(r){return(r['Pending Categorie']||'').toLowerCase().includes('measurement');}).length;
+  document.getElementById('m-nostock').textContent=rows.filter(function(r){return(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';}).length;
+  document.getElementById('m-packed').textContent=rows.filter(function(r){return(r['orderStatus']||'').trim().toLowerCase()==='packed';}).length;
+}
+
+// ── Filters & table ──
+function populateFilter(id,col,ph){
+  var sel=document.getElementById(id),cur=sel.value,vals=[];
+  allRows.forEach(function(r){if(r[col]&&vals.indexOf(r[col])===-1)vals.push(r[col]);});
+  vals.sort();
+  sel.innerHTML='<option value="">'+ph+'</option>'+vals.map(function(v){return '<option value="'+v+'"'+(v===cur?' selected':'')+'>'+v+'</option>';}).join('');
+}
+
+function badge(t,c){return '<span class="badge '+c+'">'+(t||'&mdash;')+'</span>';}
+function statusBadge(v){if(!v)return badge('&mdash;','bn');var l=v.toLowerCase();if(l.includes('complete'))return badge(v,'bs');if(l.includes('cancel'))return badge(v,'bd');if(l.includes('pending')||l.includes('pick')||l.includes('process'))return badge(v,'bw');return badge(v,'bn');}
+function payBadge(v){if(!v)return badge('&mdash;','bn');var l=v.toLowerCase();if(l==='paid')return badge(v,'bs');if(l==='pending')return badge(v,'bw');return badge(v,'bn');}
+function prioBadge(v){if(!v)return badge('&mdash;','bn');var l=v.toLowerCase();if(l.includes('high'))return badge(v,'bd');if(l.includes('med'))return badge(v,'bw');if(l.includes('low'))return badge(v,'bi');return badge(v,'bn');}
+
+var COLS=[
+  {key:'orderNumber',label:'Order #',render:function(v){return '<span class="onum">#'+v+'</span>';}},
+  {key:'Order Date',label:'Date'},
+  {key:'orderStatus',label:'Status',render:statusBadge},
+  {key:'Shopify Payment',label:'Payment',render:payBadge},
+  {key:'Priority',label:'Priority',render:prioBadge},
+  {key:'Order Tag',label:'Tag'},
+  {key:'Pending Categorie',label:'Pending Category'},
+  {key:'Assign',label:'Assigned To'},
+  {key:'User Remarks',label:'User Remarks'},
+  {key:'Agent Remarks ',label:'Agent Remarks'}
+];
+
+function applyFilters(){
+  var s=document.getElementById('f-search').value.toLowerCase();
+  var st=document.getElementById('f-status').value;
+  var pay=document.getElementById('f-pay').value;
+  var pri=document.getElementById('f-priority').value;
+  var asg=document.getElementById('f-assign').value;
+  var pc=document.getElementById('f-pendcat').value;
+  var df=document.getElementById('f-date-from').value;
+  var dt=document.getElementById('f-date-to').value;
+  var base=currentView==='today'?allRows.filter(isToday):allRows;
+  var filtered=base.filter(function(r){
+    if(s&&Object.values(r).join(' ').toLowerCase().indexOf(s)===-1)return false;
+    if(st&&r['orderStatus']!==st)return false;
+    if(pay&&r['Shopify Payment']!==pay)return false;
+    if(pri&&r['Priority']!==pri)return false;
+    if(asg&&r['Assign']!==asg)return false;
+    if(pc&&r['Pending Categorie']!==pc)return false;
+    if(df||dt){var d=parseDate(r['Order Date']);if(!d)return false;if(df&&d<new Date(df))return false;if(dt&&d>new Date(dt+'T23:59:59'))return false;}
+    return true;
+  });
+  buildCharts(filtered);
+  updateMetrics(filtered);
+  renderTable(filtered);
+}
+
+function renderTable(rows){
+  var cols=COLS.filter(function(c){return colHeaders.indexOf(c.key)!==-1;});
+  document.getElementById('thead').innerHTML=cols.map(function(c){return '<th>'+c.label+'</th>';}).join('');
+  document.getElementById('row-count').textContent='Showing '+rows.length.toLocaleString()+' order'+(rows.length!==1?'s':'');
+  if(!rows.length){document.getElementById('tbody').innerHTML='<tr><td colspan="'+cols.length+'" class="empty">No orders match your filters.</td></tr>';return;}
+  document.getElementById('tbody').innerHTML=rows.map(function(r){
+    var isTodayRow=isToday(r);
+    var isNoStock=(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';
+    var isPacked=(r['orderStatus']||'').trim().toLowerCase()==='packed';
+    var cls=isNoStock?'nostock-row':isPacked?'packed-row':isTodayRow?'today-row':'';
+    return '<tr'+(cls?' class="'+cls+'"':'')+'>'+cols.map(function(c){
+      var v=r[c.key]||'';
+      var cell=c.render?c.render(v):'<span title="'+v.replace(/"/g,'&quot;')+'">'+(v||'&mdash;')+'</span>';
+      if(c.key==='Order Date'&&isTodayRow)cell+='<span class="today-tag">Today</span>';
+      if(c.key==='Pending Categorie'&&isNoStock)cell='<span class="badge bd">No Stock</span><span class="nostock-tag">!</span>';
+      return '<td>'+cell+'</td>';
+    }).join('')+'</tr>';
+  }).join('');
+}
+
+function clearFilters(){
+  ['f-search','f-date-from','f-date-to'].forEach(function(id){document.getElementById(id).value='';});
+  ['f-status','f-pay','f-priority','f-assign','f-pendcat'].forEach(function(id){document.getElementById(id).value='';});
+  applyFilters();
+}
+
+// ── Modal ──
+var MODAL_COLS=[
+  {key:'orderNumber',label:'Order #',render:function(v){return '<span class="onum">#'+v+'</span>';}},
+  {key:'Order Date',label:'Date'},
+  {key:'orderStatus',label:'Status',render:statusBadge},
+  {key:'Shopify Payment',label:'Payment',render:payBadge},
+  {key:'Priority',label:'Priority',render:prioBadge},
+  {key:'Pending Categorie',label:'Pending Category'},
+  {key:'Assign',label:'Assigned To'},
+  {key:'User Remarks',label:'User Remarks'}
+];
+function getModalRows(type){
+  var base=currentView==='today'?allRows.filter(isToday):allRows;
+  if(type==='total')return{title:'All orders',rows:base};
+  if(type==='paid')return{title:'Paid orders',rows:base.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='paid';})};
+  if(type==='pay-pending')return{title:'Payment pending orders',rows:base.filter(function(r){return(r['Shopify Payment']||'').trim().toLowerCase()==='pending';})};
+  if(type==='pay-other')return{title:'Other payment status',rows:base.filter(function(r){var v=(r['Shopify Payment']||'').trim().toLowerCase();return v!=='paid'&&v!=='pending';})};
+  if(type==='high')return{title:'High priority orders',rows:base.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');})};
+  if(type==='pending-cat')return{title:'Orders with pending category',rows:base.filter(function(r){return r['Pending Categorie'];})};
+  if(type==='measurement')return{title:'Measurement pending orders',rows:base.filter(function(r){return(r['Pending Categorie']||'').toLowerCase().includes('measurement');})};
+  if(type==='nostock')return{title:'No stock orders',rows:base.filter(function(r){return(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';})};
+  if(type==='packed')return{title:'Packed orders',rows:base.filter(function(r){return(r['orderStatus']||'').trim().toLowerCase()==='packed';})};
+  return{title:'Orders',rows:base};
+}
+var _modalRows=[], _modalAllRows=[];
+
+function showModal(type){
+  var result=getModalRows(type);
+  _modalAllRows=result.rows;
+  _modalRows=result.rows;
+  document.getElementById('modal-title').textContent=result.title+' — '+BRANDS[currentBrand].name;
+  document.getElementById('modal-subtitle').textContent=result.rows.length+' order'+(result.rows.length!==1?'s':'')+(currentView==='today'?' (today only)':' (all time)');
+  document.getElementById('modal-search').value='';
+  populateModalFilter('modal-f-status','orderStatus','All statuses');
+  populateModalFilter('modal-f-pay','Shopify Payment','All payments');
+  populateModalFilter('modal-f-assign','Assign','All agents');
+  populateModalFilter('modal-f-pendcat','Pending Categorie','All categories');
+  ['modal-f-status','modal-f-pay','modal-f-assign','modal-f-pendcat'].forEach(function(id){document.getElementById(id).value='';});
+  renderModalRows(_modalAllRows);
+  document.getElementById('modal-overlay').className='modal-overlay open';
+}
+
+function populateModalFilter(id,col,ph){
+  var sel=document.getElementById(id),vals=[];
+  _modalAllRows.forEach(function(r){if(r[col]&&vals.indexOf(r[col])===-1)vals.push(r[col]);});
+  vals.sort();
+  sel.innerHTML='<option value="">'+ph+'</option>'+vals.map(function(v){return '<option value="'+v+'">'+v+'</option>';}).join('');
+}
+
+function filterModal(){
+  var s=document.getElementById('modal-search').value.toLowerCase();
+  var st=document.getElementById('modal-f-status').value;
+  var pay=document.getElementById('modal-f-pay').value;
+  var asg=document.getElementById('modal-f-assign').value;
+  var pc=document.getElementById('modal-f-pendcat').value;
+  var filtered=_modalAllRows.filter(function(r){
+    if(s&&Object.values(r).join(' ').toLowerCase().indexOf(s)===-1)return false;
+    if(st&&r['orderStatus']!==st)return false;
+    if(pay&&r['Shopify Payment']!==pay)return false;
+    if(asg&&r['Assign']!==asg)return false;
+    if(pc&&r['Pending Categorie']!==pc)return false;
+    return true;
+  });
+  renderModalRows(filtered);
+}
+
+function clearModalFilters(){
+  document.getElementById('modal-search').value='';
+  ['modal-f-status','modal-f-pay','modal-f-assign','modal-f-pendcat'].forEach(function(id){document.getElementById(id).value='';});
+  renderModalRows(_modalAllRows);
+}
+
+function renderModalRows(rows){
+  var cols=MODAL_COLS.filter(function(c){return colHeaders.indexOf(c.key)!==-1;});
+  document.getElementById('modal-thead').innerHTML=cols.map(function(c){return '<th>'+c.label+'</th>';}).join('');
+  document.getElementById('modal-count').textContent='Showing '+rows.length.toLocaleString()+' of '+_modalAllRows.length.toLocaleString()+' order'+(rows.length!==1?'s':'');
+  if(!rows.length){document.getElementById('modal-tbody').innerHTML='<tr><td colspan="'+cols.length+'" style="text-align:center;padding:30px;color:var(--muted)">No orders match filters.</td></tr>';return;}
+  document.getElementById('modal-tbody').innerHTML=rows.map(function(r){
+    var isNoStock=(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';
+    var isPacked=(r['orderStatus']||'').trim().toLowerCase()==='packed';
+    var cls=isNoStock?'nostock-row':isPacked?'packed-row':'';
+    return '<tr'+(cls?' class="'+cls+'"':'')+'>'+cols.map(function(c){var v=r[c.key]||'';return '<td>'+(c.render?c.render(v,r):'<span>'+(v||'&mdash;')+'</span>')+'</td>';}).join('')+'</tr>';
+  }).join('');
+}
+
+
+function closeModal(e){
+  if(!e||e.target===document.getElementById('modal-overlay')){
+    document.getElementById('modal-overlay').className='modal-overlay';
+    // Remove brand col if added
+    if(MODAL_COLS.length&&MODAL_COLS[0].key==='_brand') MODAL_COLS.shift();
+  }
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+
+function showError(msg){document.getElementById('err-box').style.display='block';document.getElementById('err-msg').textContent='Error: '+msg;setStatus('err','Failed to load');}
+function setStatus(state,text){document.getElementById('sdot').className='dot '+state;document.getElementById('stxt').textContent=text;}
+
+window.addEventListener('resize',function(){if(allRows.length)applyFilters();});
+
+// ── Pending Category Cross-Brand Dashboard ──
+var pcatData = {}; // {brand: {category: count}}
+var pcatLoaded = {};
+
+async function fetchBrandRows(brandKey) {
+  var b = BRANDS[brandKey];
+  var url = 'https://docs.google.com/spreadsheets/d/'+b.sheetId+'/gviz/tq?tqx=out:json&gid='+b.gid+'&t='+Date.now();
+  var res = await fetch(url);
+  if(!res.ok) throw new Error('HTTP '+res.status);
+  var text = await res.text();
+  var jsonStr = text.replace(/^[^(]+\(/,'').replace(/\);\s*$/,'');
+  var data = JSON.parse(jsonStr);
+  if(!data.table) throw new Error('No table');
+  var cols = (data.table.cols||[]).map(function(c){return c.label||c.id||'';});
+  var rows = (data.table.rows||[]).map(function(row){
+    var obj={};
+    cols.forEach(function(h,i){
+      var cell=row.c&&row.c[i];
+      var val='';
+      if(cell){if(cell.f!=null)val=String(cell.f);else if(cell.v!=null)val=String(cell.v);}
+      obj[h]=val.trim();
+    });
+    return obj;
+  }).filter(function(r){return cols[0]&&r[cols[0]];});
+  return rows;
+}
+
+async function loadAllPendingCategories() {
+  var status = document.getElementById('pcat-status');
+  var content = document.getElementById('pcat-content');
+  status.textContent = 'Loading...';
+  content.innerHTML = '<div class="pcat-loading">Fetching data from all brands...</div>';
+  pcatData = {};
+
+  var brandKeys = ['shrus','ikeym','maya'];
+  var results = await Promise.allSettled(brandKeys.map(function(k){ return fetchBrandRows(k); }));
+
+  brandKeys.forEach(function(k, i) {
+    if(results[i].status === 'fulfilled') {
+      var rows = results[i].value;
+      pcatData[k] = {};
+      rows.forEach(function(r){
+        var cat = (r['Pending Categorie']||'').trim();
+        if(cat) pcatData[k][cat] = (pcatData[k][cat]||0) + 1;
+      });
+      // Also cache for brand dashboard
+      brandCache[k] = rows;
+      brandCacheHeaders[k] = Object.keys(rows[0]||{});
+      document.getElementById('badge-'+k).textContent = rows.length;
+    } else {
+      pcatData[k] = null;
+    }
+  });
+
+  renderPendingCategories();
+  status.textContent = 'Updated ' + new Date().toLocaleTimeString();
+}
+
+function renderPendingCategories() {
+  var content = document.getElementById('pcat-content');
+  var brandKeys = ['shrus','ikeym','maya'];
+  var brandColors = {shrus:'#2d5be3', ikeym:'#16a34a', maya:'#d97706'};
+
+  // Aggregate all categories across brands
+  var combined = {}; // {cat: {total, brands: {brand: count}}}
+  brandKeys.forEach(function(k){
+    if(!pcatData[k]) return;
+    Object.keys(pcatData[k]).forEach(function(cat){
+      if(!combined[cat]) combined[cat] = {total:0, brands:{}};
+      combined[cat].total += pcatData[k][cat];
+      combined[cat].brands[k] = pcatData[k][cat];
+    });
+  });
+
+  var cats = Object.keys(combined);
+  if(!cats.length) {
+    content.innerHTML = '<div class="pcat-empty">No pending categories found across all brands.</div>';
+    return;
+  }
+
+  // Sort by total descending
+  cats.sort(function(a,b){ return combined[b].total - combined[a].total; });
+
+  content.innerHTML = '<div class="pcat-grid">'+cats.map(function(cat){
+    var info = combined[cat];
+    var chips = Object.keys(info.brands).map(function(k){
+      return '<span class="pcat-brand-chip" style="background:'+brandColors[k]+'22;color:'+brandColors[k]+'">'+
+        BRANDS[k].name+': '+info.brands[k]+'</span>';
+    }).join('');
+    return '<div class="pcat-card" onclick="showPcatModal(''+cat.replace(/'/g,"\'")+'')" >'+
+      '<div class="pcat-name" title="'+cat+'">'+cat+'</div>'+
+      '<div class="pcat-total">'+info.total+'</div>'+
+      '<div class="pcat-brands">'+chips+'</div>'+
+      '</div>';
+  }).join('')+'</div>';
+}
+
+// ── Pending Category Modal ──
+function showPcatModal(cat) {
+  var brandKeys = ['shrus','ikeym','maya'];
+  var rows = [];
+  brandKeys.forEach(function(k){
+    if(!brandCache[k]) return;
+    brandCache[k].forEach(function(r){
+      if((r['Pending Categorie']||'').trim()===cat){
+        var nr = Object.assign({},r);
+        nr['_brand'] = BRANDS[k].name;
+        nr['_brandColor'] = {shrus:'#2d5be3',ikeym:'#16a34a',maya:'#d97706'}[k];
+        rows.push(nr);
+      }
+    });
+  });
+
+  // Use existing modal
+  document.getElementById('modal-title').textContent = cat;
+  document.getElementById('modal-subtitle').textContent = rows.length+' order'+(rows.length!==1?'s':'')+' across all brands';
+  _modalAllRows = rows;
+
+  // Populate filters
+  document.getElementById('modal-search').value='';
+  populateModalFilter('modal-f-status','orderStatus','All statuses');
+  populateModalFilter('modal-f-pay','Shopify Payment','All payments');
+  populateModalFilter('modal-f-assign','Assign','All agents');
+  populateModalFilter('modal-f-pendcat','Pending Categorie','All categories');
+  ['modal-f-status','modal-f-pay','modal-f-assign','modal-f-pendcat'].forEach(function(id){document.getElementById(id).value='';});
+
+  // Add brand column to modal cols temporarily
+  var brandCol = {key:'_brand', label:'Brand', render:function(v,r){
+    return '<span class="badge" style="background:'+(r&&r['_brandColor']||'#ccc')+'22;color:'+(r&&r['_brandColor']||'#888')+'">'+v+'</span>';
+  }};
+  if(MODAL_COLS[0].key!=='_brand') MODAL_COLS.unshift(brandCol);
+
+  renderModalRows(rows);
+  document.getElementById('modal-overlay').className='modal-overlay open';
+}
+
+// ── Daily Tracker ──
+var APPS_SCRIPT_URL = localStorage.getItem('daily_tracker_url') || '';
+
+var APPS_SCRIPT_CODE = `function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(['Date','Total Packed','DHL','Bluedart','Franch','Others','Remarks']);
+  }
+  var data = JSON.parse(e.postData.contents);
+  sheet.appendRow([data.date, data.total, data.dhl, data.bluedart, data.franch, data.others, data.remarks||'']);
+  return ContentService.createTextOutput(JSON.stringify({status:'ok'})).setMimeType(ContentService.MimeType.JSON);
+}
+function doGet(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var rows = sheet.getDataRange().getValues();
+  return ContentService.createTextOutput(JSON.stringify(rows)).setMimeType(ContentService.MimeType.JSON);
+}`;
+
+function showDailyTracker() {
+  // Hide dashboard, show daily page
+  document.getElementById('dashboard-content').style.display='none';
+  document.getElementById('daily-page').className='daily-page open';
+
+  // Set nav active
+  ['shrus','ikeym','maya'].forEach(function(k){
+    document.getElementById('nav-'+k).className='nav-item';
+    document.getElementById('nav-'+k).style.background='';
+  });
+  document.getElementById('nav-daily').className='nav-item active';
+  document.getElementById('nav-daily').style.background='#7c3aed';
+
+  // Set today's date
+  var today=new Date();
+  document.getElementById('f-date').value=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
+
+  // Setup box
+  document.getElementById('setup-box').style.display=APPS_SCRIPT_URL?'none':'block';
+  document.getElementById('script-url-input').value=APPS_SCRIPT_URL||'';
+  document.getElementById('apps-script-code').value=APPS_SCRIPT_CODE;
+
+  calcTotal();
+  if(APPS_SCRIPT_URL) loadTrackerHistory();
+}
+
+function showBrandDashboard(brand) {
+  document.getElementById('dashboard-content').style.display='block';
+  document.getElementById('daily-page').className='daily-page';
+  document.getElementById('nav-daily').className='nav-item';
+  document.getElementById('nav-daily').style.background='';
+  switchBrand(brand);
+}
+
+function saveScriptUrl() {
+  var url = document.getElementById('script-url-input').value.trim();
+  if(!url){ alert('Please enter the Apps Script URL'); return; }
+  APPS_SCRIPT_URL = url;
+  localStorage.setItem('daily_tracker_url', url);
+  document.getElementById('setup-box').style.display='none';
+  loadTrackerHistory();
+}
+
+function calcTotal(){
+  var dhl=parseInt(document.getElementById('f-dhl').value)||0;
+  var bd=parseInt(document.getElementById('f-bluedart').value)||0;
+  var fr=parseInt(document.getElementById('f-franch').value)||0;
+  var ot=parseInt(document.getElementById('f-others').value)||0;
+  document.getElementById('f-total-display').textContent=dhl+bd+fr+ot;
+}
+
+async function submitDailyData() {
+  if(!APPS_SCRIPT_URL){ showFormMsg('Please set up the Apps Script URL first.','error'); return; }
+  var rawDate=document.getElementById('f-date').value; // YYYY-MM-DD from input
+  var dp=rawDate.split('-');
+  var date=dp.length===3?dp[2]+'-'+dp[1]+'-'+dp[0]:rawDate; // convert to DD-MM-YYYY
+  var dhl=parseInt(document.getElementById('f-dhl').value)||0;
+  var bluedart=parseInt(document.getElementById('f-bluedart').value)||0;
+  var franch=parseInt(document.getElementById('f-franch').value)||0;
+  var others=parseInt(document.getElementById('f-others').value)||0;
+  var total=dhl+bluedart+franch+others;
+  var remarks=document.getElementById('f-remarks').value.trim();
+  if(!date){showFormMsg('Please select a date.','error');return;}
+  var btn=document.getElementById('submit-btn');
+  btn.disabled=true;btn.textContent='Submitting...';
+  try {
+    await fetch(APPS_SCRIPT_URL,{
+      method:'POST',mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({date:date,total:total,dhl:dhl,bluedart:bluedart,franch:franch,others:others,remarks:remarks})
+    });
+    showFormMsg('Entry saved successfully!','success');
+    ['f-dhl','f-bluedart','f-franch','f-others','f-remarks'].forEach(function(id){document.getElementById(id).value='';});
+    document.getElementById('f-total-display').textContent='0';
+    setTimeout(loadTrackerHistory,1500);
+  } catch(e){
+    showFormMsg('Error: '+e.message,'error');
+  }
+  btn.disabled=false;btn.textContent='Submit Entry';
+}
+
+async function loadTrackerHistory() {
+  if(!APPS_SCRIPT_URL) return;
+  var tbody=document.getElementById('tracker-tbody');
+  tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:16px;color:var(--muted)">Loading...</td></tr>';
+  try {
+    var res=await fetch(APPS_SCRIPT_URL+'?t='+Date.now());
+    var rows=await res.json();
+    if(!rows||rows.length<=1){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--muted)">No entries yet.</td></tr>';return;}
+    var data=rows.slice(1).reverse();
+    tbody.innerHTML=data.map(function(r){
+      // Format date as DD-MM-YYYY
+      var rawDate=String(r[0]||'').trim();
+      var dispDate=rawDate;
+      try {
+        // Handle ISO format (2026-06-02T...) from existing entries
+        if(rawDate.includes('T')||(/^\d{4}-\d{2}-\d{2}$/.test(rawDate))) {
+          var d=new Date(rawDate);
+          if(!isNaN(d.getTime())) dispDate=pad(d.getDate())+'-'+pad(d.getMonth()+1)+'-'+d.getFullYear();
+        }
+        // Already DD-MM-YYYY — use as-is
+      } catch(e){}
+      return '<tr><td>'+dispDate+'</td><td><strong>'+(r[1]||0)+'</strong></td><td>'+(r[2]||0)+'</td><td>'+(r[3]||0)+'</td><td>'+(r[4]||0)+'</td><td>'+(r[5]||0)+'</td><td style="color:var(--muted);white-space:normal;max-width:200px">'+(r[6]||'&mdash;')+'</td></tr>';
+    }).join('');
+  } catch(e){
+    tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:16px;color:var(--danger)">Could not load history.</td></tr>';
+  }
+}
+
+function showFormMsg(msg, type) {
+  var el = document.getElementById('form-msg');
+  el.textContent=msg; el.className='form-msg '+type; el.style.display='block';
+  setTimeout(function(){el.style.display='none';},3500);
+}
+
+// ── Init ──
+showBrandDashboard('shrus');
+loadAllPendingCategories();
+setInterval(function(){loadData();},60000);
+</script>
+</body>
+</html>
 
