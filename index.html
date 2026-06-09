@@ -731,13 +731,26 @@ function updateMetrics(rows){
     return;
   }
   var catColors=['#2d5be3','#d97706','#dc2626','#16a34a','#7c3aed','#0891b2','#db2777','#65a30d','#0f766e','#9333ea','#b45309','#0369a1'];
-  container.innerHTML=cats.map(function(cat,i){
-    var color=catColors[i%catColors.length];
-    return '<div class="mc" data-cat="'+encodeURIComponent(cat)+'" onclick="showCatModal(this.dataset.cat)" style="border-left:3px solid '+color+'">'+
-      '<div class="mc-label" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+cat+'">'+cat+'</div>'+
-      '<div class="mc-val" style="color:'+color+'">'+catMap[cat]+'</div>'+
-      '</div>';
-  }).join('');
+  container.innerHTML = '';
+  cats.forEach(function(cat,i){
+    var color = catColors[i%catColors.length];
+    var card = document.createElement('div');
+    card.className = 'mc';
+    card.style.borderLeft = '3px solid '+color;
+    card.addEventListener('click', (function(c){ return function(){ showCatModal(c); }; })(cat));
+    var lbl = document.createElement('div');
+    lbl.className = 'mc-label';
+    lbl.style.cssText = 'white-space:nowrap;overflow:hidden;text-overflow:ellipsis';
+    lbl.title = cat;
+    lbl.textContent = cat;
+    var val = document.createElement('div');
+    val.className = 'mc-val';
+    val.style.color = color;
+    val.textContent = catMap[cat];
+    card.appendChild(lbl);
+    card.appendChild(val);
+    container.appendChild(card);
+  });
 }
 
 // ── Filters & table ──
@@ -1006,19 +1019,6 @@ function renderPendingCategories() {
 
   // Sort by total descending
   cats.sort(function(a,b){ return combined[b].total - combined[a].total; });
-
-  content.innerHTML = '<div class="pcat-grid">'+cats.map(function(cat){
-    var info = combined[cat];
-    var chips = Object.keys(info.brands).map(function(k){
-      return '<span class="pcat-brand-chip" style="background:'+brandColors[k]+'22;color:'+brandColors[k]+'">'+
-        BRANDS[k].name+': '+info.brands[k]+'</span>';
-    }).join('');
-    return '<div class="pcat-card" onclick="showPcatModal(''+cat.replace(/'/g,"\'")+'')" >'+
-      '<div class="pcat-name" title="'+cat+'">'+cat+'</div>'+
-      '<div class="pcat-total">'+info.total+'</div>'+
-      '<div class="pcat-brands">'+chips+'</div>'+
-      '</div>';
-  }).join('')+'</div>';
 }
 
 // ── Pending Category Modal ──
