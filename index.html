@@ -365,10 +365,10 @@ tbody tr.packed-row td{background:#f0fdf4}
     <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">Order Aging</div>
   </div>
   <div class="metrics" id="metrics-aging">
-    <div class="mc" onclick="showModal('aging-fresh')" style="border-left:3px solid #16a34a"><div class="mc-label">0-3 days</div><div class="mc-val s" id="m-aging-fresh">-</div></div>
-    <div class="mc" onclick="showModal('aging-warn')" style="border-left:3px solid #d97706"><div class="mc-label">4-7 days</div><div class="mc-val w" id="m-aging-warn">-</div></div>
-    <div class="mc" onclick="showModal('aging-old')" style="border-left:3px solid #dc2626"><div class="mc-label">8+ days</div><div class="mc-val d" id="m-aging-old">-</div></div>
-    <div class="mc" onclick="showModal('aging-avg')" style="border-left:3px solid #2d5be3;cursor:default"><div class="mc-label">Avg. age (days)</div><div class="mc-val a" id="m-aging-avg">-</div></div>
+    <div class="mc" onclick="showModal('aging-3')" style="border-left:3px solid #d97706"><div class="mc-label">&ge; 3 days</div><div class="mc-val w" id="m-aging-3">-</div></div>
+    <div class="mc" onclick="showModal('aging-5')" style="border-left:3px solid #ea580c"><div class="mc-label">&ge; 5 days</div><div class="mc-val" id="m-aging-5" style="color:#ea580c">-</div></div>
+    <div class="mc" onclick="showModal('aging-14')" style="border-left:3px solid #dc2626"><div class="mc-label">&gt; 14 days</div><div class="mc-val d" id="m-aging-14">-</div></div>
+    <div class="mc" style="border-left:3px solid #2d5be3;cursor:default"><div class="mc-label">Avg. age (days)</div><div class="mc-val a" id="m-aging-avg">-</div></div>
   </div>
 
   <!-- Metrics Row 2: Pending Categories (dynamic) -->
@@ -760,13 +760,13 @@ function updateMetrics(rows){
 
   // Aging summary
   var ages=srcRows.map(getAgingDays).filter(function(a){return a!==null;});
-  var fresh=ages.filter(function(a){return a<=3;}).length;
-  var warn=ages.filter(function(a){return a>3&&a<=7;}).length;
-  var old=ages.filter(function(a){return a>7;}).length;
+  var ge3=ages.filter(function(a){return a>=3;}).length;
+  var ge5=ages.filter(function(a){return a>=5;}).length;
+  var gt14=ages.filter(function(a){return a>14;}).length;
   var avg=ages.length?Math.round(ages.reduce(function(a,b){return a+b;},0)/ages.length*10)/10:0;
-  document.getElementById('m-aging-fresh').textContent=fresh;
-  document.getElementById('m-aging-warn').textContent=warn;
-  document.getElementById('m-aging-old').textContent=old;
+  document.getElementById('m-aging-3').textContent=ge3;
+  document.getElementById('m-aging-5').textContent=ge5;
+  document.getElementById('m-aging-14').textContent=gt14;
   document.getElementById('m-aging-avg').textContent=avg;
 
   // Dynamic pending category cards — always from full allRows
@@ -903,9 +903,9 @@ function getModalRows(type){
   if(type==='high')return{title:'High priority orders',rows:base.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');})};
   if(type==='packed')return{title:'Packed orders',rows:base.filter(function(r){return(r['orderStatus']||'').trim().toLowerCase()==='packed';})};
   // Dynamic category: prefix
-  if(type==='aging-fresh')return{title:'Orders aged 0-3 days',rows:base.filter(function(r){var a=getAgingDays(r);return a!==null&&a<=3;})};
-  if(type==='aging-warn')return{title:'Orders aged 4-7 days',rows:base.filter(function(r){var a=getAgingDays(r);return a!==null&&a>3&&a<=7;})};
-  if(type==='aging-old')return{title:'Orders aged 8+ days',rows:base.filter(function(r){var a=getAgingDays(r);return a!==null&&a>7;})};
+  if(type==='aging-3')return{title:'Orders aged ≥ 3 days',rows:base.filter(function(r){var a=getAgingDays(r);return a!==null&&a>=3;})};
+  if(type==='aging-5')return{title:'Orders aged ≥ 5 days',rows:base.filter(function(r){var a=getAgingDays(r);return a!==null&&a>=5;})};
+  if(type==='aging-14')return{title:'Orders aged > 14 days',rows:base.filter(function(r){var a=getAgingDays(r);return a!==null&&a>14;})};
   if(type.indexOf('cat:')===0){
     var cat=type.slice(4);
     return{title:cat,rows:base.filter(function(r){return(r['Pending Categorie']||'').trim()===cat;})};
