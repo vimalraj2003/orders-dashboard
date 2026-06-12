@@ -129,7 +129,15 @@ tbody tr:hover td{background:var(--surface2)}
 tbody tr.today-row td{background:#eef1fd}
 tbody tr.nostock-row td{background:#fef2f2}
 tbody tr.packed-row td{background:#f0fdf4}
+.aging-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;white-space:nowrap}
+.aging-fresh{background:var(--success-bg);color:var(--success)}
+.aging-warn{background:var(--warn-bg);color:var(--warn)}
+.aging-old{background:var(--danger-bg);color:var(--danger)}
 .modal-tbl-wrap tbody tr.packed-row td{background:#f0fdf4}
+.aging-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;white-space:nowrap}
+.aging-fresh{background:var(--success-bg);color:var(--success)}
+.aging-warn{background:var(--warn-bg);color:var(--warn)}
+.aging-old{background:var(--danger-bg);color:var(--danger)}
 .empty{text-align:center;padding:40px;color:var(--muted);font-size:13px}
 
 /* ── Badges ── */
@@ -166,7 +174,15 @@ tbody tr.packed-row td{background:#f0fdf4}
 .modal-tbl-wrap tbody tr:hover td{background:var(--surface2)}
 .modal-tbl-wrap tbody tr.nostock-row td{background:#fef2f2}
 tbody tr.packed-row td{background:#f0fdf4}
+.aging-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;white-space:nowrap}
+.aging-fresh{background:var(--success-bg);color:var(--success)}
+.aging-warn{background:var(--warn-bg);color:var(--warn)}
+.aging-old{background:var(--danger-bg);color:var(--danger)}
 .modal-tbl-wrap tbody tr.packed-row td{background:#f0fdf4}
+.aging-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;white-space:nowrap}
+.aging-fresh{background:var(--success-bg);color:var(--success)}
+.aging-warn{background:var(--warn-bg);color:var(--warn)}
+.aging-old{background:var(--danger-bg);color:var(--danger)}
 
 /* ── Daily Tracker ── */
 .daily-page{display:none}.daily-page.open{display:block}
@@ -342,6 +358,17 @@ tbody tr.packed-row td{background:#f0fdf4}
     <div class="mc" onclick="showModal('pay-other')"><div class="mc-label">Other payment</div><div class="mc-val" id="m-pay-other" style="color:var(--muted)">-</div></div>
     <div class="mc" onclick="showModal('high')"><div class="mc-label">High priority</div><div class="mc-val d" id="m-high">-</div></div>
     <div class="mc" onclick="showModal('packed')"><div class="mc-label">Packed orders</div><div class="mc-val s" id="m-packed">-</div></div>
+  </div>
+
+  <!-- Aging Summary -->
+  <div style="margin-bottom:6px;margin-top:4px">
+    <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">Order Aging</div>
+  </div>
+  <div class="metrics" id="metrics-aging">
+    <div class="mc" onclick="showModal('aging-fresh')" style="border-left:3px solid #16a34a"><div class="mc-label">0-3 days</div><div class="mc-val s" id="m-aging-fresh">-</div></div>
+    <div class="mc" onclick="showModal('aging-warn')" style="border-left:3px solid #d97706"><div class="mc-label">4-7 days</div><div class="mc-val w" id="m-aging-warn">-</div></div>
+    <div class="mc" onclick="showModal('aging-old')" style="border-left:3px solid #dc2626"><div class="mc-label">8+ days</div><div class="mc-val d" id="m-aging-old">-</div></div>
+    <div class="mc" onclick="showModal('aging-avg')" style="border-left:3px solid #2d5be3;cursor:default"><div class="mc-label">Avg. age (days)</div><div class="mc-val a" id="m-aging-avg">-</div></div>
   </div>
 
   <!-- Metrics Row 2: Pending Categories (dynamic) -->
@@ -523,6 +550,19 @@ function fmtDate(str){
   if(p.length===3)return p[0]+' '+months[parseInt(p[1],10)-1]+' '+p[2];
   return str;
 }
+function getAgingDays(r){
+  var d=parseDate(r['Order Date']);
+  if(!d)return null;
+  var diff=Math.floor((_today-d)/(1000*60*60*24));
+  return diff>=0?diff:0;
+}
+function agingBadge(r){
+  var days=getAgingDays(r);
+  if(days===null)return '<span class="aging-badge bn">&mdash;</span>';
+  var cls=days<=3?'aging-fresh':days<=7?'aging-warn':'aging-old';
+  return '<span class="aging-badge '+cls+'">'+days+'d</span>';
+}
+
 function parseDate(str){
   if(!str)return null;
   str=str.trim().split(' ')[0];
@@ -718,6 +758,17 @@ function updateMetrics(rows){
   document.getElementById('m-high').textContent=srcRows.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');}).length;
   document.getElementById('m-packed').textContent=srcRows.filter(function(r){return(r['orderStatus']||'').trim().toLowerCase()==='packed';}).length;
 
+  // Aging summary
+  var ages=srcRows.map(getAgingDays).filter(function(a){return a!==null;});
+  var fresh=ages.filter(function(a){return a<=3;}).length;
+  var warn=ages.filter(function(a){return a>3&&a<=7;}).length;
+  var old=ages.filter(function(a){return a>7;}).length;
+  var avg=ages.length?Math.round(ages.reduce(function(a,b){return a+b;},0)/ages.length*10)/10:0;
+  document.getElementById('m-aging-fresh').textContent=fresh;
+  document.getElementById('m-aging-warn').textContent=warn;
+  document.getElementById('m-aging-old').textContent=old;
+  document.getElementById('m-aging-avg').textContent=avg;
+
   // Dynamic pending category cards — always from full allRows
   var catMap={};
   allRows.forEach(function(r){
@@ -769,6 +820,7 @@ function prioBadge(v){if(!v)return badge('&mdash;','bn');var l=v.toLowerCase();i
 var COLS=[
   {key:'orderNumber',label:'Order #',render:function(v){return '<span class="onum">#'+v+'</span>';}},
   {key:'Order Date',label:'Date'},
+  {key:'_aging',label:'Aging',render:function(v,r){return agingBadge(r);}},
   {key:'orderStatus',label:'Status',render:statusBadge},
   {key:'Shopify Payment',label:'Payment',render:payBadge},
   {key:'Priority',label:'Priority',render:prioBadge},
@@ -805,7 +857,7 @@ function applyFilters(){
 }
 
 function renderTable(rows){
-  var cols=COLS.filter(function(c){return colHeaders.indexOf(c.key)!==-1;});
+  var cols=COLS.filter(function(c){return c.key==='_aging'||colHeaders.indexOf(c.key)!==-1;});
   document.getElementById('thead').innerHTML=cols.map(function(c){return '<th>'+c.label+'</th>';}).join('');
   document.getElementById('row-count').textContent='Showing '+rows.length.toLocaleString()+' order'+(rows.length!==1?'s':'');
   if(!rows.length){document.getElementById('tbody').innerHTML='<tr><td colspan="'+cols.length+'" class="empty">No orders match your filters.</td></tr>';return;}
@@ -816,7 +868,7 @@ function renderTable(rows){
     var cls=isNoStock?'nostock-row':isPacked?'packed-row':isTodayRow?'today-row':'';
     return '<tr'+(cls?' class="'+cls+'"':'')+'>'+cols.map(function(c){
       var v=r[c.key]||'';
-      var cell=c.render?c.render(v):'<span title="'+v.replace(/"/g,'&quot;')+'">'+(v||'&mdash;')+'</span>';
+      var cell=c.render?c.render(v,r):'<span title="'+v.replace(/"/g,'&quot;')+'">'+(v||'&mdash;')+'</span>';
       if(c.key==='Order Date'&&isTodayRow)cell+='<span class="today-tag">Today</span>';
       if(c.key==='Pending Categorie'&&isNoStock)cell='<span class="badge bd">No Stock</span><span class="nostock-tag">!</span>';
       return '<td>'+cell+'</td>';
@@ -834,6 +886,7 @@ function clearFilters(){
 var MODAL_COLS=[
   {key:'orderNumber',label:'Order #',render:function(v){return '<span class="onum">#'+v+'</span>';}},
   {key:'Order Date',label:'Date'},
+  {key:'_aging',label:'Aging',render:function(v,r){return agingBadge(r);}},
   {key:'orderStatus',label:'Status',render:statusBadge},
   {key:'Shopify Payment',label:'Payment',render:payBadge},
   {key:'Priority',label:'Priority',render:prioBadge},
@@ -850,6 +903,9 @@ function getModalRows(type){
   if(type==='high')return{title:'High priority orders',rows:base.filter(function(r){return(r['Priority']||'').toLowerCase().includes('high');})};
   if(type==='packed')return{title:'Packed orders',rows:base.filter(function(r){return(r['orderStatus']||'').trim().toLowerCase()==='packed';})};
   // Dynamic category: prefix
+  if(type==='aging-fresh')return{title:'Orders aged 0-3 days',rows:base.filter(function(r){var a=getAgingDays(r);return a!==null&&a<=3;})};
+  if(type==='aging-warn')return{title:'Orders aged 4-7 days',rows:base.filter(function(r){var a=getAgingDays(r);return a!==null&&a>3&&a<=7;})};
+  if(type==='aging-old')return{title:'Orders aged 8+ days',rows:base.filter(function(r){var a=getAgingDays(r);return a!==null&&a>7;})};
   if(type.indexOf('cat:')===0){
     var cat=type.slice(4);
     return{title:cat,rows:base.filter(function(r){return(r['Pending Categorie']||'').trim()===cat;})};
@@ -905,7 +961,7 @@ function clearModalFilters(){
 }
 
 function renderModalRows(rows){
-  var cols=MODAL_COLS.filter(function(c){return colHeaders.indexOf(c.key)!==-1;});
+  var cols=MODAL_COLS.filter(function(c){return c.key==='_aging'||c.key==='_brand'||colHeaders.indexOf(c.key)!==-1;});
   document.getElementById('modal-thead').innerHTML=cols.map(function(c){return '<th>'+c.label+'</th>';}).join('');
   document.getElementById('modal-count').textContent='Showing '+rows.length.toLocaleString()+' of '+_modalAllRows.length.toLocaleString()+' order'+(rows.length!==1?'s':'');
   if(!rows.length){document.getElementById('modal-tbody').innerHTML='<tr><td colspan="'+cols.length+'" style="text-align:center;padding:30px;color:var(--muted)">No orders match filters.</td></tr>';return;}
