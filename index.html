@@ -147,6 +147,21 @@ tbody tr.packed-row td{background:#f0fdf4}
 .daywise-bar-wrap{display:flex;align-items:center;gap:8px}
 .daywise-bar-track{flex:1;height:8px;background:var(--surface2);border-radius:100px;overflow:hidden;min-width:60px}
 .daywise-bar-fill{height:100%;background:#d97706;border-radius:100px}
+.editable-cell{cursor:pointer;position:relative;min-width:100px}
+.editable-cell:hover{background:#eef1fd!important}
+.editable-cell .edit-icon{opacity:0;font-size:10px;margin-left:4px;color:var(--accent)}
+.editable-cell:hover .edit-icon{opacity:1}
+.edit-input{width:100%;font-family:inherit;font-size:13px;padding:4px 6px;border:1px solid var(--accent);border-radius:4px;outline:none;background:#fff}
+.edit-textarea{width:100%;font-family:inherit;font-size:13px;padding:4px 6px;border:1px solid var(--accent);border-radius:4px;outline:none;background:#fff;resize:vertical;min-height:50px}
+.edit-saving{opacity:0.5;pointer-events:none}
+.edit-toast{position:fixed;bottom:20px;right:20px;background:var(--success);color:#fff;font-size:13px;padding:10px 16px;border-radius:var(--radius-sm);box-shadow:0 4px 12px rgba(0,0,0,0.15);z-index:500;display:none;align-items:center;gap:8px}
+.edit-toast.error{background:var(--danger)}
+.edit-toast.show{display:flex}
+.brand-script-setup{background:#fffbeb;border:1px solid #fde68a;border-radius:var(--radius);padding:14px 16px;margin-bottom:16px;font-size:12px}
+.brand-script-setup h4{font-size:12px;font-weight:600;color:#b45309;margin-bottom:8px}
+.brand-script-setup input{font-family:inherit;font-size:12px;height:30px;padding:0 8px;border-radius:4px;border:1px solid #fde68a;width:100%;margin-top:6px;outline:none}
+.brand-script-setup textarea{width:100%;height:100px;font-family:monospace;font-size:10px;margin-top:6px;padding:6px;border:1px solid #fde68a;border-radius:4px;resize:none}
+.brand-script-setup button{margin-top:6px;background:#d97706;border:none;color:#fff;font-family:inherit;font-size:11px;padding:5px 12px;border-radius:4px;cursor:pointer}
 .modal-tbl-wrap tbody tr.packed-row td{background:#f0fdf4}
 .aging-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;white-space:nowrap}
 .aging-fresh{background:var(--success-bg);color:var(--success)}
@@ -166,6 +181,21 @@ tbody tr.packed-row td{background:#f0fdf4}
 .daywise-bar-wrap{display:flex;align-items:center;gap:8px}
 .daywise-bar-track{flex:1;height:8px;background:var(--surface2);border-radius:100px;overflow:hidden;min-width:60px}
 .daywise-bar-fill{height:100%;background:#d97706;border-radius:100px}
+.editable-cell{cursor:pointer;position:relative;min-width:100px}
+.editable-cell:hover{background:#eef1fd!important}
+.editable-cell .edit-icon{opacity:0;font-size:10px;margin-left:4px;color:var(--accent)}
+.editable-cell:hover .edit-icon{opacity:1}
+.edit-input{width:100%;font-family:inherit;font-size:13px;padding:4px 6px;border:1px solid var(--accent);border-radius:4px;outline:none;background:#fff}
+.edit-textarea{width:100%;font-family:inherit;font-size:13px;padding:4px 6px;border:1px solid var(--accent);border-radius:4px;outline:none;background:#fff;resize:vertical;min-height:50px}
+.edit-saving{opacity:0.5;pointer-events:none}
+.edit-toast{position:fixed;bottom:20px;right:20px;background:var(--success);color:#fff;font-size:13px;padding:10px 16px;border-radius:var(--radius-sm);box-shadow:0 4px 12px rgba(0,0,0,0.15);z-index:500;display:none;align-items:center;gap:8px}
+.edit-toast.error{background:var(--danger)}
+.edit-toast.show{display:flex}
+.brand-script-setup{background:#fffbeb;border:1px solid #fde68a;border-radius:var(--radius);padding:14px 16px;margin-bottom:16px;font-size:12px}
+.brand-script-setup h4{font-size:12px;font-weight:600;color:#b45309;margin-bottom:8px}
+.brand-script-setup input{font-family:inherit;font-size:12px;height:30px;padding:0 8px;border-radius:4px;border:1px solid #fde68a;width:100%;margin-top:6px;outline:none}
+.brand-script-setup textarea{width:100%;height:100px;font-family:monospace;font-size:10px;margin-top:6px;padding:6px;border:1px solid #fde68a;border-radius:4px;resize:none}
+.brand-script-setup button{margin-top:6px;background:#d97706;border:none;color:#fff;font-family:inherit;font-size:11px;padding:5px 12px;border-radius:4px;cursor:pointer}
 .empty{text-align:center;padding:40px;color:var(--muted);font-size:13px}
 
 /* ── Badges ── */
@@ -220,6 +250,21 @@ tbody tr.packed-row td{background:#f0fdf4}
 .daywise-bar-wrap{display:flex;align-items:center;gap:8px}
 .daywise-bar-track{flex:1;height:8px;background:var(--surface2);border-radius:100px;overflow:hidden;min-width:60px}
 .daywise-bar-fill{height:100%;background:#d97706;border-radius:100px}
+.editable-cell{cursor:pointer;position:relative;min-width:100px}
+.editable-cell:hover{background:#eef1fd!important}
+.editable-cell .edit-icon{opacity:0;font-size:10px;margin-left:4px;color:var(--accent)}
+.editable-cell:hover .edit-icon{opacity:1}
+.edit-input{width:100%;font-family:inherit;font-size:13px;padding:4px 6px;border:1px solid var(--accent);border-radius:4px;outline:none;background:#fff}
+.edit-textarea{width:100%;font-family:inherit;font-size:13px;padding:4px 6px;border:1px solid var(--accent);border-radius:4px;outline:none;background:#fff;resize:vertical;min-height:50px}
+.edit-saving{opacity:0.5;pointer-events:none}
+.edit-toast{position:fixed;bottom:20px;right:20px;background:var(--success);color:#fff;font-size:13px;padding:10px 16px;border-radius:var(--radius-sm);box-shadow:0 4px 12px rgba(0,0,0,0.15);z-index:500;display:none;align-items:center;gap:8px}
+.edit-toast.error{background:var(--danger)}
+.edit-toast.show{display:flex}
+.brand-script-setup{background:#fffbeb;border:1px solid #fde68a;border-radius:var(--radius);padding:14px 16px;margin-bottom:16px;font-size:12px}
+.brand-script-setup h4{font-size:12px;font-weight:600;color:#b45309;margin-bottom:8px}
+.brand-script-setup input{font-family:inherit;font-size:12px;height:30px;padding:0 8px;border-radius:4px;border:1px solid #fde68a;width:100%;margin-top:6px;outline:none}
+.brand-script-setup textarea{width:100%;height:100px;font-family:monospace;font-size:10px;margin-top:6px;padding:6px;border:1px solid #fde68a;border-radius:4px;resize:none}
+.brand-script-setup button{margin-top:6px;background:#d97706;border:none;color:#fff;font-family:inherit;font-size:11px;padding:5px 12px;border-radius:4px;cursor:pointer}
 .modal-tbl-wrap tbody tr.packed-row td{background:#f0fdf4}
 .aging-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;white-space:nowrap}
 .aging-fresh{background:var(--success-bg);color:var(--success)}
@@ -239,6 +284,21 @@ tbody tr.packed-row td{background:#f0fdf4}
 .daywise-bar-wrap{display:flex;align-items:center;gap:8px}
 .daywise-bar-track{flex:1;height:8px;background:var(--surface2);border-radius:100px;overflow:hidden;min-width:60px}
 .daywise-bar-fill{height:100%;background:#d97706;border-radius:100px}
+.editable-cell{cursor:pointer;position:relative;min-width:100px}
+.editable-cell:hover{background:#eef1fd!important}
+.editable-cell .edit-icon{opacity:0;font-size:10px;margin-left:4px;color:var(--accent)}
+.editable-cell:hover .edit-icon{opacity:1}
+.edit-input{width:100%;font-family:inherit;font-size:13px;padding:4px 6px;border:1px solid var(--accent);border-radius:4px;outline:none;background:#fff}
+.edit-textarea{width:100%;font-family:inherit;font-size:13px;padding:4px 6px;border:1px solid var(--accent);border-radius:4px;outline:none;background:#fff;resize:vertical;min-height:50px}
+.edit-saving{opacity:0.5;pointer-events:none}
+.edit-toast{position:fixed;bottom:20px;right:20px;background:var(--success);color:#fff;font-size:13px;padding:10px 16px;border-radius:var(--radius-sm);box-shadow:0 4px 12px rgba(0,0,0,0.15);z-index:500;display:none;align-items:center;gap:8px}
+.edit-toast.error{background:var(--danger)}
+.edit-toast.show{display:flex}
+.brand-script-setup{background:#fffbeb;border:1px solid #fde68a;border-radius:var(--radius);padding:14px 16px;margin-bottom:16px;font-size:12px}
+.brand-script-setup h4{font-size:12px;font-weight:600;color:#b45309;margin-bottom:8px}
+.brand-script-setup input{font-family:inherit;font-size:12px;height:30px;padding:0 8px;border-radius:4px;border:1px solid #fde68a;width:100%;margin-top:6px;outline:none}
+.brand-script-setup textarea{width:100%;height:100px;font-family:monospace;font-size:10px;margin-top:6px;padding:6px;border:1px solid #fde68a;border-radius:4px;resize:none}
+.brand-script-setup button{margin-top:6px;background:#d97706;border:none;color:#fff;font-family:inherit;font-size:11px;padding:5px 12px;border-radius:4px;cursor:pointer}
 
 /* ── Daily Tracker ── */
 .daily-page{display:none}.daily-page.open{display:block}
@@ -359,6 +419,10 @@ tbody tr.packed-row td{background:#f0fdf4}
     </div>
     <div class="hdr-right">
       <div class="status-pill"><span class="dot" id="sdot"></span><span id="stxt">Loading...</span></div>
+      <button class="btn" id="edit-access-btn" onclick="showEditSetup()" title="Connect edit access for this brand">
+        <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        <span id="edit-access-label">Enable editing</span>
+      </button>
       <button class="btn" onclick="loadData()">
         <svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
         Refresh
@@ -463,6 +527,7 @@ tbody tr.packed-row td{background:#f0fdf4}
     <h3>Filters</h3>
     <div class="filters-grid">
       <div class="fg"><label>Search</label><input type="text" id="f-search" placeholder="Order #, agent, remark..." oninput="applyFilters()"></div>
+      <div class="fg"><label>User Remarks</label><input type="text" id="f-remarks" placeholder="Search remarks..." oninput="applyFilters()"></div>
       <div class="fg"><label>Order status</label><select id="f-status" onchange="applyFilters()"><option value="">All statuses</option></select></div>
       <div class="fg"><label>Payment</label><select id="f-pay" onchange="applyFilters()"><option value="">All payments</option></select></div>
       <div class="fg"><label>Priority</label><select id="f-priority" onchange="applyFilters()"><option value="">All priorities</option></select></div>
@@ -604,13 +669,16 @@ tbody tr.packed-row td{background:#f0fdf4}
   </div>
 </div>
 
+<div class="edit-toast" id="edit-toast"></div>
 <script>
 // ── Brand config ──
 var BRANDS = {
-  shrus:      { name:'Shrus',      icon:'S', color:'#2d5be3', sheetId:'16wFoJiT3hlHakrdow1znmjlRfRqCzpQnLfiDEfSUeXo', gid:'271152649' },
-  ikeym:      { name:'Ikeym',      icon:'I', color:'#16a34a', sheetId:'1nO8vJB8XF_IhPyRhJRdAampvV-zqU7ASWzTU4CU4SKQ', gid:'0' },
-  maya:       { name:'Maya',       icon:'M', color:'#d97706', sheetId:'1nI6hwvEcctT25bDycuIsDR9WMwPnP780VQQlPAyw3Us', gid:'0' }
+  shrus:      { name:'Shrus',      icon:'S', color:'#2d5be3', sheetId:'16wFoJiT3hlHakrdow1znmjlRfRqCzpQnLfiDEfSUeXo', gid:'271152649', editUrl:localStorage.getItem('edit_url_shrus')||'' },
+  ikeym:      { name:'Ikeym',      icon:'I', color:'#16a34a', sheetId:'1nO8vJB8XF_IhPyRhJRdAampvV-zqU7ASWzTU4CU4SKQ', gid:'0', editUrl:localStorage.getItem('edit_url_ikeym')||'' },
+  maya:       { name:'Maya',       icon:'M', color:'#d97706', sheetId:'1nI6hwvEcctT25bDycuIsDR9WMwPnP780VQQlPAyw3Us', gid:'0', editUrl:localStorage.getItem('edit_url_maya')||'' }
 };
+
+var EDIT_APPS_SCRIPT_CODE = "function doPost(e) {\n  var data = JSON.parse(e.postData.contents);\n  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();\n  var values = sheet.getDataRange().getValues();\n  var headers = values[0];\n  var orderColIdx = headers.indexOf('orderNumber');\n  var targetColIdx = headers.indexOf(data.column);\n  if (orderColIdx === -1 || targetColIdx === -1) {\n    return ContentService.createTextOutput(JSON.stringify({status:'error', message:'Column not found: ' + data.column})).setMimeType(ContentService.MimeType.JSON);\n  }\n  for (var i = 1; i < values.length; i++) {\n    if (String(values[i][orderColIdx]).trim() === String(data.orderNumber).trim()) {\n      sheet.getRange(i+1, targetColIdx+1).setValue(data.value);\n      return ContentService.createTextOutput(JSON.stringify({status:'ok'})).setMimeType(ContentService.MimeType.JSON);\n    }\n  }\n  return ContentService.createTextOutput(JSON.stringify({status:'error', message:'Order not found: ' + data.orderNumber})).setMimeType(ContentService.MimeType.JSON);\n}\n\nfunction doGet(e) {\n  return ContentService.createTextOutput(JSON.stringify({status:'ready'})).setMimeType(ContentService.MimeType.JSON);\n}";
 
 var currentBrand = 'shrus';
 var allRows = [], colHeaders = [];
@@ -676,6 +744,9 @@ function switchBrand(brand){
   document.getElementById('today-badge').style.background=b.color;
   // Update toggle active color
   document.querySelectorAll('.toggle-btn.active').forEach(function(el){el.style.background=b.color;el.style.borderColor=b.color;});
+  // Update edit access label
+  var lbl=document.getElementById('edit-access-label');
+  if(lbl) lbl.textContent=b.editUrl?'Editing enabled':'Enable editing';
   // Load from cache or fetch
   if(brandCache[brand]){
     allRows=brandCache[brand];
@@ -907,9 +978,9 @@ var COLS=[
   {key:'Shopify Payment',label:'Payment',render:payBadge},
   {key:'Priority',label:'Priority',render:prioBadge},
   {key:'Order Tag',label:'Tag'},
-  {key:'Pending Categorie',label:'Pending Category'},
-  {key:'Assign',label:'Assigned To'},
-  {key:'User Remarks',label:'User Remarks'},
+  {key:'Pending Categorie',label:'Pending Category',editable:true},
+  {key:'Assign',label:'Assigned To',editable:true},
+  {key:'User Remarks',label:'User Remarks',editable:true,multiline:true},
   {key:'Agent Remarks ',label:'Agent Remarks'}
 ];
 
@@ -980,6 +1051,7 @@ function showDaywiseModal(dayIndex){
 
 function applyFilters(){
   var s=document.getElementById('f-search').value.toLowerCase();
+  var rem=document.getElementById('f-remarks').value.toLowerCase();
   var st=document.getElementById('f-status').value;
   var pay=document.getElementById('f-pay').value;
   var pri=document.getElementById('f-priority').value;
@@ -990,6 +1062,7 @@ function applyFilters(){
   var base=currentView==='today'?allRows.filter(isToday):allRows;
   var filtered=base.filter(function(r){
     if(s&&Object.values(r).join(' ').toLowerCase().indexOf(s)===-1)return false;
+    if(rem&&(r['User Remarks']||'').toLowerCase().indexOf(rem)===-1)return false;
     if(st&&r['orderStatus']!==st)return false;
     if(pay&&r['Shopify Payment']!==pay)return false;
     if(pri&&r['Priority']!==pri)return false;
@@ -1013,18 +1086,131 @@ function renderTable(rows){
     var isNoStock=(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';
     var isPacked=(r['orderStatus']||'').trim().toLowerCase()==='packed';
     var cls=isNoStock?'nostock-row':isPacked?'packed-row':isTodayRow?'today-row':'';
-    return '<tr'+(cls?' class="'+cls+'"':'')+'>'+cols.map(function(c){
+    return '<tr'+(cls?' class="'+cls+'"':'')+' data-order="'+(r['orderNumber']||'').replace(/"/g,'&quot;')+'">'+cols.map(function(c){
       var v=r[c.key]||'';
+      if(c.editable){
+        var content=(c.key==='Pending Categorie'&&isNoStock)?
+          '<span class="badge bd">No Stock</span><span class="nostock-tag">!</span>':
+          '<span class="cell-text">'+(v||'<span style="color:var(--muted)">&mdash;</span>')+'</span>';
+        return '<td class="editable-cell" data-field="'+c.key+'" data-multiline="'+(c.multiline?'1':'0')+'" onclick="startInlineEdit(this)">'+content+'<span class="edit-icon">&#9998;</span></td>';
+      }
       var cell=c.render?c.render(v,r):'<span title="'+v.replace(/"/g,'&quot;')+'">'+(v||'&mdash;')+'</span>';
       if(c.key==='Order Date'&&isTodayRow)cell+='<span class="today-tag">Today</span>';
-      if(c.key==='Pending Categorie'&&isNoStock)cell='<span class="badge bd">No Stock</span><span class="nostock-tag">!</span>';
       return '<td>'+cell+'</td>';
     }).join('')+'</tr>';
   }).join('');
 }
 
+function showToast(msg, isError){
+  var t=document.getElementById('edit-toast');
+  t.textContent=msg;
+  t.className='edit-toast show'+(isError?' error':'');
+  setTimeout(function(){t.className='edit-toast';},2500);
+}
+
+function startInlineEdit(td){
+  if(td.querySelector('.edit-input,.edit-textarea'))return; // already editing
+  var field=td.dataset.field;
+  var multiline=td.dataset.multiline==='1';
+  var tr=td.closest('tr');
+  var orderNum=tr.dataset.order;
+  var currentText=td.querySelector('.cell-text');
+  var currentVal=currentText?currentText.textContent.trim():'';
+  if(currentVal==='—')currentVal='';
+
+  var b=BRANDS[currentBrand];
+  if(!b.editUrl){
+    showEditSetup();
+    return;
+  }
+
+  var input=document.createElement(multiline?'textarea':'input');
+  input.className=multiline?'edit-textarea':'edit-input';
+  input.value=currentVal;
+  td.innerHTML='';
+  td.appendChild(input);
+  input.focus();
+  input.select();
+
+  function save(){
+    var newVal=input.value.trim();
+    if(newVal===currentVal){ renderTable(getCurrentFilteredRows()); return; }
+    td.classList.add('edit-saving');
+    saveInlineEdit(orderNum, field, newVal, function(success){
+      if(success){
+        // Update local data
+        allRows.forEach(function(r){ if((r['orderNumber']||'')===orderNum) r[field]=newVal; });
+        showToast('Saved successfully');
+      } else {
+        showToast('Failed to save. Try again.', true);
+      }
+      applyFilters();
+    });
+  }
+
+  input.addEventListener('blur', save);
+  input.addEventListener('keydown', function(e){
+    if(e.key==='Enter'&&!multiline){ e.preventDefault(); input.blur(); }
+    if(e.key==='Escape'){ input.value=currentVal; input.blur(); }
+  });
+}
+
+async function saveInlineEdit(orderNumber, column, value, callback){
+  var b=BRANDS[currentBrand];
+  try{
+    await fetch(b.editUrl,{
+      method:'POST', mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({orderNumber:orderNumber, column:column, value:value})
+    });
+    callback(true);
+  }catch(e){
+    callback(false);
+  }
+}
+
+function getCurrentFilteredRows(){
+  var s=document.getElementById('f-search').value.toLowerCase();
+  var rem=document.getElementById('f-remarks').value.toLowerCase();
+  var st=document.getElementById('f-status').value;
+  var pay=document.getElementById('f-pay').value;
+  var pri=document.getElementById('f-priority').value;
+  var asg=document.getElementById('f-assign').value;
+  var pc=document.getElementById('f-pendcat').value;
+  var df=document.getElementById('f-date-from').value;
+  var dt=document.getElementById('f-date-to').value;
+  var base=currentView==='today'?allRows.filter(isToday):allRows;
+  return base.filter(function(r){
+    if(s&&Object.values(r).join(' ').toLowerCase().indexOf(s)===-1)return false;
+    if(rem&&(r['User Remarks']||'').toLowerCase().indexOf(rem)===-1)return false;
+    if(st&&r['orderStatus']!==st)return false;
+    if(pay&&r['Shopify Payment']!==pay)return false;
+    if(pri&&r['Priority']!==pri)return false;
+    if(asg&&r['Assign']!==asg)return false;
+    if(pc&&r['Pending Categorie']!==pc)return false;
+    if(df||dt){var d=parseDate(r['Order Date']);if(!d)return false;if(df&&d<new Date(df))return false;if(dt&&d>new Date(dt+'T23:59:59'))return false;}
+    return true;
+  });
+}
+
+function showEditSetup(){
+  var b=BRANDS[currentBrand];
+  var msg='To enable editing for '+b.name+', set up a Google Apps Script on that sheet.\n\n'+
+    'Steps:\n1. Open the '+b.name+' Google Sheet\n2. Extensions → Apps Script\n'+
+    '3. Paste the script (will be copied to clipboard)\n4. Deploy as Web App (Anyone access)\n'+
+    '5. Paste the URL when prompted next';
+  navigator.clipboard && navigator.clipboard.writeText(EDIT_APPS_SCRIPT_CODE).catch(function(){});
+  alert(msg+'\n\n(Script code copied to clipboard)');
+  var url=prompt('Paste the Web App URL for '+b.name+':');
+  if(url && url.trim()){
+    b.editUrl=url.trim();
+    localStorage.setItem('edit_url_'+currentBrand, url.trim());
+    showToast('Edit access connected for '+b.name+'!');
+  }
+}
+
 function clearFilters(){
-  ['f-search','f-date-from','f-date-to'].forEach(function(id){document.getElementById(id).value='';});
+  ['f-search','f-remarks','f-date-from','f-date-to'].forEach(function(id){document.getElementById(id).value='';});
   ['f-status','f-pay','f-priority','f-assign','f-pendcat'].forEach(function(id){document.getElementById(id).value='';});
   applyFilters();
 }
