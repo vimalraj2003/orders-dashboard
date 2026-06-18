@@ -179,25 +179,26 @@ tbody tr.packed-row td{background:#f0fdf4}
 .editgrid-toolbar select{font-family:inherit;font-size:13px;height:34px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);min-width:140px}
 .editgrid-toolbar input{font-family:inherit;font-size:13px;height:34px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);min-width:200px}
 .editgrid-status{font-size:12px;color:var(--muted);margin-left:auto}
-.editgrid-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:auto;max-height:72vh}
-.editgrid-table{width:100%;border-collapse:collapse;font-size:13px;min-width:900px}
-.editgrid-table thead th{position:sticky;top:0;z-index:2;background:var(--surface2);padding:9px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);white-space:nowrap}
+.editgrid-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:auto;max-height:72vh;box-shadow:var(--shadow,0 1px 2px rgba(0,0,0,0.04))}
+.editgrid-table{width:100%;border-collapse:collapse;font-size:13px;min-width:900px;table-layout:auto}
+.editgrid-table thead th{position:sticky;top:0;z-index:2;background:var(--surface2);padding:10px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);white-space:nowrap}
 .editgrid-table th:first-child,.editgrid-table td:first-child{position:sticky;left:0;z-index:1;background:var(--surface2)}
 .editgrid-table th:first-child{z-index:3}
-.editgrid-table td{padding:0;border-bottom:1px solid var(--border);border-right:1px solid var(--border);color:var(--text);white-space:nowrap}
-.editgrid-table td.readonly-cell{padding:8px 12px;color:var(--text-muted);background:var(--surface2);max-width:160px;overflow:hidden;text-overflow:ellipsis}
+.editgrid-table tbody tr:last-child td{border-bottom:none}
+.editgrid-table td{padding:0;border-bottom:1px solid var(--border);color:var(--text);white-space:nowrap;vertical-align:middle}
+.editgrid-table td.readonly-cell{padding:10px 14px;color:var(--muted);background:var(--surface2);max-width:160px;overflow:hidden;text-overflow:ellipsis}
 .editgrid-table tbody tr:hover td.readonly-cell{background:#f0f1ee}
-.editgrid-table td.editable-grid-cell{cursor:text;min-width:140px;max-width:240px}
-.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:8px 12px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis}
+.editgrid-table td.editable-grid-cell{cursor:text;min-width:150px;max-width:240px;background:#fbfaf7}
+.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:10px 14px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
 .editgrid-table td.editable-grid-cell:focus-within{background:#eef1fd;box-shadow:inset 0 0 0 2px var(--accent)}
 .editgrid-table td.editable-grid-cell.saving{background:#fffbeb}
 .editgrid-table td.editable-grid-cell.saved{background:#f0fdf4}
 .editgrid-table td.editable-grid-cell.save-error{background:#fef2f2}
 .editgrid-table tr.nostock-row td.readonly-cell{background:#fef2f2}
 .editgrid-table tr.packed-row td.readonly-cell{background:#f0fdf4}
-.editgrid-legend{display:flex;gap:16px;margin-top:10px;font-size:11px;color:var(--muted);flex-wrap:wrap}
+.editgrid-legend{display:flex;align-items:center;gap:16px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);flex-wrap:wrap}
 .editgrid-legend span{display:flex;align-items:center;gap:5px}
-.editgrid-legend .sw{width:10px;height:10px;border-radius:2px;display:inline-block}
+.editgrid-legend .sw{width:10px;height:10px;border-radius:2px;display:inline-block;border:1px solid var(--border)}
 .modal-tbl-wrap tbody tr.packed-row td{background:#f0fdf4}
 .aging-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;white-space:nowrap}
 .aging-fresh{background:var(--success-bg);color:var(--success)}
@@ -249,25 +250,26 @@ tbody tr.packed-row td{background:#f0fdf4}
 .editgrid-toolbar select{font-family:inherit;font-size:13px;height:34px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);min-width:140px}
 .editgrid-toolbar input{font-family:inherit;font-size:13px;height:34px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);min-width:200px}
 .editgrid-status{font-size:12px;color:var(--muted);margin-left:auto}
-.editgrid-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:auto;max-height:72vh}
-.editgrid-table{width:100%;border-collapse:collapse;font-size:13px;min-width:900px}
-.editgrid-table thead th{position:sticky;top:0;z-index:2;background:var(--surface2);padding:9px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);white-space:nowrap}
+.editgrid-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:auto;max-height:72vh;box-shadow:var(--shadow,0 1px 2px rgba(0,0,0,0.04))}
+.editgrid-table{width:100%;border-collapse:collapse;font-size:13px;min-width:900px;table-layout:auto}
+.editgrid-table thead th{position:sticky;top:0;z-index:2;background:var(--surface2);padding:10px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);white-space:nowrap}
 .editgrid-table th:first-child,.editgrid-table td:first-child{position:sticky;left:0;z-index:1;background:var(--surface2)}
 .editgrid-table th:first-child{z-index:3}
-.editgrid-table td{padding:0;border-bottom:1px solid var(--border);border-right:1px solid var(--border);color:var(--text);white-space:nowrap}
-.editgrid-table td.readonly-cell{padding:8px 12px;color:var(--text-muted);background:var(--surface2);max-width:160px;overflow:hidden;text-overflow:ellipsis}
+.editgrid-table tbody tr:last-child td{border-bottom:none}
+.editgrid-table td{padding:0;border-bottom:1px solid var(--border);color:var(--text);white-space:nowrap;vertical-align:middle}
+.editgrid-table td.readonly-cell{padding:10px 14px;color:var(--muted);background:var(--surface2);max-width:160px;overflow:hidden;text-overflow:ellipsis}
 .editgrid-table tbody tr:hover td.readonly-cell{background:#f0f1ee}
-.editgrid-table td.editable-grid-cell{cursor:text;min-width:140px;max-width:240px}
-.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:8px 12px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis}
+.editgrid-table td.editable-grid-cell{cursor:text;min-width:150px;max-width:240px;background:#fbfaf7}
+.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:10px 14px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
 .editgrid-table td.editable-grid-cell:focus-within{background:#eef1fd;box-shadow:inset 0 0 0 2px var(--accent)}
 .editgrid-table td.editable-grid-cell.saving{background:#fffbeb}
 .editgrid-table td.editable-grid-cell.saved{background:#f0fdf4}
 .editgrid-table td.editable-grid-cell.save-error{background:#fef2f2}
 .editgrid-table tr.nostock-row td.readonly-cell{background:#fef2f2}
 .editgrid-table tr.packed-row td.readonly-cell{background:#f0fdf4}
-.editgrid-legend{display:flex;gap:16px;margin-top:10px;font-size:11px;color:var(--muted);flex-wrap:wrap}
+.editgrid-legend{display:flex;align-items:center;gap:16px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);flex-wrap:wrap}
 .editgrid-legend span{display:flex;align-items:center;gap:5px}
-.editgrid-legend .sw{width:10px;height:10px;border-radius:2px;display:inline-block}
+.editgrid-legend .sw{width:10px;height:10px;border-radius:2px;display:inline-block;border:1px solid var(--border)}
 .empty{text-align:center;padding:40px;color:var(--muted);font-size:13px}
 
 /* ── Badges ── */
@@ -354,25 +356,26 @@ tbody tr.packed-row td{background:#f0fdf4}
 .editgrid-toolbar select{font-family:inherit;font-size:13px;height:34px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);min-width:140px}
 .editgrid-toolbar input{font-family:inherit;font-size:13px;height:34px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);min-width:200px}
 .editgrid-status{font-size:12px;color:var(--muted);margin-left:auto}
-.editgrid-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:auto;max-height:72vh}
-.editgrid-table{width:100%;border-collapse:collapse;font-size:13px;min-width:900px}
-.editgrid-table thead th{position:sticky;top:0;z-index:2;background:var(--surface2);padding:9px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);white-space:nowrap}
+.editgrid-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:auto;max-height:72vh;box-shadow:var(--shadow,0 1px 2px rgba(0,0,0,0.04))}
+.editgrid-table{width:100%;border-collapse:collapse;font-size:13px;min-width:900px;table-layout:auto}
+.editgrid-table thead th{position:sticky;top:0;z-index:2;background:var(--surface2);padding:10px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);white-space:nowrap}
 .editgrid-table th:first-child,.editgrid-table td:first-child{position:sticky;left:0;z-index:1;background:var(--surface2)}
 .editgrid-table th:first-child{z-index:3}
-.editgrid-table td{padding:0;border-bottom:1px solid var(--border);border-right:1px solid var(--border);color:var(--text);white-space:nowrap}
-.editgrid-table td.readonly-cell{padding:8px 12px;color:var(--text-muted);background:var(--surface2);max-width:160px;overflow:hidden;text-overflow:ellipsis}
+.editgrid-table tbody tr:last-child td{border-bottom:none}
+.editgrid-table td{padding:0;border-bottom:1px solid var(--border);color:var(--text);white-space:nowrap;vertical-align:middle}
+.editgrid-table td.readonly-cell{padding:10px 14px;color:var(--muted);background:var(--surface2);max-width:160px;overflow:hidden;text-overflow:ellipsis}
 .editgrid-table tbody tr:hover td.readonly-cell{background:#f0f1ee}
-.editgrid-table td.editable-grid-cell{cursor:text;min-width:140px;max-width:240px}
-.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:8px 12px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis}
+.editgrid-table td.editable-grid-cell{cursor:text;min-width:150px;max-width:240px;background:#fbfaf7}
+.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:10px 14px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
 .editgrid-table td.editable-grid-cell:focus-within{background:#eef1fd;box-shadow:inset 0 0 0 2px var(--accent)}
 .editgrid-table td.editable-grid-cell.saving{background:#fffbeb}
 .editgrid-table td.editable-grid-cell.saved{background:#f0fdf4}
 .editgrid-table td.editable-grid-cell.save-error{background:#fef2f2}
 .editgrid-table tr.nostock-row td.readonly-cell{background:#fef2f2}
 .editgrid-table tr.packed-row td.readonly-cell{background:#f0fdf4}
-.editgrid-legend{display:flex;gap:16px;margin-top:10px;font-size:11px;color:var(--muted);flex-wrap:wrap}
+.editgrid-legend{display:flex;align-items:center;gap:16px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);flex-wrap:wrap}
 .editgrid-legend span{display:flex;align-items:center;gap:5px}
-.editgrid-legend .sw{width:10px;height:10px;border-radius:2px;display:inline-block}
+.editgrid-legend .sw{width:10px;height:10px;border-radius:2px;display:inline-block;border:1px solid var(--border)}
 .modal-tbl-wrap tbody tr.packed-row td{background:#f0fdf4}
 .aging-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;white-space:nowrap}
 .aging-fresh{background:var(--success-bg);color:var(--success)}
@@ -424,25 +427,26 @@ tbody tr.packed-row td{background:#f0fdf4}
 .editgrid-toolbar select{font-family:inherit;font-size:13px;height:34px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);min-width:140px}
 .editgrid-toolbar input{font-family:inherit;font-size:13px;height:34px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);min-width:200px}
 .editgrid-status{font-size:12px;color:var(--muted);margin-left:auto}
-.editgrid-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:auto;max-height:72vh}
-.editgrid-table{width:100%;border-collapse:collapse;font-size:13px;min-width:900px}
-.editgrid-table thead th{position:sticky;top:0;z-index:2;background:var(--surface2);padding:9px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);white-space:nowrap}
+.editgrid-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:auto;max-height:72vh;box-shadow:var(--shadow,0 1px 2px rgba(0,0,0,0.04))}
+.editgrid-table{width:100%;border-collapse:collapse;font-size:13px;min-width:900px;table-layout:auto}
+.editgrid-table thead th{position:sticky;top:0;z-index:2;background:var(--surface2);padding:10px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);white-space:nowrap}
 .editgrid-table th:first-child,.editgrid-table td:first-child{position:sticky;left:0;z-index:1;background:var(--surface2)}
 .editgrid-table th:first-child{z-index:3}
-.editgrid-table td{padding:0;border-bottom:1px solid var(--border);border-right:1px solid var(--border);color:var(--text);white-space:nowrap}
-.editgrid-table td.readonly-cell{padding:8px 12px;color:var(--text-muted);background:var(--surface2);max-width:160px;overflow:hidden;text-overflow:ellipsis}
+.editgrid-table tbody tr:last-child td{border-bottom:none}
+.editgrid-table td{padding:0;border-bottom:1px solid var(--border);color:var(--text);white-space:nowrap;vertical-align:middle}
+.editgrid-table td.readonly-cell{padding:10px 14px;color:var(--muted);background:var(--surface2);max-width:160px;overflow:hidden;text-overflow:ellipsis}
 .editgrid-table tbody tr:hover td.readonly-cell{background:#f0f1ee}
-.editgrid-table td.editable-grid-cell{cursor:text;min-width:140px;max-width:240px}
-.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:8px 12px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis}
+.editgrid-table td.editable-grid-cell{cursor:text;min-width:150px;max-width:240px;background:#fbfaf7}
+.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:10px 14px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
 .editgrid-table td.editable-grid-cell:focus-within{background:#eef1fd;box-shadow:inset 0 0 0 2px var(--accent)}
 .editgrid-table td.editable-grid-cell.saving{background:#fffbeb}
 .editgrid-table td.editable-grid-cell.saved{background:#f0fdf4}
 .editgrid-table td.editable-grid-cell.save-error{background:#fef2f2}
 .editgrid-table tr.nostock-row td.readonly-cell{background:#fef2f2}
 .editgrid-table tr.packed-row td.readonly-cell{background:#f0fdf4}
-.editgrid-legend{display:flex;gap:16px;margin-top:10px;font-size:11px;color:var(--muted);flex-wrap:wrap}
+.editgrid-legend{display:flex;align-items:center;gap:16px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);flex-wrap:wrap}
 .editgrid-legend span{display:flex;align-items:center;gap:5px}
-.editgrid-legend .sw{width:10px;height:10px;border-radius:2px;display:inline-block}
+.editgrid-legend .sw{width:10px;height:10px;border-radius:2px;display:inline-block;border:1px solid var(--border)}
 
 /* ── Daily Tracker ── */
 .daily-page{display:none}.daily-page.open{display:block}
@@ -769,7 +773,7 @@ tbody tr.packed-row td{background:#f0fdf4}
   </div>
 
   <div class="editgrid-legend">
-    <span><span class="sw" style="background:#eef1fd;border:1px solid #c7d2fe"></span> Click to edit (saves on blur or Enter)</span>
+    <span><span class="sw" style="background:#fbfaf7"></span> Editable (click any cell to edit, saves on blur or Enter)</span>
     <span><span class="sw" style="background:#fffbeb"></span> Saving...</span>
     <span><span class="sw" style="background:#f0fdf4"></span> Saved</span>
     <span><span class="sw" style="background:#fef2f2"></span> Save failed</span>
