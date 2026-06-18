@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -163,50 +162,6 @@ tbody tr.packed-row td{background:#f0fdf4}
 .brand-script-setup input{font-family:inherit;font-size:12px;height:30px;padding:0 8px;border-radius:4px;border:1px solid #fde68a;width:100%;margin-top:6px;outline:none}
 .brand-script-setup textarea{width:100%;height:100px;font-family:monospace;font-size:10px;margin-top:6px;padding:6px;border:1px solid #fde68a;border-radius:4px;resize:none}
 .brand-script-setup button{margin-top:6px;background:#d97706;border:none;color:#fff;font-family:inherit;font-size:11px;padding:5px 12px;border-radius:4px;cursor:pointer}
-.row-checkbox{width:16px;height:16px;cursor:pointer}
-.bulk-bar{display:none;align-items:center;gap:12px;background:#eef1fd;border:1px solid #2d5be3;border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:10px;flex-wrap:wrap}
-.bulk-bar.show{display:flex}
-.bulk-bar span{font-size:13px;color:var(--text);font-weight:500}
-.bulk-bar select{font-family:inherit;font-size:13px;height:32px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:#fff;min-width:160px}
-.bulk-bar button{font-family:inherit;font-size:12px;height:32px;padding:0 14px;border-radius:var(--radius-sm);border:none;cursor:pointer}
-.bulk-apply-btn{background:#2d5be3;color:#fff}
-.bulk-apply-btn:hover{background:#2450c8}
-.bulk-apply-btn:disabled{background:#ccc;cursor:not-allowed}
-.bulk-clear-btn{background:#fff;border:1px solid var(--border)!important;color:var(--text)}
-
-/* ── Edit Grid page ── */
-.editgrid-page{display:none}.editgrid-page.open{display:block}
-.editgrid-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
-.editgrid-toolbar select{font-family:inherit;font-size:13px;height:34px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);min-width:140px}
-.editgrid-toolbar input{font-family:inherit;font-size:13px;height:34px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);min-width:200px}
-.editgrid-status{font-size:12px;color:var(--muted);margin-left:auto}
-.editgrid-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:auto;max-height:72vh;box-shadow:var(--shadow,0 1px 2px rgba(0,0,0,0.04))}
-.editgrid-table{width:100%;border-collapse:collapse;font-size:13px;min-width:900px;table-layout:auto}
-.editgrid-table thead th{position:sticky;top:0;z-index:2;background:var(--surface2);padding:10px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);white-space:nowrap}
-.editgrid-table th:first-child,.editgrid-table td:first-child{position:sticky;left:0;z-index:1;background:var(--surface2)}
-.editgrid-table th:first-child{z-index:3}
-.editgrid-table tbody tr:last-child td{border-bottom:none}
-.editgrid-table td{padding:0;border-bottom:1px solid var(--border);color:var(--text);white-space:nowrap;vertical-align:middle}
-.editgrid-table td.readonly-cell{padding:10px 14px;color:var(--muted);background:var(--surface2);max-width:160px;overflow:hidden;text-overflow:ellipsis}
-.editgrid-table tbody tr:hover td.readonly-cell{background:#f0f1ee}
-.editgrid-table td.editable-grid-cell{cursor:text;min-width:150px;max-width:240px;background:#eef1fd;box-shadow:inset 3px 0 0 #2d5be3}
-.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:10px 14px 10px 12px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
-.editgrid-table td.editable-grid-cell:hover{background:#e3e9fc}
-.editgrid-table td.editable-grid-cell:focus-within{background:#fff;box-shadow:inset 0 0 0 2px var(--accent)}
-.editgrid-table td.editable-grid-cell.saving{background:#fef3c7;box-shadow:inset 3px 0 0 #d97706}
-.editgrid-table td.editable-grid-cell.saved{background:#dcfce7;box-shadow:inset 3px 0 0 #16a34a}
-.editgrid-table td.editable-grid-cell.save-error{background:#fee2e2;box-shadow:inset 3px 0 0 #dc2626}
-.editgrid-table th.editable-th{color:var(--accent)}
-.editgrid-table tr.nostock-row td.readonly-cell{background:#fef2f2}
-.editgrid-table tr.packed-row td.readonly-cell{background:#f0fdf4}
-.editgrid-legend{display:flex;align-items:center;gap:16px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);flex-wrap:wrap}
-.editgrid-legend span{display:flex;align-items:center;gap:5px}
-.editgrid-legend .sw{width:10px;height:10px;border-radius:2px;display:inline-block;border:1px solid var(--border)}
-.eg-th-inner{display:flex;align-items:center;justify-content:space-between;gap:6px}
-.eg-th-filter{font-family:inherit;font-size:10px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px 4px;max-width:90px;cursor:pointer;outline:none}
-.eg-th-filter:focus{border-color:var(--accent)}
-.eg-th-filter.active-filter{border-color:var(--accent);background:#eef1fd;color:var(--accent);font-weight:600}
-.editgrid-table th.editable-th .eg-th-filter.active-filter{background:#fff}
 .modal-tbl-wrap tbody tr.packed-row td{background:#f0fdf4}
 .aging-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;white-space:nowrap}
 .aging-fresh{background:var(--success-bg);color:var(--success)}
@@ -241,50 +196,6 @@ tbody tr.packed-row td{background:#f0fdf4}
 .brand-script-setup input{font-family:inherit;font-size:12px;height:30px;padding:0 8px;border-radius:4px;border:1px solid #fde68a;width:100%;margin-top:6px;outline:none}
 .brand-script-setup textarea{width:100%;height:100px;font-family:monospace;font-size:10px;margin-top:6px;padding:6px;border:1px solid #fde68a;border-radius:4px;resize:none}
 .brand-script-setup button{margin-top:6px;background:#d97706;border:none;color:#fff;font-family:inherit;font-size:11px;padding:5px 12px;border-radius:4px;cursor:pointer}
-.row-checkbox{width:16px;height:16px;cursor:pointer}
-.bulk-bar{display:none;align-items:center;gap:12px;background:#eef1fd;border:1px solid #2d5be3;border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:10px;flex-wrap:wrap}
-.bulk-bar.show{display:flex}
-.bulk-bar span{font-size:13px;color:var(--text);font-weight:500}
-.bulk-bar select{font-family:inherit;font-size:13px;height:32px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:#fff;min-width:160px}
-.bulk-bar button{font-family:inherit;font-size:12px;height:32px;padding:0 14px;border-radius:var(--radius-sm);border:none;cursor:pointer}
-.bulk-apply-btn{background:#2d5be3;color:#fff}
-.bulk-apply-btn:hover{background:#2450c8}
-.bulk-apply-btn:disabled{background:#ccc;cursor:not-allowed}
-.bulk-clear-btn{background:#fff;border:1px solid var(--border)!important;color:var(--text)}
-
-/* ── Edit Grid page ── */
-.editgrid-page{display:none}.editgrid-page.open{display:block}
-.editgrid-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
-.editgrid-toolbar select{font-family:inherit;font-size:13px;height:34px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);min-width:140px}
-.editgrid-toolbar input{font-family:inherit;font-size:13px;height:34px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);min-width:200px}
-.editgrid-status{font-size:12px;color:var(--muted);margin-left:auto}
-.editgrid-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:auto;max-height:72vh;box-shadow:var(--shadow,0 1px 2px rgba(0,0,0,0.04))}
-.editgrid-table{width:100%;border-collapse:collapse;font-size:13px;min-width:900px;table-layout:auto}
-.editgrid-table thead th{position:sticky;top:0;z-index:2;background:var(--surface2);padding:10px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);white-space:nowrap}
-.editgrid-table th:first-child,.editgrid-table td:first-child{position:sticky;left:0;z-index:1;background:var(--surface2)}
-.editgrid-table th:first-child{z-index:3}
-.editgrid-table tbody tr:last-child td{border-bottom:none}
-.editgrid-table td{padding:0;border-bottom:1px solid var(--border);color:var(--text);white-space:nowrap;vertical-align:middle}
-.editgrid-table td.readonly-cell{padding:10px 14px;color:var(--muted);background:var(--surface2);max-width:160px;overflow:hidden;text-overflow:ellipsis}
-.editgrid-table tbody tr:hover td.readonly-cell{background:#f0f1ee}
-.editgrid-table td.editable-grid-cell{cursor:text;min-width:150px;max-width:240px;background:#eef1fd;box-shadow:inset 3px 0 0 #2d5be3}
-.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:10px 14px 10px 12px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
-.editgrid-table td.editable-grid-cell:hover{background:#e3e9fc}
-.editgrid-table td.editable-grid-cell:focus-within{background:#fff;box-shadow:inset 0 0 0 2px var(--accent)}
-.editgrid-table td.editable-grid-cell.saving{background:#fef3c7;box-shadow:inset 3px 0 0 #d97706}
-.editgrid-table td.editable-grid-cell.saved{background:#dcfce7;box-shadow:inset 3px 0 0 #16a34a}
-.editgrid-table td.editable-grid-cell.save-error{background:#fee2e2;box-shadow:inset 3px 0 0 #dc2626}
-.editgrid-table th.editable-th{color:var(--accent)}
-.editgrid-table tr.nostock-row td.readonly-cell{background:#fef2f2}
-.editgrid-table tr.packed-row td.readonly-cell{background:#f0fdf4}
-.editgrid-legend{display:flex;align-items:center;gap:16px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);flex-wrap:wrap}
-.editgrid-legend span{display:flex;align-items:center;gap:5px}
-.editgrid-legend .sw{width:10px;height:10px;border-radius:2px;display:inline-block;border:1px solid var(--border)}
-.eg-th-inner{display:flex;align-items:center;justify-content:space-between;gap:6px}
-.eg-th-filter{font-family:inherit;font-size:10px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px 4px;max-width:90px;cursor:pointer;outline:none}
-.eg-th-filter:focus{border-color:var(--accent)}
-.eg-th-filter.active-filter{border-color:var(--accent);background:#eef1fd;color:var(--accent);font-weight:600}
-.editgrid-table th.editable-th .eg-th-filter.active-filter{background:#fff}
 .empty{text-align:center;padding:40px;color:var(--muted);font-size:13px}
 
 /* ── Badges ── */
@@ -354,50 +265,6 @@ tbody tr.packed-row td{background:#f0fdf4}
 .brand-script-setup input{font-family:inherit;font-size:12px;height:30px;padding:0 8px;border-radius:4px;border:1px solid #fde68a;width:100%;margin-top:6px;outline:none}
 .brand-script-setup textarea{width:100%;height:100px;font-family:monospace;font-size:10px;margin-top:6px;padding:6px;border:1px solid #fde68a;border-radius:4px;resize:none}
 .brand-script-setup button{margin-top:6px;background:#d97706;border:none;color:#fff;font-family:inherit;font-size:11px;padding:5px 12px;border-radius:4px;cursor:pointer}
-.row-checkbox{width:16px;height:16px;cursor:pointer}
-.bulk-bar{display:none;align-items:center;gap:12px;background:#eef1fd;border:1px solid #2d5be3;border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:10px;flex-wrap:wrap}
-.bulk-bar.show{display:flex}
-.bulk-bar span{font-size:13px;color:var(--text);font-weight:500}
-.bulk-bar select{font-family:inherit;font-size:13px;height:32px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:#fff;min-width:160px}
-.bulk-bar button{font-family:inherit;font-size:12px;height:32px;padding:0 14px;border-radius:var(--radius-sm);border:none;cursor:pointer}
-.bulk-apply-btn{background:#2d5be3;color:#fff}
-.bulk-apply-btn:hover{background:#2450c8}
-.bulk-apply-btn:disabled{background:#ccc;cursor:not-allowed}
-.bulk-clear-btn{background:#fff;border:1px solid var(--border)!important;color:var(--text)}
-
-/* ── Edit Grid page ── */
-.editgrid-page{display:none}.editgrid-page.open{display:block}
-.editgrid-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
-.editgrid-toolbar select{font-family:inherit;font-size:13px;height:34px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);min-width:140px}
-.editgrid-toolbar input{font-family:inherit;font-size:13px;height:34px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);min-width:200px}
-.editgrid-status{font-size:12px;color:var(--muted);margin-left:auto}
-.editgrid-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:auto;max-height:72vh;box-shadow:var(--shadow,0 1px 2px rgba(0,0,0,0.04))}
-.editgrid-table{width:100%;border-collapse:collapse;font-size:13px;min-width:900px;table-layout:auto}
-.editgrid-table thead th{position:sticky;top:0;z-index:2;background:var(--surface2);padding:10px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);white-space:nowrap}
-.editgrid-table th:first-child,.editgrid-table td:first-child{position:sticky;left:0;z-index:1;background:var(--surface2)}
-.editgrid-table th:first-child{z-index:3}
-.editgrid-table tbody tr:last-child td{border-bottom:none}
-.editgrid-table td{padding:0;border-bottom:1px solid var(--border);color:var(--text);white-space:nowrap;vertical-align:middle}
-.editgrid-table td.readonly-cell{padding:10px 14px;color:var(--muted);background:var(--surface2);max-width:160px;overflow:hidden;text-overflow:ellipsis}
-.editgrid-table tbody tr:hover td.readonly-cell{background:#f0f1ee}
-.editgrid-table td.editable-grid-cell{cursor:text;min-width:150px;max-width:240px;background:#eef1fd;box-shadow:inset 3px 0 0 #2d5be3}
-.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:10px 14px 10px 12px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
-.editgrid-table td.editable-grid-cell:hover{background:#e3e9fc}
-.editgrid-table td.editable-grid-cell:focus-within{background:#fff;box-shadow:inset 0 0 0 2px var(--accent)}
-.editgrid-table td.editable-grid-cell.saving{background:#fef3c7;box-shadow:inset 3px 0 0 #d97706}
-.editgrid-table td.editable-grid-cell.saved{background:#dcfce7;box-shadow:inset 3px 0 0 #16a34a}
-.editgrid-table td.editable-grid-cell.save-error{background:#fee2e2;box-shadow:inset 3px 0 0 #dc2626}
-.editgrid-table th.editable-th{color:var(--accent)}
-.editgrid-table tr.nostock-row td.readonly-cell{background:#fef2f2}
-.editgrid-table tr.packed-row td.readonly-cell{background:#f0fdf4}
-.editgrid-legend{display:flex;align-items:center;gap:16px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);flex-wrap:wrap}
-.editgrid-legend span{display:flex;align-items:center;gap:5px}
-.editgrid-legend .sw{width:10px;height:10px;border-radius:2px;display:inline-block;border:1px solid var(--border)}
-.eg-th-inner{display:flex;align-items:center;justify-content:space-between;gap:6px}
-.eg-th-filter{font-family:inherit;font-size:10px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px 4px;max-width:90px;cursor:pointer;outline:none}
-.eg-th-filter:focus{border-color:var(--accent)}
-.eg-th-filter.active-filter{border-color:var(--accent);background:#eef1fd;color:var(--accent);font-weight:600}
-.editgrid-table th.editable-th .eg-th-filter.active-filter{background:#fff}
 .modal-tbl-wrap tbody tr.packed-row td{background:#f0fdf4}
 .aging-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;white-space:nowrap}
 .aging-fresh{background:var(--success-bg);color:var(--success)}
@@ -432,50 +299,6 @@ tbody tr.packed-row td{background:#f0fdf4}
 .brand-script-setup input{font-family:inherit;font-size:12px;height:30px;padding:0 8px;border-radius:4px;border:1px solid #fde68a;width:100%;margin-top:6px;outline:none}
 .brand-script-setup textarea{width:100%;height:100px;font-family:monospace;font-size:10px;margin-top:6px;padding:6px;border:1px solid #fde68a;border-radius:4px;resize:none}
 .brand-script-setup button{margin-top:6px;background:#d97706;border:none;color:#fff;font-family:inherit;font-size:11px;padding:5px 12px;border-radius:4px;cursor:pointer}
-.row-checkbox{width:16px;height:16px;cursor:pointer}
-.bulk-bar{display:none;align-items:center;gap:12px;background:#eef1fd;border:1px solid #2d5be3;border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:10px;flex-wrap:wrap}
-.bulk-bar.show{display:flex}
-.bulk-bar span{font-size:13px;color:var(--text);font-weight:500}
-.bulk-bar select{font-family:inherit;font-size:13px;height:32px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:#fff;min-width:160px}
-.bulk-bar button{font-family:inherit;font-size:12px;height:32px;padding:0 14px;border-radius:var(--radius-sm);border:none;cursor:pointer}
-.bulk-apply-btn{background:#2d5be3;color:#fff}
-.bulk-apply-btn:hover{background:#2450c8}
-.bulk-apply-btn:disabled{background:#ccc;cursor:not-allowed}
-.bulk-clear-btn{background:#fff;border:1px solid var(--border)!important;color:var(--text)}
-
-/* ── Edit Grid page ── */
-.editgrid-page{display:none}.editgrid-page.open{display:block}
-.editgrid-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
-.editgrid-toolbar select{font-family:inherit;font-size:13px;height:34px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);min-width:140px}
-.editgrid-toolbar input{font-family:inherit;font-size:13px;height:34px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);min-width:200px}
-.editgrid-status{font-size:12px;color:var(--muted);margin-left:auto}
-.editgrid-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:auto;max-height:72vh;box-shadow:var(--shadow,0 1px 2px rgba(0,0,0,0.04))}
-.editgrid-table{width:100%;border-collapse:collapse;font-size:13px;min-width:900px;table-layout:auto}
-.editgrid-table thead th{position:sticky;top:0;z-index:2;background:var(--surface2);padding:10px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);white-space:nowrap}
-.editgrid-table th:first-child,.editgrid-table td:first-child{position:sticky;left:0;z-index:1;background:var(--surface2)}
-.editgrid-table th:first-child{z-index:3}
-.editgrid-table tbody tr:last-child td{border-bottom:none}
-.editgrid-table td{padding:0;border-bottom:1px solid var(--border);color:var(--text);white-space:nowrap;vertical-align:middle}
-.editgrid-table td.readonly-cell{padding:10px 14px;color:var(--muted);background:var(--surface2);max-width:160px;overflow:hidden;text-overflow:ellipsis}
-.editgrid-table tbody tr:hover td.readonly-cell{background:#f0f1ee}
-.editgrid-table td.editable-grid-cell{cursor:text;min-width:150px;max-width:240px;background:#eef1fd;box-shadow:inset 3px 0 0 #2d5be3}
-.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:10px 14px 10px 12px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
-.editgrid-table td.editable-grid-cell:hover{background:#e3e9fc}
-.editgrid-table td.editable-grid-cell:focus-within{background:#fff;box-shadow:inset 0 0 0 2px var(--accent)}
-.editgrid-table td.editable-grid-cell.saving{background:#fef3c7;box-shadow:inset 3px 0 0 #d97706}
-.editgrid-table td.editable-grid-cell.saved{background:#dcfce7;box-shadow:inset 3px 0 0 #16a34a}
-.editgrid-table td.editable-grid-cell.save-error{background:#fee2e2;box-shadow:inset 3px 0 0 #dc2626}
-.editgrid-table th.editable-th{color:var(--accent)}
-.editgrid-table tr.nostock-row td.readonly-cell{background:#fef2f2}
-.editgrid-table tr.packed-row td.readonly-cell{background:#f0fdf4}
-.editgrid-legend{display:flex;align-items:center;gap:16px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);flex-wrap:wrap}
-.editgrid-legend span{display:flex;align-items:center;gap:5px}
-.editgrid-legend .sw{width:10px;height:10px;border-radius:2px;display:inline-block;border:1px solid var(--border)}
-.eg-th-inner{display:flex;align-items:center;justify-content:space-between;gap:6px}
-.eg-th-filter{font-family:inherit;font-size:10px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px 4px;max-width:90px;cursor:pointer;outline:none}
-.eg-th-filter:focus{border-color:var(--accent)}
-.eg-th-filter.active-filter{border-color:var(--accent);background:#eef1fd;color:var(--accent);font-weight:600}
-.editgrid-table th.editable-th .eg-th-filter.active-filter{background:#fff}
 
 /* ── Daily Tracker ── */
 .daily-page{display:none}.daily-page.open{display:block}
@@ -568,10 +391,6 @@ tbody tr.packed-row td{background:#f0fdf4}
   <button class="nav-item" id="nav-daily" onclick="showDailyTracker()">
     <span class="nav-dot" style="background:#7c3aed"></span>
     Daily Tracker
-  </button>
-  <button class="nav-item" id="nav-editgrid" onclick="showEditGrid()">
-    <span class="nav-dot" style="background:#0369a1"></span>
-    Edit Grid
   </button>
   <a class="nav-item" href="https://vimalraj2003.github.io/Daily-Tracker-Dashboard/" target="_blank" rel="noopener" style="text-decoration:none;box-sizing:border-box">
     <span class="nav-dot" style="background:#0891b2"></span>
@@ -720,16 +539,6 @@ tbody tr.packed-row td{background:#f0fdf4}
     </div>
   </div>
 
-  <div class="bulk-bar" id="bulk-bar">
-    <span id="bulk-count">0 selected</span>
-    <select id="bulk-pendcat-select">
-      <option value="">Choose Pending Category...</option>
-    </select>
-    <input type="text" id="bulk-pendcat-custom" placeholder="Or type new value..." style="font-family:inherit;font-size:13px;height:32px;padding:0 10px;border-radius:6px;border:1px solid var(--border);min-width:160px">
-    <button class="bulk-apply-btn" id="bulk-apply-btn" onclick="applyBulkUpdate()">Apply to selected</button>
-    <button class="bulk-clear-btn" onclick="clearSelection()">Clear selection</button>
-  </div>
-
   <div class="result-info" id="row-count"></div>
   <div class="tbl-wrap">
     <table>
@@ -770,45 +579,6 @@ tbody tr.packed-row td{background:#f0fdf4}
 </div>
 
   </div><!-- end dashboard-content -->
-
-<!-- Edit Grid Inline Page -->
-<div class="daily-page" id="editgrid-page">
-  <div class="page-hdr">
-    <div>
-      <h1>Edit Grid</h1>
-      <p>Spreadsheet-style view — click any highlighted cell to edit and save instantly</p>
-    </div>
-    <button class="btn" onclick="loadEditGridData()">
-      <svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
-      Refresh
-    </button>
-  </div>
-
-  <div class="editgrid-toolbar">
-    <select id="eg-brand-select" onchange="onEditGridBrandChange()">
-      <option value="shrus">Shrus</option>
-      <option value="ikeym">Ikeym</option>
-      <option value="maya">Maya</option>
-    </select>
-    <input type="text" id="eg-search" placeholder="Search order #, agent, remarks..." oninput="renderEditGrid()">
-    <button class="btn" onclick="clearEgColumnFilters()" style="font-size:12px;height:34px;padding:0 12px">Clear column filters</button>
-    <span class="editgrid-status" id="eg-status"></span>
-  </div>
-
-  <div class="editgrid-wrap">
-    <table class="editgrid-table">
-      <thead><tr id="eg-thead"></tr></thead>
-      <tbody id="eg-tbody"><tr><td style="padding:24px;text-align:center;color:var(--muted)">Loading...</td></tr></tbody>
-    </table>
-  </div>
-
-  <div class="editgrid-legend">
-    <span><span class="sw" style="background:#eef1fd;box-shadow:inset 2px 0 0 #2d5be3"></span> Editable column (click to edit)</span>
-    <span><span class="sw" style="background:#fef3c7"></span> Saving...</span>
-    <span><span class="sw" style="background:#dcfce7"></span> Saved</span>
-    <span><span class="sw" style="background:#fee2e2"></span> Save failed</span>
-  </div>
-</div>
 
 <!-- Daily Tracker Inline Page -->
 <div class="daily-page" id="daily-page">
@@ -1214,88 +984,6 @@ var COLS=[
   {key:'Agent Remarks ',label:'Agent Remarks'}
 ];
 
-var selectedOrders = new Set();
-
-function toggleRowSelect(cb){
-  var orderNum = cb.dataset.orderCb;
-  if(cb.checked) selectedOrders.add(orderNum);
-  else selectedOrders.delete(orderNum);
-  updateBulkBar();
-}
-
-function toggleSelectAll(cb){
-  var checkboxes = document.querySelectorAll('#tbody .row-checkbox');
-  checkboxes.forEach(function(box){
-    box.checked = cb.checked;
-    var orderNum = box.dataset.orderCb;
-    if(cb.checked) selectedOrders.add(orderNum);
-    else selectedOrders.delete(orderNum);
-  });
-  updateBulkBar();
-}
-
-function clearSelection(){
-  selectedOrders.clear();
-  document.querySelectorAll('.row-checkbox').forEach(function(cb){cb.checked=false;});
-  updateBulkBar();
-}
-
-function updateBulkBar(){
-  var bar=document.getElementById('bulk-bar');
-  var count=selectedOrders.size;
-  document.getElementById('bulk-count').textContent=count+' selected';
-  if(count>0){
-    bar.className='bulk-bar show';
-    // Populate pending category dropdown with existing values
-    var sel=document.getElementById('bulk-pendcat-select');
-    var vals=[];
-    allRows.forEach(function(r){if(r['Pending Categorie']&&vals.indexOf(r['Pending Categorie'])===-1)vals.push(r['Pending Categorie']);});
-    vals.sort();
-    sel.innerHTML='<option value="">Choose Pending Category...</option>'+vals.map(function(v){return '<option value="'+v+'">'+v+'</option>';}).join('');
-  } else {
-    bar.className='bulk-bar';
-  }
-}
-
-async function applyBulkUpdate(){
-  var selectVal=document.getElementById('bulk-pendcat-select').value;
-  var customVal=document.getElementById('bulk-pendcat-custom').value.trim();
-  var newVal=customVal||selectVal;
-  if(!newVal){ showToast('Please choose or type a category value', true); return; }
-  if(!selectedOrders.size){ showToast('No orders selected', true); return; }
-
-  var b=BRANDS[currentBrand];
-  if(!b.editUrl){ showEditSetup(); return; }
-
-  var btn=document.getElementById('bulk-apply-btn');
-  btn.disabled=true; btn.textContent='Updating...';
-
-  var orderList=Array.from(selectedOrders);
-  var successCount=0, failCount=0;
-
-  for(var i=0;i<orderList.length;i++){
-    var ok=await new Promise(function(resolve){
-      saveInlineEdit(orderList[i],'Pending Categorie',newVal,resolve);
-    });
-    if(ok){
-      successCount++;
-      allRows.forEach(function(r){ if((r['orderNumber']||'')===orderList[i]) r['Pending Categorie']=newVal; });
-    } else {
-      failCount++;
-    }
-  }
-
-  btn.disabled=false; btn.textContent='Apply to selected';
-  if(failCount===0){
-    showToast('Updated '+successCount+' order'+(successCount!==1?'s':'')+' successfully');
-  } else {
-    showToast(successCount+' updated, '+failCount+' failed', failCount>successCount);
-  }
-  document.getElementById('bulk-pendcat-custom').value='';
-  clearSelection();
-  applyFilters();
-}
-
 function isPendingStatus(r){
   var s=(r['orderStatus']||'').trim().toLowerCase();
   return s!=='pick complete'&&s!=='packed';
@@ -1390,18 +1078,15 @@ function applyFilters(){
 
 function renderTable(rows){
   var cols=COLS.filter(function(c){return c.key==='_aging'||colHeaders.indexOf(c.key)!==-1;});
-  document.getElementById('thead').innerHTML='<th style="width:30px"><input type="checkbox" class="row-checkbox" id="select-all-checkbox" onchange="toggleSelectAll(this)"></th>'+cols.map(function(c){return '<th>'+c.label+'</th>';}).join('');
+  document.getElementById('thead').innerHTML=cols.map(function(c){return '<th>'+c.label+'</th>';}).join('');
   document.getElementById('row-count').textContent='Showing '+rows.length.toLocaleString()+' order'+(rows.length!==1?'s':'');
-  if(!rows.length){document.getElementById('tbody').innerHTML='<tr><td colspan="'+(cols.length+1)+'" class="empty">No orders match your filters.</td></tr>';return;}
+  if(!rows.length){document.getElementById('tbody').innerHTML='<tr><td colspan="'+cols.length+'" class="empty">No orders match your filters.</td></tr>';return;}
   document.getElementById('tbody').innerHTML=rows.map(function(r){
     var isTodayRow=isToday(r);
     var isNoStock=(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';
     var isPacked=(r['orderStatus']||'').trim().toLowerCase()==='packed';
     var cls=isNoStock?'nostock-row':isPacked?'packed-row':isTodayRow?'today-row':'';
-    var orderNum=(r['orderNumber']||'').replace(/"/g,'&quot;');
-    var isChecked=selectedOrders.has(r['orderNumber']);
-    var checkboxTd='<td><input type="checkbox" class="row-checkbox" data-order-cb="'+orderNum+'" '+(isChecked?'checked':'')+' onchange="toggleRowSelect(this)"></td>';
-    return '<tr'+(cls?' class="'+cls+'"':'')+' data-order="'+orderNum+'">'+checkboxTd+cols.map(function(c){
+    return '<tr'+(cls?' class="'+cls+'"':'')+' data-order="'+(r['orderNumber']||'').replace(/"/g,'&quot;')+'">'+cols.map(function(c){
       var v=r[c.key]||'';
       if(c.editable){
         var content=(c.key==='Pending Categorie'&&isNoStock)?
@@ -1745,15 +1430,10 @@ async function loadAllPendingCategories() {
         var cat = (r['Pending Categorie']||'').trim();
         if(cat) pcatData[k][cat] = (pcatData[k][cat]||0) + 1;
       });
-      // Only seed the cache if this brand hasn't been loaded by the main dashboard yet.
-      // Never overwrite a brand that's currently active/cached, to avoid clobbering
-      // live allRows/colHeaders used by editing, checkboxes, and filters.
-      if(!brandCache[k]){
-        brandCache[k] = rows;
-        brandCacheHeaders[k] = Object.keys(rows[0]||{});
-      }
-      var badgeEl = document.getElementById('badge-'+k);
-      if(badgeEl && (badgeEl.textContent==='-'||!badgeEl.textContent)) badgeEl.textContent = rows.length;
+      // Also cache for brand dashboard
+      brandCache[k] = rows;
+      brandCacheHeaders[k] = Object.keys(rows[0]||{});
+      document.getElementById('badge-'+k).textContent = rows.length;
     } else {
       pcatData[k] = null;
     }
@@ -1879,215 +1559,16 @@ function doGet(e) {
   return ContentService.createTextOutput(JSON.stringify(rows)).setMimeType(ContentService.MimeType.JSON);
 }`;
 
-function hideAllPages(){
+function showDailyTracker() {
+  // Hide dashboard, show daily page
   document.getElementById('dashboard-content').style.display='none';
-  document.getElementById('daily-page').className='daily-page';
-  document.getElementById('editgrid-page').className='daily-page';
+  document.getElementById('daily-page').className='daily-page open';
+
+  // Set nav active
   ['shrus','ikeym','maya'].forEach(function(k){
     document.getElementById('nav-'+k).className='nav-item';
     document.getElementById('nav-'+k).style.background='';
   });
-  document.getElementById('nav-daily').className='nav-item';
-  document.getElementById('nav-daily').style.background='';
-  document.getElementById('nav-editgrid').className='nav-item';
-  document.getElementById('nav-editgrid').style.background='';
-}
-
-// ── Edit Grid Page ──
-var egRows = [];
-var egColHeaders = [];
-var egCurrentBrand = 'shrus';
-
-var EG_COLS = [
-  {key:'orderNumber', label:'Order #', readonly:true},
-  {key:'Order Date', label:'Date', readonly:true},
-  {key:'orderStatus', label:'Status', readonly:true, filterable:true},
-  {key:'Shopify Payment', label:'Payment', readonly:true, filterable:true},
-  {key:'Priority', label:'Priority', readonly:true, filterable:true},
-  {key:'Pending Categorie', label:'Pending Category', readonly:false, filterable:true},
-  {key:'Assign', label:'Assigned To', readonly:false, filterable:true},
-  {key:'User Remarks', label:'User Remarks', readonly:false}
-];
-
-var egColumnFilters = {}; // {colKey: selectedValue}
-
-function showEditGrid() {
-  hideAllPages();
-  document.getElementById('editgrid-page').className='daily-page open';
-  document.getElementById('nav-editgrid').className='nav-item active';
-  document.getElementById('nav-editgrid').style.background='#0369a1';
-  document.getElementById('eg-brand-select').value = egCurrentBrand;
-  loadEditGridData();
-}
-
-function onEditGridBrandChange(){
-  egCurrentBrand = document.getElementById('eg-brand-select').value;
-  egColumnFilters = {};
-  document.getElementById('eg-search').value='';
-  loadEditGridData();
-}
-
-async function loadEditGridData(){
-  var status=document.getElementById('eg-status');
-  status.textContent='Loading...';
-  document.getElementById('eg-tbody').innerHTML='<tr><td style="padding:24px;text-align:center;color:var(--muted)">Loading '+BRANDS[egCurrentBrand].name+' data...</td></tr>';
-  try{
-    // Reuse cache if this brand is already loaded by the main dashboard
-    if(egCurrentBrand===currentBrand && allRows.length){
-      egRows = allRows;
-      egColHeaders = colHeaders;
-    } else if(brandCache[egCurrentBrand]) {
-      egRows = brandCache[egCurrentBrand];
-      egColHeaders = brandCacheHeaders[egCurrentBrand] || Object.keys(egRows[0]||{});
-    } else {
-      egRows = await fetchBrandRows(egCurrentBrand);
-      egColHeaders = Object.keys(egRows[0]||{});
-      brandCache[egCurrentBrand] = egRows;
-      brandCacheHeaders[egCurrentBrand] = egColHeaders;
-    }
-    renderEditGrid();
-    status.textContent = egRows.length+' orders · Updated '+new Date().toLocaleTimeString();
-  }catch(e){
-    document.getElementById('eg-tbody').innerHTML='<tr><td style="padding:24px;text-align:center;color:var(--danger)">Failed to load: '+e.message+'</td></tr>';
-    status.textContent='Error loading data';
-  }
-}
-
-function renderEditGridHeader(cols){
-  document.getElementById('eg-thead').innerHTML=cols.map(function(c){
-    var labelHtml=c.label+(c.readonly?'':' &#9998;');
-    if(!c.filterable){
-      return '<th'+(c.readonly?'':' class="editable-th"')+'>'+labelHtml+'</th>';
-    }
-    var vals=[];
-    egRows.forEach(function(r){ if(r[c.key]&&vals.indexOf(r[c.key])===-1) vals.push(r[c.key]); });
-    vals.sort();
-    var curFilter=egColumnFilters[c.key]||'';
-    var options='<option value="">'+c.label+'</option>'+vals.map(function(v){
-      return '<option value="'+v.replace(/"/g,'&quot;')+'"'+(v===curFilter?' selected':'')+'>'+v+'</option>';
-    }).join('');
-    return '<th'+(c.readonly?'':' class="editable-th"')+'>'+
-      '<div class="eg-th-inner"><span>'+labelHtml+'</span></div>'+
-      '<select class="eg-th-filter'+(curFilter?' active-filter':'')+'" onclick="event.stopPropagation()" onchange="onEgColumnFilterChange(this,\''+c.key+'\')">'+options+'</select>'+
-      '</th>';
-  }).join('');
-}
-
-function onEgColumnFilterChange(sel, key){
-  var val=sel.value;
-  if(val) egColumnFilters[key]=val;
-  else delete egColumnFilters[key];
-  renderEditGrid();
-}
-
-function clearEgColumnFilters(){
-  egColumnFilters={};
-  renderEditGrid();
-}
-
-function renderEditGrid(){
-  var search=document.getElementById('eg-search').value.toLowerCase();
-  var cols=EG_COLS.filter(function(c){return egColHeaders.indexOf(c.key)!==-1;});
-  renderEditGridHeader(cols);
-
-  var rows=egRows.filter(function(r){
-    if(search&&Object.values(r).join(' ').toLowerCase().indexOf(search)===-1)return false;
-    for(var key in egColumnFilters){
-      if((r[key]||'')!==egColumnFilters[key])return false;
-    }
-    return true;
-  });
-
-  // Update active filter count in status
-  var activeCount=Object.keys(egColumnFilters).length;
-  var statusEl=document.getElementById('eg-status');
-  if(statusEl) statusEl.dataset.activeFilters=activeCount;
-
-  if(!rows.length){
-    document.getElementById('eg-tbody').innerHTML='<tr><td colspan="'+cols.length+'" style="padding:24px;text-align:center;color:var(--muted)">No orders match the current filters.</td></tr>';
-    return;
-  }
-
-  document.getElementById('eg-tbody').innerHTML=rows.map(function(r){
-    var isNoStock=(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';
-    var isPacked=(r['orderStatus']||'').trim().toLowerCase()==='packed';
-    var rowCls=isNoStock?'nostock-row':isPacked?'packed-row':'';
-    var orderNum=(r['orderNumber']||'').replace(/"/g,'&quot;');
-    return '<tr'+(rowCls?' class="'+rowCls+'"':'')+' data-order="'+orderNum+'">'+cols.map(function(c){
-      var v=r[c.key]||'';
-      if(c.readonly){
-        if(c.key==='orderStatus') return '<td class="readonly-cell">'+statusBadge(v)+'</td>';
-        if(c.key==='Shopify Payment') return '<td class="readonly-cell">'+payBadge(v)+'</td>';
-        if(c.key==='Priority') return '<td class="readonly-cell">'+prioBadge(v)+'</td>';
-        if(c.key==='orderNumber') return '<td class="readonly-cell"><span class="onum">#'+v+'</span></td>';
-        return '<td class="readonly-cell" title="'+v.replace(/"/g,'&quot;')+'">'+(v||'&mdash;')+'</td>';
-      }
-      return '<td class="editable-grid-cell" data-field="'+c.key+'" data-order="'+orderNum+'">'+
-        '<div class="grid-cell-inner" contenteditable="true" onblur="onGridCellBlur(this)" onkeydown="onGridCellKeydown(event,this)">'+
-        (v||'').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</div></td>';
-    }).join('')+'</tr>';
-  }).join('');
-}
-
-var egOriginalValues = new WeakMap();
-
-function onGridCellKeydown(e, el){
-  if(e.key==='Enter'){ e.preventDefault(); el.blur(); }
-  if(e.key==='Escape'){
-    var orig=egOriginalValues.get(el);
-    if(orig!==undefined) el.textContent=orig;
-    el.blur();
-  }
-}
-
-async function onGridCellBlur(el){
-  var td=el.closest('td');
-  var field=td.dataset.field;
-  var orderNum=td.dataset.order;
-  var newVal=el.textContent.trim();
-
-  // Find original value to detect no-op
-  var row=egRows.find(function(r){return (r['orderNumber']||'')===orderNum;});
-  var oldVal=row?(row[field]||''):'';
-  if(newVal===oldVal)return;
-
-  if(egCurrentBrand!==currentBrand && !BRANDS[egCurrentBrand].editUrl){
-    // brand other than active one needs its own editUrl too
-  }
-  var b=BRANDS[egCurrentBrand];
-  if(!b.editUrl){
-    var prevBrand=currentBrand;
-    currentBrand=egCurrentBrand; // so showEditSetup operates on the right brand
-    showEditSetup();
-    currentBrand=prevBrand;
-    el.textContent=oldVal;
-    return;
-  }
-
-  td.classList.add('saving');
-  td.classList.remove('saved','save-error');
-
-  var prevBrand2=currentBrand;
-  currentBrand=egCurrentBrand;
-  saveInlineEdit(orderNum, field, newVal, function(success){
-    currentBrand=prevBrand2;
-    td.classList.remove('saving');
-    if(success){
-      if(row) row[field]=newVal;
-      td.classList.add('saved');
-      setTimeout(function(){td.classList.remove('saved');},1500);
-      showToast('Saved');
-    } else {
-      td.classList.add('save-error');
-      el.textContent=oldVal;
-      showToast('Failed to save', true);
-    }
-  });
-}
-
-function showDailyTracker() {
-  hideAllPages();
-  document.getElementById('daily-page').className='daily-page open';
   document.getElementById('nav-daily').className='nav-item active';
   document.getElementById('nav-daily').style.background='#7c3aed';
 
@@ -2105,8 +1586,10 @@ function showDailyTracker() {
 }
 
 function showBrandDashboard(brand) {
-  hideAllPages();
   document.getElementById('dashboard-content').style.display='block';
+  document.getElementById('daily-page').className='daily-page';
+  document.getElementById('nav-daily').className='nav-item';
+  document.getElementById('nav-daily').style.background='';
   switchBrand(brand);
 }
 
@@ -2193,9 +1676,7 @@ function showFormMsg(msg, type) {
 
 // ── Init ──
 showBrandDashboard('shrus');
-// Load cross-brand pending categories after the main brand finishes its first fetch,
-// so it never races with or overwrites the active brand's live data.
-setTimeout(function(){ loadAllPendingCategories(); }, 1500);
+loadAllPendingCategories();
 setInterval(function(){loadData();},60000);
 </script>
 </body>
