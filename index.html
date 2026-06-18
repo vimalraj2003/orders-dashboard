@@ -162,6 +162,16 @@ tbody tr.packed-row td{background:#f0fdf4}
 .brand-script-setup input{font-family:inherit;font-size:12px;height:30px;padding:0 8px;border-radius:4px;border:1px solid #fde68a;width:100%;margin-top:6px;outline:none}
 .brand-script-setup textarea{width:100%;height:100px;font-family:monospace;font-size:10px;margin-top:6px;padding:6px;border:1px solid #fde68a;border-radius:4px;resize:none}
 .brand-script-setup button{margin-top:6px;background:#d97706;border:none;color:#fff;font-family:inherit;font-size:11px;padding:5px 12px;border-radius:4px;cursor:pointer}
+.row-checkbox{width:16px;height:16px;cursor:pointer}
+.bulk-bar{display:none;align-items:center;gap:12px;background:#eef1fd;border:1px solid #2d5be3;border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:10px;flex-wrap:wrap}
+.bulk-bar.show{display:flex}
+.bulk-bar span{font-size:13px;color:var(--text);font-weight:500}
+.bulk-bar select{font-family:inherit;font-size:13px;height:32px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:#fff;min-width:160px}
+.bulk-bar button{font-family:inherit;font-size:12px;height:32px;padding:0 14px;border-radius:var(--radius-sm);border:none;cursor:pointer}
+.bulk-apply-btn{background:#2d5be3;color:#fff}
+.bulk-apply-btn:hover{background:#2450c8}
+.bulk-apply-btn:disabled{background:#ccc;cursor:not-allowed}
+.bulk-clear-btn{background:#fff;border:1px solid var(--border)!important;color:var(--text)}
 .modal-tbl-wrap tbody tr.packed-row td{background:#f0fdf4}
 .aging-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;white-space:nowrap}
 .aging-fresh{background:var(--success-bg);color:var(--success)}
@@ -196,6 +206,16 @@ tbody tr.packed-row td{background:#f0fdf4}
 .brand-script-setup input{font-family:inherit;font-size:12px;height:30px;padding:0 8px;border-radius:4px;border:1px solid #fde68a;width:100%;margin-top:6px;outline:none}
 .brand-script-setup textarea{width:100%;height:100px;font-family:monospace;font-size:10px;margin-top:6px;padding:6px;border:1px solid #fde68a;border-radius:4px;resize:none}
 .brand-script-setup button{margin-top:6px;background:#d97706;border:none;color:#fff;font-family:inherit;font-size:11px;padding:5px 12px;border-radius:4px;cursor:pointer}
+.row-checkbox{width:16px;height:16px;cursor:pointer}
+.bulk-bar{display:none;align-items:center;gap:12px;background:#eef1fd;border:1px solid #2d5be3;border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:10px;flex-wrap:wrap}
+.bulk-bar.show{display:flex}
+.bulk-bar span{font-size:13px;color:var(--text);font-weight:500}
+.bulk-bar select{font-family:inherit;font-size:13px;height:32px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:#fff;min-width:160px}
+.bulk-bar button{font-family:inherit;font-size:12px;height:32px;padding:0 14px;border-radius:var(--radius-sm);border:none;cursor:pointer}
+.bulk-apply-btn{background:#2d5be3;color:#fff}
+.bulk-apply-btn:hover{background:#2450c8}
+.bulk-apply-btn:disabled{background:#ccc;cursor:not-allowed}
+.bulk-clear-btn{background:#fff;border:1px solid var(--border)!important;color:var(--text)}
 .empty{text-align:center;padding:40px;color:var(--muted);font-size:13px}
 
 /* ── Badges ── */
@@ -265,6 +285,16 @@ tbody tr.packed-row td{background:#f0fdf4}
 .brand-script-setup input{font-family:inherit;font-size:12px;height:30px;padding:0 8px;border-radius:4px;border:1px solid #fde68a;width:100%;margin-top:6px;outline:none}
 .brand-script-setup textarea{width:100%;height:100px;font-family:monospace;font-size:10px;margin-top:6px;padding:6px;border:1px solid #fde68a;border-radius:4px;resize:none}
 .brand-script-setup button{margin-top:6px;background:#d97706;border:none;color:#fff;font-family:inherit;font-size:11px;padding:5px 12px;border-radius:4px;cursor:pointer}
+.row-checkbox{width:16px;height:16px;cursor:pointer}
+.bulk-bar{display:none;align-items:center;gap:12px;background:#eef1fd;border:1px solid #2d5be3;border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:10px;flex-wrap:wrap}
+.bulk-bar.show{display:flex}
+.bulk-bar span{font-size:13px;color:var(--text);font-weight:500}
+.bulk-bar select{font-family:inherit;font-size:13px;height:32px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:#fff;min-width:160px}
+.bulk-bar button{font-family:inherit;font-size:12px;height:32px;padding:0 14px;border-radius:var(--radius-sm);border:none;cursor:pointer}
+.bulk-apply-btn{background:#2d5be3;color:#fff}
+.bulk-apply-btn:hover{background:#2450c8}
+.bulk-apply-btn:disabled{background:#ccc;cursor:not-allowed}
+.bulk-clear-btn{background:#fff;border:1px solid var(--border)!important;color:var(--text)}
 .modal-tbl-wrap tbody tr.packed-row td{background:#f0fdf4}
 .aging-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;white-space:nowrap}
 .aging-fresh{background:var(--success-bg);color:var(--success)}
@@ -299,6 +329,16 @@ tbody tr.packed-row td{background:#f0fdf4}
 .brand-script-setup input{font-family:inherit;font-size:12px;height:30px;padding:0 8px;border-radius:4px;border:1px solid #fde68a;width:100%;margin-top:6px;outline:none}
 .brand-script-setup textarea{width:100%;height:100px;font-family:monospace;font-size:10px;margin-top:6px;padding:6px;border:1px solid #fde68a;border-radius:4px;resize:none}
 .brand-script-setup button{margin-top:6px;background:#d97706;border:none;color:#fff;font-family:inherit;font-size:11px;padding:5px 12px;border-radius:4px;cursor:pointer}
+.row-checkbox{width:16px;height:16px;cursor:pointer}
+.bulk-bar{display:none;align-items:center;gap:12px;background:#eef1fd;border:1px solid #2d5be3;border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:10px;flex-wrap:wrap}
+.bulk-bar.show{display:flex}
+.bulk-bar span{font-size:13px;color:var(--text);font-weight:500}
+.bulk-bar select{font-family:inherit;font-size:13px;height:32px;padding:0 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:#fff;min-width:160px}
+.bulk-bar button{font-family:inherit;font-size:12px;height:32px;padding:0 14px;border-radius:var(--radius-sm);border:none;cursor:pointer}
+.bulk-apply-btn{background:#2d5be3;color:#fff}
+.bulk-apply-btn:hover{background:#2450c8}
+.bulk-apply-btn:disabled{background:#ccc;cursor:not-allowed}
+.bulk-clear-btn{background:#fff;border:1px solid var(--border)!important;color:var(--text)}
 
 /* ── Daily Tracker ── */
 .daily-page{display:none}.daily-page.open{display:block}
@@ -539,6 +579,16 @@ tbody tr.packed-row td{background:#f0fdf4}
     </div>
   </div>
 
+  <div class="bulk-bar" id="bulk-bar">
+    <span id="bulk-count">0 selected</span>
+    <select id="bulk-pendcat-select">
+      <option value="">Choose Pending Category...</option>
+    </select>
+    <input type="text" id="bulk-pendcat-custom" placeholder="Or type new value..." style="font-family:inherit;font-size:13px;height:32px;padding:0 10px;border-radius:6px;border:1px solid var(--border);min-width:160px">
+    <button class="bulk-apply-btn" id="bulk-apply-btn" onclick="applyBulkUpdate()">Apply to selected</button>
+    <button class="bulk-clear-btn" onclick="clearSelection()">Clear selection</button>
+  </div>
+
   <div class="result-info" id="row-count"></div>
   <div class="tbl-wrap">
     <table>
@@ -673,7 +723,7 @@ tbody tr.packed-row td{background:#f0fdf4}
 <script>
 // ── Brand config ──
 var BRANDS = {
-  shrus:      { name:'Shrus',      icon:'S', color:'#2d5be3', sheetId:'16wFoJiT3hlHakrdow1znmjlRfRqCzpQnLfiDEfSUeXo', gid:'271152649', editUrl:localStorage.getItem('edit_url_shrus')||'' },
+  shrus:      { name:'Shrus',      icon:'S', color:'#2d5be3', sheetId:'1KJwyv84TEUX6XNEI4761Zhvaa3y3zp3rTCNydjkyKpY', gid:'271152649', editUrl:localStorage.getItem('edit_url_shrus')||'https://script.google.com/macros/s/AKfycbzV2XtP5rBlWxwFi-sHLP8nwGcfwUMhNNDojnG8DdK25_13M6F9BUmnZsJ55-asqJLVoA/exec' },
   ikeym:      { name:'Ikeym',      icon:'I', color:'#16a34a', sheetId:'1nO8vJB8XF_IhPyRhJRdAampvV-zqU7ASWzTU4CU4SKQ', gid:'0', editUrl:localStorage.getItem('edit_url_ikeym')||'' },
   maya:       { name:'Maya',       icon:'M', color:'#d97706', sheetId:'1nI6hwvEcctT25bDycuIsDR9WMwPnP780VQQlPAyw3Us', gid:'0', editUrl:localStorage.getItem('edit_url_maya')||'' }
 };
@@ -984,6 +1034,88 @@ var COLS=[
   {key:'Agent Remarks ',label:'Agent Remarks'}
 ];
 
+var selectedOrders = new Set();
+
+function toggleRowSelect(cb){
+  var orderNum = cb.dataset.orderCb;
+  if(cb.checked) selectedOrders.add(orderNum);
+  else selectedOrders.delete(orderNum);
+  updateBulkBar();
+}
+
+function toggleSelectAll(cb){
+  var checkboxes = document.querySelectorAll('#tbody .row-checkbox');
+  checkboxes.forEach(function(box){
+    box.checked = cb.checked;
+    var orderNum = box.dataset.orderCb;
+    if(cb.checked) selectedOrders.add(orderNum);
+    else selectedOrders.delete(orderNum);
+  });
+  updateBulkBar();
+}
+
+function clearSelection(){
+  selectedOrders.clear();
+  document.querySelectorAll('.row-checkbox').forEach(function(cb){cb.checked=false;});
+  updateBulkBar();
+}
+
+function updateBulkBar(){
+  var bar=document.getElementById('bulk-bar');
+  var count=selectedOrders.size;
+  document.getElementById('bulk-count').textContent=count+' selected';
+  if(count>0){
+    bar.className='bulk-bar show';
+    // Populate pending category dropdown with existing values
+    var sel=document.getElementById('bulk-pendcat-select');
+    var vals=[];
+    allRows.forEach(function(r){if(r['Pending Categorie']&&vals.indexOf(r['Pending Categorie'])===-1)vals.push(r['Pending Categorie']);});
+    vals.sort();
+    sel.innerHTML='<option value="">Choose Pending Category...</option>'+vals.map(function(v){return '<option value="'+v+'">'+v+'</option>';}).join('');
+  } else {
+    bar.className='bulk-bar';
+  }
+}
+
+async function applyBulkUpdate(){
+  var selectVal=document.getElementById('bulk-pendcat-select').value;
+  var customVal=document.getElementById('bulk-pendcat-custom').value.trim();
+  var newVal=customVal||selectVal;
+  if(!newVal){ showToast('Please choose or type a category value', true); return; }
+  if(!selectedOrders.size){ showToast('No orders selected', true); return; }
+
+  var b=BRANDS[currentBrand];
+  if(!b.editUrl){ showEditSetup(); return; }
+
+  var btn=document.getElementById('bulk-apply-btn');
+  btn.disabled=true; btn.textContent='Updating...';
+
+  var orderList=Array.from(selectedOrders);
+  var successCount=0, failCount=0;
+
+  for(var i=0;i<orderList.length;i++){
+    var ok=await new Promise(function(resolve){
+      saveInlineEdit(orderList[i],'Pending Categorie',newVal,resolve);
+    });
+    if(ok){
+      successCount++;
+      allRows.forEach(function(r){ if((r['orderNumber']||'')===orderList[i]) r['Pending Categorie']=newVal; });
+    } else {
+      failCount++;
+    }
+  }
+
+  btn.disabled=false; btn.textContent='Apply to selected';
+  if(failCount===0){
+    showToast('Updated '+successCount+' order'+(successCount!==1?'s':'')+' successfully');
+  } else {
+    showToast(successCount+' updated, '+failCount+' failed', failCount>successCount);
+  }
+  document.getElementById('bulk-pendcat-custom').value='';
+  clearSelection();
+  applyFilters();
+}
+
 function isPendingStatus(r){
   var s=(r['orderStatus']||'').trim().toLowerCase();
   return s!=='pick complete'&&s!=='packed';
@@ -1078,15 +1210,18 @@ function applyFilters(){
 
 function renderTable(rows){
   var cols=COLS.filter(function(c){return c.key==='_aging'||colHeaders.indexOf(c.key)!==-1;});
-  document.getElementById('thead').innerHTML=cols.map(function(c){return '<th>'+c.label+'</th>';}).join('');
+  document.getElementById('thead').innerHTML='<th style="width:30px"><input type="checkbox" class="row-checkbox" id="select-all-checkbox" onchange="toggleSelectAll(this)"></th>'+cols.map(function(c){return '<th>'+c.label+'</th>';}).join('');
   document.getElementById('row-count').textContent='Showing '+rows.length.toLocaleString()+' order'+(rows.length!==1?'s':'');
-  if(!rows.length){document.getElementById('tbody').innerHTML='<tr><td colspan="'+cols.length+'" class="empty">No orders match your filters.</td></tr>';return;}
+  if(!rows.length){document.getElementById('tbody').innerHTML='<tr><td colspan="'+(cols.length+1)+'" class="empty">No orders match your filters.</td></tr>';return;}
   document.getElementById('tbody').innerHTML=rows.map(function(r){
     var isTodayRow=isToday(r);
     var isNoStock=(r['Pending Categorie']||'').trim().toLowerCase()==='no stock';
     var isPacked=(r['orderStatus']||'').trim().toLowerCase()==='packed';
     var cls=isNoStock?'nostock-row':isPacked?'packed-row':isTodayRow?'today-row':'';
-    return '<tr'+(cls?' class="'+cls+'"':'')+' data-order="'+(r['orderNumber']||'').replace(/"/g,'&quot;')+'">'+cols.map(function(c){
+    var orderNum=(r['orderNumber']||'').replace(/"/g,'&quot;');
+    var isChecked=selectedOrders.has(r['orderNumber']);
+    var checkboxTd='<td><input type="checkbox" class="row-checkbox" data-order-cb="'+orderNum+'" '+(isChecked?'checked':'')+' onchange="toggleRowSelect(this)"></td>';
+    return '<tr'+(cls?' class="'+cls+'"':'')+' data-order="'+orderNum+'">'+checkboxTd+cols.map(function(c){
       var v=r[c.key]||'';
       if(c.editable){
         var content=(c.key==='Pending Categorie'&&isNoStock)?
