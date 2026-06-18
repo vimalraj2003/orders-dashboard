@@ -188,17 +188,24 @@ tbody tr.packed-row td{background:#f0fdf4}
 .editgrid-table td{padding:0;border-bottom:1px solid var(--border);color:var(--text);white-space:nowrap;vertical-align:middle}
 .editgrid-table td.readonly-cell{padding:10px 14px;color:var(--muted);background:var(--surface2);max-width:160px;overflow:hidden;text-overflow:ellipsis}
 .editgrid-table tbody tr:hover td.readonly-cell{background:#f0f1ee}
-.editgrid-table td.editable-grid-cell{cursor:text;min-width:150px;max-width:240px;background:#fbfaf7}
-.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:10px 14px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
-.editgrid-table td.editable-grid-cell:focus-within{background:#eef1fd;box-shadow:inset 0 0 0 2px var(--accent)}
-.editgrid-table td.editable-grid-cell.saving{background:#fffbeb}
-.editgrid-table td.editable-grid-cell.saved{background:#f0fdf4}
-.editgrid-table td.editable-grid-cell.save-error{background:#fef2f2}
+.editgrid-table td.editable-grid-cell{cursor:text;min-width:150px;max-width:240px;background:#eef1fd;box-shadow:inset 3px 0 0 #2d5be3}
+.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:10px 14px 10px 12px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
+.editgrid-table td.editable-grid-cell:hover{background:#e3e9fc}
+.editgrid-table td.editable-grid-cell:focus-within{background:#fff;box-shadow:inset 0 0 0 2px var(--accent)}
+.editgrid-table td.editable-grid-cell.saving{background:#fef3c7;box-shadow:inset 3px 0 0 #d97706}
+.editgrid-table td.editable-grid-cell.saved{background:#dcfce7;box-shadow:inset 3px 0 0 #16a34a}
+.editgrid-table td.editable-grid-cell.save-error{background:#fee2e2;box-shadow:inset 3px 0 0 #dc2626}
+.editgrid-table th.editable-th{color:var(--accent)}
 .editgrid-table tr.nostock-row td.readonly-cell{background:#fef2f2}
 .editgrid-table tr.packed-row td.readonly-cell{background:#f0fdf4}
 .editgrid-legend{display:flex;align-items:center;gap:16px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);flex-wrap:wrap}
 .editgrid-legend span{display:flex;align-items:center;gap:5px}
 .editgrid-legend .sw{width:10px;height:10px;border-radius:2px;display:inline-block;border:1px solid var(--border)}
+.eg-th-inner{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.eg-th-filter{font-family:inherit;font-size:10px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px 4px;max-width:90px;cursor:pointer;outline:none}
+.eg-th-filter:focus{border-color:var(--accent)}
+.eg-th-filter.active-filter{border-color:var(--accent);background:#eef1fd;color:var(--accent);font-weight:600}
+.editgrid-table th.editable-th .eg-th-filter.active-filter{background:#fff}
 .modal-tbl-wrap tbody tr.packed-row td{background:#f0fdf4}
 .aging-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;white-space:nowrap}
 .aging-fresh{background:var(--success-bg);color:var(--success)}
@@ -259,17 +266,24 @@ tbody tr.packed-row td{background:#f0fdf4}
 .editgrid-table td{padding:0;border-bottom:1px solid var(--border);color:var(--text);white-space:nowrap;vertical-align:middle}
 .editgrid-table td.readonly-cell{padding:10px 14px;color:var(--muted);background:var(--surface2);max-width:160px;overflow:hidden;text-overflow:ellipsis}
 .editgrid-table tbody tr:hover td.readonly-cell{background:#f0f1ee}
-.editgrid-table td.editable-grid-cell{cursor:text;min-width:150px;max-width:240px;background:#fbfaf7}
-.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:10px 14px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
-.editgrid-table td.editable-grid-cell:focus-within{background:#eef1fd;box-shadow:inset 0 0 0 2px var(--accent)}
-.editgrid-table td.editable-grid-cell.saving{background:#fffbeb}
-.editgrid-table td.editable-grid-cell.saved{background:#f0fdf4}
-.editgrid-table td.editable-grid-cell.save-error{background:#fef2f2}
+.editgrid-table td.editable-grid-cell{cursor:text;min-width:150px;max-width:240px;background:#eef1fd;box-shadow:inset 3px 0 0 #2d5be3}
+.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:10px 14px 10px 12px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
+.editgrid-table td.editable-grid-cell:hover{background:#e3e9fc}
+.editgrid-table td.editable-grid-cell:focus-within{background:#fff;box-shadow:inset 0 0 0 2px var(--accent)}
+.editgrid-table td.editable-grid-cell.saving{background:#fef3c7;box-shadow:inset 3px 0 0 #d97706}
+.editgrid-table td.editable-grid-cell.saved{background:#dcfce7;box-shadow:inset 3px 0 0 #16a34a}
+.editgrid-table td.editable-grid-cell.save-error{background:#fee2e2;box-shadow:inset 3px 0 0 #dc2626}
+.editgrid-table th.editable-th{color:var(--accent)}
 .editgrid-table tr.nostock-row td.readonly-cell{background:#fef2f2}
 .editgrid-table tr.packed-row td.readonly-cell{background:#f0fdf4}
 .editgrid-legend{display:flex;align-items:center;gap:16px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);flex-wrap:wrap}
 .editgrid-legend span{display:flex;align-items:center;gap:5px}
 .editgrid-legend .sw{width:10px;height:10px;border-radius:2px;display:inline-block;border:1px solid var(--border)}
+.eg-th-inner{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.eg-th-filter{font-family:inherit;font-size:10px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px 4px;max-width:90px;cursor:pointer;outline:none}
+.eg-th-filter:focus{border-color:var(--accent)}
+.eg-th-filter.active-filter{border-color:var(--accent);background:#eef1fd;color:var(--accent);font-weight:600}
+.editgrid-table th.editable-th .eg-th-filter.active-filter{background:#fff}
 .empty{text-align:center;padding:40px;color:var(--muted);font-size:13px}
 
 /* ── Badges ── */
@@ -365,17 +379,24 @@ tbody tr.packed-row td{background:#f0fdf4}
 .editgrid-table td{padding:0;border-bottom:1px solid var(--border);color:var(--text);white-space:nowrap;vertical-align:middle}
 .editgrid-table td.readonly-cell{padding:10px 14px;color:var(--muted);background:var(--surface2);max-width:160px;overflow:hidden;text-overflow:ellipsis}
 .editgrid-table tbody tr:hover td.readonly-cell{background:#f0f1ee}
-.editgrid-table td.editable-grid-cell{cursor:text;min-width:150px;max-width:240px;background:#fbfaf7}
-.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:10px 14px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
-.editgrid-table td.editable-grid-cell:focus-within{background:#eef1fd;box-shadow:inset 0 0 0 2px var(--accent)}
-.editgrid-table td.editable-grid-cell.saving{background:#fffbeb}
-.editgrid-table td.editable-grid-cell.saved{background:#f0fdf4}
-.editgrid-table td.editable-grid-cell.save-error{background:#fef2f2}
+.editgrid-table td.editable-grid-cell{cursor:text;min-width:150px;max-width:240px;background:#eef1fd;box-shadow:inset 3px 0 0 #2d5be3}
+.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:10px 14px 10px 12px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
+.editgrid-table td.editable-grid-cell:hover{background:#e3e9fc}
+.editgrid-table td.editable-grid-cell:focus-within{background:#fff;box-shadow:inset 0 0 0 2px var(--accent)}
+.editgrid-table td.editable-grid-cell.saving{background:#fef3c7;box-shadow:inset 3px 0 0 #d97706}
+.editgrid-table td.editable-grid-cell.saved{background:#dcfce7;box-shadow:inset 3px 0 0 #16a34a}
+.editgrid-table td.editable-grid-cell.save-error{background:#fee2e2;box-shadow:inset 3px 0 0 #dc2626}
+.editgrid-table th.editable-th{color:var(--accent)}
 .editgrid-table tr.nostock-row td.readonly-cell{background:#fef2f2}
 .editgrid-table tr.packed-row td.readonly-cell{background:#f0fdf4}
 .editgrid-legend{display:flex;align-items:center;gap:16px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);flex-wrap:wrap}
 .editgrid-legend span{display:flex;align-items:center;gap:5px}
 .editgrid-legend .sw{width:10px;height:10px;border-radius:2px;display:inline-block;border:1px solid var(--border)}
+.eg-th-inner{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.eg-th-filter{font-family:inherit;font-size:10px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px 4px;max-width:90px;cursor:pointer;outline:none}
+.eg-th-filter:focus{border-color:var(--accent)}
+.eg-th-filter.active-filter{border-color:var(--accent);background:#eef1fd;color:var(--accent);font-weight:600}
+.editgrid-table th.editable-th .eg-th-filter.active-filter{background:#fff}
 .modal-tbl-wrap tbody tr.packed-row td{background:#f0fdf4}
 .aging-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;white-space:nowrap}
 .aging-fresh{background:var(--success-bg);color:var(--success)}
@@ -436,17 +457,24 @@ tbody tr.packed-row td{background:#f0fdf4}
 .editgrid-table td{padding:0;border-bottom:1px solid var(--border);color:var(--text);white-space:nowrap;vertical-align:middle}
 .editgrid-table td.readonly-cell{padding:10px 14px;color:var(--muted);background:var(--surface2);max-width:160px;overflow:hidden;text-overflow:ellipsis}
 .editgrid-table tbody tr:hover td.readonly-cell{background:#f0f1ee}
-.editgrid-table td.editable-grid-cell{cursor:text;min-width:150px;max-width:240px;background:#fbfaf7}
-.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:10px 14px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
-.editgrid-table td.editable-grid-cell:focus-within{background:#eef1fd;box-shadow:inset 0 0 0 2px var(--accent)}
-.editgrid-table td.editable-grid-cell.saving{background:#fffbeb}
-.editgrid-table td.editable-grid-cell.saved{background:#f0fdf4}
-.editgrid-table td.editable-grid-cell.save-error{background:#fef2f2}
+.editgrid-table td.editable-grid-cell{cursor:text;min-width:150px;max-width:240px;background:#eef1fd;box-shadow:inset 3px 0 0 #2d5be3}
+.editgrid-table td.editable-grid-cell .grid-cell-inner{padding:10px 14px 10px 12px;min-height:20px;outline:none;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
+.editgrid-table td.editable-grid-cell:hover{background:#e3e9fc}
+.editgrid-table td.editable-grid-cell:focus-within{background:#fff;box-shadow:inset 0 0 0 2px var(--accent)}
+.editgrid-table td.editable-grid-cell.saving{background:#fef3c7;box-shadow:inset 3px 0 0 #d97706}
+.editgrid-table td.editable-grid-cell.saved{background:#dcfce7;box-shadow:inset 3px 0 0 #16a34a}
+.editgrid-table td.editable-grid-cell.save-error{background:#fee2e2;box-shadow:inset 3px 0 0 #dc2626}
+.editgrid-table th.editable-th{color:var(--accent)}
 .editgrid-table tr.nostock-row td.readonly-cell{background:#fef2f2}
 .editgrid-table tr.packed-row td.readonly-cell{background:#f0fdf4}
 .editgrid-legend{display:flex;align-items:center;gap:16px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);flex-wrap:wrap}
 .editgrid-legend span{display:flex;align-items:center;gap:5px}
 .editgrid-legend .sw{width:10px;height:10px;border-radius:2px;display:inline-block;border:1px solid var(--border)}
+.eg-th-inner{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.eg-th-filter{font-family:inherit;font-size:10px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px 4px;max-width:90px;cursor:pointer;outline:none}
+.eg-th-filter:focus{border-color:var(--accent)}
+.eg-th-filter.active-filter{border-color:var(--accent);background:#eef1fd;color:var(--accent);font-weight:600}
+.editgrid-table th.editable-th .eg-th-filter.active-filter{background:#fff}
 
 /* ── Daily Tracker ── */
 .daily-page{display:none}.daily-page.open{display:block}
@@ -762,6 +790,7 @@ tbody tr.packed-row td{background:#f0fdf4}
       <option value="maya">Maya</option>
     </select>
     <input type="text" id="eg-search" placeholder="Search order #, agent, remarks..." oninput="renderEditGrid()">
+    <button class="btn" onclick="clearEgColumnFilters()" style="font-size:12px;height:34px;padding:0 12px">Clear column filters</button>
     <span class="editgrid-status" id="eg-status"></span>
   </div>
 
@@ -773,10 +802,10 @@ tbody tr.packed-row td{background:#f0fdf4}
   </div>
 
   <div class="editgrid-legend">
-    <span><span class="sw" style="background:#fbfaf7"></span> Editable (click any cell to edit, saves on blur or Enter)</span>
-    <span><span class="sw" style="background:#fffbeb"></span> Saving...</span>
-    <span><span class="sw" style="background:#f0fdf4"></span> Saved</span>
-    <span><span class="sw" style="background:#fef2f2"></span> Save failed</span>
+    <span><span class="sw" style="background:#eef1fd;box-shadow:inset 2px 0 0 #2d5be3"></span> Editable column (click to edit)</span>
+    <span><span class="sw" style="background:#fef3c7"></span> Saving...</span>
+    <span><span class="sw" style="background:#dcfce7"></span> Saved</span>
+    <span><span class="sw" style="background:#fee2e2"></span> Save failed</span>
   </div>
 </div>
 
@@ -1871,13 +1900,15 @@ var egCurrentBrand = 'shrus';
 var EG_COLS = [
   {key:'orderNumber', label:'Order #', readonly:true},
   {key:'Order Date', label:'Date', readonly:true},
-  {key:'orderStatus', label:'Status', readonly:true},
-  {key:'Shopify Payment', label:'Payment', readonly:true},
-  {key:'Priority', label:'Priority', readonly:true},
-  {key:'Pending Categorie', label:'Pending Category', readonly:false},
-  {key:'Assign', label:'Assigned To', readonly:false},
+  {key:'orderStatus', label:'Status', readonly:true, filterable:true},
+  {key:'Shopify Payment', label:'Payment', readonly:true, filterable:true},
+  {key:'Priority', label:'Priority', readonly:true, filterable:true},
+  {key:'Pending Categorie', label:'Pending Category', readonly:false, filterable:true},
+  {key:'Assign', label:'Assigned To', readonly:false, filterable:true},
   {key:'User Remarks', label:'User Remarks', readonly:false}
 ];
+
+var egColumnFilters = {}; // {colKey: selectedValue}
 
 function showEditGrid() {
   hideAllPages();
@@ -1890,6 +1921,8 @@ function showEditGrid() {
 
 function onEditGridBrandChange(){
   egCurrentBrand = document.getElementById('eg-brand-select').value;
+  egColumnFilters = {};
+  document.getElementById('eg-search').value='';
   loadEditGridData();
 }
 
@@ -1919,18 +1952,58 @@ async function loadEditGridData(){
   }
 }
 
+function renderEditGridHeader(cols){
+  document.getElementById('eg-thead').innerHTML=cols.map(function(c){
+    var labelHtml=c.label+(c.readonly?'':' &#9998;');
+    if(!c.filterable){
+      return '<th'+(c.readonly?'':' class="editable-th"')+'>'+labelHtml+'</th>';
+    }
+    var vals=[];
+    egRows.forEach(function(r){ if(r[c.key]&&vals.indexOf(r[c.key])===-1) vals.push(r[c.key]); });
+    vals.sort();
+    var curFilter=egColumnFilters[c.key]||'';
+    var options='<option value="">'+c.label+'</option>'+vals.map(function(v){
+      return '<option value="'+v.replace(/"/g,'&quot;')+'"'+(v===curFilter?' selected':'')+'>'+v+'</option>';
+    }).join('');
+    return '<th'+(c.readonly?'':' class="editable-th"')+'>'+
+      '<div class="eg-th-inner"><span>'+labelHtml+'</span></div>'+
+      '<select class="eg-th-filter'+(curFilter?' active-filter':'')+'" onclick="event.stopPropagation()" onchange="onEgColumnFilterChange(this,\''+c.key+'\')">'+options+'</select>'+
+      '</th>';
+  }).join('');
+}
+
+function onEgColumnFilterChange(sel, key){
+  var val=sel.value;
+  if(val) egColumnFilters[key]=val;
+  else delete egColumnFilters[key];
+  renderEditGrid();
+}
+
+function clearEgColumnFilters(){
+  egColumnFilters={};
+  renderEditGrid();
+}
+
 function renderEditGrid(){
   var search=document.getElementById('eg-search').value.toLowerCase();
   var cols=EG_COLS.filter(function(c){return egColHeaders.indexOf(c.key)!==-1;});
-  document.getElementById('eg-thead').innerHTML=cols.map(function(c){return '<th>'+c.label+(c.readonly?'':' &#9998;')+'</th>';}).join('');
+  renderEditGridHeader(cols);
 
   var rows=egRows.filter(function(r){
-    if(!search)return true;
-    return Object.values(r).join(' ').toLowerCase().indexOf(search)!==-1;
+    if(search&&Object.values(r).join(' ').toLowerCase().indexOf(search)===-1)return false;
+    for(var key in egColumnFilters){
+      if((r[key]||'')!==egColumnFilters[key])return false;
+    }
+    return true;
   });
 
+  // Update active filter count in status
+  var activeCount=Object.keys(egColumnFilters).length;
+  var statusEl=document.getElementById('eg-status');
+  if(statusEl) statusEl.dataset.activeFilters=activeCount;
+
   if(!rows.length){
-    document.getElementById('eg-tbody').innerHTML='<tr><td colspan="'+cols.length+'" style="padding:24px;text-align:center;color:var(--muted)">No orders found.</td></tr>';
+    document.getElementById('eg-tbody').innerHTML='<tr><td colspan="'+cols.length+'" style="padding:24px;text-align:center;color:var(--muted)">No orders match the current filters.</td></tr>';
     return;
   }
 
