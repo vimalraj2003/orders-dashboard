@@ -1565,10 +1565,15 @@ async function loadAllPendingCategories() {
         var cat = (r['Pending Categorie']||'').trim();
         if(cat) pcatData[k][cat] = (pcatData[k][cat]||0) + 1;
       });
-      // Also cache for brand dashboard
-      brandCache[k] = rows;
-      brandCacheHeaders[k] = Object.keys(rows[0]||{});
-      document.getElementById('badge-'+k).textContent = rows.length;
+      // Only seed the cache if this brand hasn't been loaded by the main dashboard yet.
+      // Never overwrite a brand that's currently active/cached, to avoid clobbering
+      // live allRows/colHeaders used by editing, checkboxes, and filters.
+      if(!brandCache[k]){
+        brandCache[k] = rows;
+        brandCacheHeaders[k] = Object.keys(rows[0]||{});
+      }
+      var badgeEl = document.getElementById('badge-'+k);
+      if(badgeEl && (badgeEl.textContent==='-'||!badgeEl.textContent)) badgeEl.textContent = rows.length;
     } else {
       pcatData[k] = null;
     }
@@ -1811,7 +1816,9 @@ function showFormMsg(msg, type) {
 
 // ── Init ──
 showBrandDashboard('shrus');
-loadAllPendingCategories();
+// Load cross-brand pending categories after the main brand finishes its first fetch,
+// so it never races with or overwrites the active brand's live data.
+setTimeout(function(){ loadAllPendingCategories(); }, 1500);
 setInterval(function(){loadData();},60000);
 </script>
 </body>
